@@ -242,7 +242,7 @@ dynamic_for(functorT & func);
  * how the loop increments the current iteration value. By default, the inc_once
  * structure above is used.
  *
- * Finally, dynamic_for allows for an optional comparator template parameter, to
+ * Finally, static_for allows for an optional comparator template parameter, to
  * change how the current loop value is compared to the end loop value. By
  * default, a less operation is performed, to follow the runtime for loop
  * semantics. Alternatively, you can also choose to supply any of the
