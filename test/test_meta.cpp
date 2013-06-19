@@ -20,10 +20,10 @@
  **/
 #include <vector>
 
-#include <boost/noncopyable.hpp>
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <meta/noncopyable.h>
 #include <meta/comparison.h>
 #include <meta/for.h>
 
@@ -38,7 +38,7 @@ dynamic_for_functor1(int i)
 }
 
 
-struct dynamic_for_functor2 : boost::noncopyable
+struct dynamic_for_functor2 : meta::noncopyable
 {
   void operator()(int i)
   {
