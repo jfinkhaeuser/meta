@@ -11,3 +11,23 @@ Makefile.in
 /depcomp
 /install-sh
 /missing
+/config.*
+Makefile
+.deps
+.libs
+
+# libtool
+ltmain.sh
+libtool
+
+# pkg-config
+meta.pc
+
+# editor
+.*.sw*
+
+# native code
+*.o
+*.a
+*.lo
+*.la
