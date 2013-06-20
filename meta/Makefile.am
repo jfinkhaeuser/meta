@@ -11,6 +11,7 @@ include_HEADERS = \
 	mandatory.h \
 	byteorder.h \
 	pointers.h \
+	nullptr.h \
 	detail/dynamic_for.tcc \
 	detail/static_for.tcc
 
