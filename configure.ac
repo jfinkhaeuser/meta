@@ -45,6 +45,9 @@ AX_CXX_HEADER_STDCXX_98
 AX_CXX_HEADER_STDCXX_TR1
 AX_CXX_HEADER_STDCXX_0X
 
+AC_CHECK_HEADERS([endian.h])
+AC_CHECK_HEADERS([byteswap.h])
+
 ##############################################################################
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_INT32_T

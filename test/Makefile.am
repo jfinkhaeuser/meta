@@ -9,4 +9,5 @@ testsuite_LDADD = $(CPPUNIT_LIBS)
 testsuite_SOURCES = \
 	test_meta.cpp \
 	test_mandatory.cpp \
+	test_byteorder.cpp \
 	testsuite.cpp
