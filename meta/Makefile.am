@@ -8,6 +8,7 @@ include_HEADERS = \
 	for.h \
 	comparison.h \
 	noncopyable.h \
+	mandatory.h \
 	detail/dynamic_for.tcc \
 	detail/static_for.tcc
 
