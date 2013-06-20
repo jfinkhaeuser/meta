@@ -10,6 +10,7 @@ include_HEADERS = \
 	noncopyable.h \
 	mandatory.h \
 	byteorder.h \
+	pointers.h \
 	detail/dynamic_for.tcc \
 	detail/static_for.tcc
 
