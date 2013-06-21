@@ -52,7 +52,9 @@ private:
         int ret = 0;
         CPPUNIT_ASSERT_THROW(mandatory_function(), std::logic_error);
         CPPUNIT_ASSERT_NO_THROW(static_cast<meta::ignore_return_value>(mandatory_function()));
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
         CPPUNIT_ASSERT_NO_THROW(meta::ignore_return_value x = mandatory_function());
+#pragma GCC diagnostic pop
         CPPUNIT_ASSERT_NO_THROW(ret = mandatory_function());
 
         ret = mandatory_function();

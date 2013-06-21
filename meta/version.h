@@ -58,7 +58,7 @@ inline std::pair<std::string, std::string> version()
 /**
  * Return the library version as a string, with appropriate copyright notice.
  **/
-inline char const * const copyright_string()
+inline char const * copyright_string()
 {
   static auto ret = PACKAGE_NAME " " PACKAGE_VERSION " " PACKAGE_URL
     " - Copyright (c) 2011 Jens Finkhaeuser.\n"
@@ -73,7 +73,7 @@ inline char const * const copyright_string()
 /**
  * Returns a short string with licensing information.
  **/
-inline char const * const license_string()
+inline char const * license_string()
 {
   static auto ret =
     "This software is licensed under the terms of the GNU GPLv3 for personal,\n"

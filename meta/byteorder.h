@@ -137,7 +137,7 @@ inline endian host_byte_order()
  * Simple function to return a string representation of the passed endian value,
  * that is "LE", "BE" or "--" for unknown endianness.
  **/
-inline char const * const to_string(int source_endian)
+inline char const * to_string(int source_endian)
 {
   return (source_endian == META_UNKNOWN_ENDIAN
           ? "--"
@@ -174,7 +174,10 @@ inline endian opposite(int arg)
 inline uint16_t swap(uint16_t const & orig)
 {
 #if defined(HAVE_BYTESWAP_H)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_16(orig);
+#  pragma GCC diagnostic pop
 #else
   return ((orig & 0xff00) >> 8) |
          ((orig & 0x00ff) << 8);
@@ -184,7 +187,10 @@ inline uint16_t swap(uint16_t const & orig)
 inline int16_t swap(int16_t const & orig)
 {
 #if defined(HAVE_BYTESWAP_H)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_16(orig);
+#  pragma GCC diagnostic pop
 #else
   return swap(static_cast<uint16_t>(orig));
 #endif
@@ -193,7 +199,10 @@ inline int16_t swap(int16_t const & orig)
 inline uint32_t swap(uint32_t const & orig)
 {
 #if defined(HAVE_BYTESWAP_H)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_32(orig);
+#  pragma GCC diagnostic pop
 #else
   return ((orig & 0xff000000UL) >> 24) |
          ((orig & 0x00ff0000UL) >> 8)  |
@@ -205,7 +214,10 @@ inline uint32_t swap(uint32_t const & orig)
 inline int32_t swap(int32_t const & orig)
 {
 #if defined(HAVE_BYTESWAP_H)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_32(orig);
+#  pragma GCC diagnostic pop
 #else
   return swap(static_cast<uint32_t>(orig));
 #endif
@@ -214,7 +226,10 @@ inline int32_t swap(int32_t const & orig)
 inline uint64_t swap(uint64_t const & orig)
 {
 #if defined(HAVE_BYTESWAP_H)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_64(orig);
+#  pragma GCC diagnostic pop
 #else
   return ((orig & ((uint64_t) 0xff << 56)) >> 56) |
          ((orig & ((uint64_t) 0xff << 48)) >> 40) |
@@ -230,7 +245,10 @@ inline uint64_t swap(uint64_t const & orig)
 inline int64_t swap(int64_t const & orig)
 {
 #if defined(HAVE_BYTESWAP_H)
+#  pragma GCC diagnostic push
+#  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_64(orig);
+#  pragma GCC diagnostic pop
 #else
   return swap(static_cast<uint64_t>(orig));
 #endif

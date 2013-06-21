@@ -40,7 +40,7 @@ protected:
   {
   }
 
-  ~noncopyable()
+  inline ~noncopyable()
   {
   }
 

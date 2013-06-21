@@ -95,12 +95,12 @@ template <
 struct next<0, CURRENT, END, incrementorT, comparatorT>
 {
   template <typename functorT>
-  inline static void run(functorT & f)
+  inline static void run(functorT &)
   {
   }
 
   template <typename functorT>
-  inline static void run(functorT const & f)
+  inline static void run(functorT const &)
   {
   }
 };

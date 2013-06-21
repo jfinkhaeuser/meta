@@ -54,7 +54,7 @@ struct copy_policy_test_struct
     {
     }
 
-    copy_policy_test_struct(copy_policy_test_struct const & other)
+    copy_policy_test_struct(copy_policy_test_struct const &)
         : m_copied(true)
     {
     }

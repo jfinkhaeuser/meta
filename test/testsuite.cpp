@@ -237,6 +237,8 @@ VerboseOutput::addFailure(CppUnit::TestFailure const & failure)
 
 
 // Called just after a TestCase was run (even if a failure occured).
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 void
 VerboseOutput::endTest(CppUnit::Test * test)
 {
@@ -258,6 +260,7 @@ VerboseOutput::endTest(CppUnit::Test * test)
   }
   m_status = ST_OK;
 }
+#pragma GCC diagnostic pop
 
 
 // Called by a TestComposite just before running its child tests.
@@ -296,15 +299,20 @@ VerboseOutput::endSuite(CppUnit::Test * suite)
 
 
 // Called by a TestRunner before running the test.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 void
 VerboseOutput::startTestRun(CppUnit::Test * test,
         CppUnit::TestResult * eventManager)
 {
   m_os << std::endl;
 }
+#pragma GCC diagnostic pop
 
 
 // Called by a TestRunner after running the test.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 void
 VerboseOutput::endTestRun(CppUnit::Test * test,
         CppUnit::TestResult * eventManager)
@@ -315,6 +323,7 @@ VerboseOutput::endTestRun(CppUnit::Test * test,
       << std::endl << std::endl;
   }
 }
+#pragma GCC diagnostic pop
 
 
 
