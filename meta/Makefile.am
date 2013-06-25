@@ -12,6 +12,9 @@ include_HEADERS = \
 	byteorder.h \
 	pointers.h \
 	nullptr.h \
+	condition.h \
 	detail/dynamic_for.tcc \
-	detail/static_for.tcc
+	detail/static_for.tcc \
+	detail/dual_operators.tcc \
+	detail/chain_helper.tcc
 
