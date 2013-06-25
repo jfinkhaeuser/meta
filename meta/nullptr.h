@@ -18,8 +18,8 @@
  * PARTICULAR PURPOSE.
  **/
 
-#ifndef META_NULLPTR
-#define META_NULLPTR
+#ifndef META_NULLPTR_H
+#define META_NULLPTR_H
 
 #ifndef __cplusplus
 #error You are trying to include a C++ only header file
