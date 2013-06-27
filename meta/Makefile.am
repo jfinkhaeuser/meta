@@ -13,6 +13,7 @@ include_HEADERS = \
 	pointers.h \
 	nullptr.h \
 	condition.h \
+	typelist.h \
 	detail/dynamic_for.tcc \
 	detail/static_for.tcc \
 	detail/dual_operators.tcc \
