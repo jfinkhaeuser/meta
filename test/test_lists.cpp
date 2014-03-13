@@ -68,6 +68,18 @@ struct double_type
   }
 };
 
+struct complex_type
+{
+  int a;
+  double b;
+
+  complex_type(double _b, int _a)
+    : a(_a)
+    , b(_b)
+  {
+  }
+};
+
 } // anonymous namespace
 
 class ListsTest
@@ -340,6 +352,25 @@ private:
         t::classlist<int_type, float_type> b = {42, 3.14};
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&b)->v);
         CPPUNIT_ASSERT_EQUAL(float(3.14), static_cast<float_type *>(&b)->v);
+      }
+
+      // Complex initializers
+      {
+        // Omissions of braces don't work.
+        // t::classlist<int_type> a = 42;
+        // t::classlist<complex_type> a = {3.14, 42};
+
+        t::classlist<complex_type> a = {{3.14, 42}};
+        CPPUNIT_ASSERT_EQUAL(int(42), static_cast<complex_type *>(&a)->a);
+        CPPUNIT_ASSERT_EQUAL(double(3.14), static_cast<complex_type *>(&a)->b);
+
+        t::classlist<int_type, complex_type> b = {666, {3.14, 42}};
+        CPPUNIT_ASSERT_EQUAL(int(666), static_cast<int_type *>(&b)->v);
+        CPPUNIT_ASSERT_EQUAL(int(42), static_cast<complex_type *>(&b)->a);
+        CPPUNIT_ASSERT_EQUAL(double(3.14), static_cast<complex_type *>(&b)->b);
+
+        // Looks funny, but is the correct use of the round braces
+        t::classlist<complex_type> c({3.14, 42});
       }
 
     }

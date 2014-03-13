@@ -13,6 +13,7 @@ than CppUnit for testing).
 - byteorder.h provides compiler-/platform-independent versions of ntoh/hton for
   integer types (including 64 bits)
 - pointers.h provides policies for shallow-copying/deep-copying pointer members.
+- typelist.h provides constructs for constructing and manipulating lists of types.
 
 Some of this code started out as a mental exercise, so there's no guarantee for
 usefulness implied in providing them.
