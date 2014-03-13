@@ -52,10 +52,9 @@ struct classlist<Head, Tail...>
   {
   }
 
-  // FIXME
-  // It's *really* strange, but it appears we have to put the head at the end
-  // if we want classlist<int, float> to be initialized by { 42, 3.14 } rather
-  // than { 3.14, 42 } (or rather classlist<int_type, float_type>).
+  // XXX There were some problems with early GCC support that seemed to have
+  //     reversed the initalizer list if it was passed in curly braces. It
+  //     can't be reproduced any longer (GCC 4.6.3).
   inline classlist(Head && head, Tail && ... tail)
     : Head(head)
     , Tail(tail)...

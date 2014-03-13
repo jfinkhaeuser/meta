@@ -88,6 +88,8 @@ public:
       CPPUNIT_TEST(testClassListRevert);
       CPPUNIT_TEST(testUniqueClassList);
 
+      CPPUNIT_TEST(testClassListInitializer);
+
     CPPUNIT_TEST_SUITE_END();
 
 private:
@@ -284,7 +286,6 @@ private:
       CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, FloatType, IntType, FloatType, IntType>::type));
       CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, FloatType, IntType, FloatType, IntType, FloatType>::type));
 
-
       CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, IntType, FloatType, FloatType, IntType>::type));
     }
 
@@ -302,6 +303,45 @@ private:
         meta::types::classlist,
         meta::types::unique_classlist,
         int_type, float_type, double_type>();
+    }
+
+
+
+
+    void testClassListInitializer()
+    {
+      namespace t = meta::types;
+
+      // No arguments
+      {
+        t::classlist<int_type> a;
+        CPPUNIT_ASSERT_EQUAL(int(0), static_cast<int_type *>(&a)->v);
+
+        t::classlist<int_type, float_type> b;
+        CPPUNIT_ASSERT_EQUAL(int(0), static_cast<int_type *>(&b)->v);
+        CPPUNIT_ASSERT_EQUAL(float(0), static_cast<float_type *>(&b)->v);
+      }
+
+      // Round braces
+      {
+        t::classlist<int_type> a(42);
+        CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&a)->v);
+
+        t::classlist<int_type, float_type> b(42, 3.14);
+        CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&b)->v);
+        CPPUNIT_ASSERT_EQUAL(float(3.14), static_cast<float_type *>(&b)->v);
+      }
+
+      // Curly braces
+      {
+        t::classlist<int_type> a = {42};
+        CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&a)->v);
+
+        t::classlist<int_type, float_type> b = {42, 3.14};
+        CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&b)->v);
+        CPPUNIT_ASSERT_EQUAL(float(3.14), static_cast<float_type *>(&b)->v);
+      }
+
     }
 };
 
