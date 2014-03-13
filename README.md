@@ -15,5 +15,5 @@ than CppUnit for testing).
 - pointers.h provides policies for shallow-copying/deep-copying pointer members.
 - typelist.h provides constructs for constructing and manipulating lists of types.
 
-Some of this code started out as a mental exercise, so there's no guarantee for
-usefulness implied in providing them.
+Some of these bits of code started out as mental exercises, so there's no
+guarantee for usefulness implied in providing them. See COPYING for details.
