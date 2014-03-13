@@ -18,8 +18,8 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
-#ifndef META_TYPELIST_H
-#define META_TYPELIST_H
+#ifndef META_DETAIL_TYPELIST_H
+#define META_DETAIL_TYPELIST_H
 
 #ifndef __cplusplus
 #error You are trying to include a C++ only header file
@@ -27,14 +27,21 @@
 
 #include <meta/meta-config.h>
 
-#include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
-#include <meta/detail/list_contains.h>
-#include <meta/detail/list_revert.h>
-#include <meta/detail/list_append.h>
-#include <meta/detail/list_append_unique.h>
-#include <meta/detail/list_prepend.h>
-#include <meta/detail/list_prepend_unique.h>
-#include <meta/detail/unique_list.h>
+namespace meta {
+namespace types {
+
+/**
+ * This file contains meta-programming code for handling lists of types.
+ **/
+
+/**
+ * The typelist struct is just used to represent a list of types at compile
+ * time; it has no run-time value.
+ **/
+template <typename... Types>
+struct typelist {};
+
+
+}} // namespace meta::types
 
 #endif // guard

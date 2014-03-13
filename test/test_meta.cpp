@@ -18,15 +18,12 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
-#include <vector>
-
 
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <meta/noncopyable.h>
 #include <meta/comparison.h>
 #include <meta/for.h>
-#include <meta/typelist.h>
 
 namespace {
 
@@ -70,6 +67,7 @@ struct static_functor
 };
 
 
+
 } // anonymous namespace
 
 class MetaTest
@@ -81,7 +79,6 @@ public:
       CPPUNIT_TEST(testComparison);
       CPPUNIT_TEST(testDynamicFor);
       CPPUNIT_TEST(testStaticFor);
-      CPPUNIT_TEST(testTypelist);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -224,38 +221,6 @@ private:
         meta::static_for<0, 10, inc_twice, meta::less_equal, static_functor>(3);
         CPPUNIT_ASSERT_EQUAL(30 * 3, test_sum);
       }
-    }
-
-
-
-    void testTypelist()
-    {
-      namespace t = meta::types;
-
-      // First a number of checks for contains
-      CPPUNIT_ASSERT(typeid(t::true_type) == typeid(t::contains<int, t::typelist<int, double>>::type));
-      CPPUNIT_ASSERT(typeid(t::true_type) == typeid(t::contains<int, t::typelist<double, float, double, int>>::type));
-      CPPUNIT_ASSERT(typeid(t::false_type) == typeid(t::contains<int, t::typelist<float, double>>::type));
-      CPPUNIT_ASSERT(typeid(t::false_type) == typeid(t::contains<int, t::typelist<>>::type));
-
-      // Invalid use of contains; not using a typelist
-      CPPUNIT_ASSERT(typeid(t::false_type) == typeid(t::contains<int, int>::type));
-
-      // Second, test append_unique struct.
-      CPPUNIT_ASSERT(typeid(t::typelist<int, float>) == typeid(t::append_unique<float, t::typelist<int>>::type));
-      CPPUNIT_ASSERT(typeid(t::typelist<int, float>) == typeid(t::append_unique<int, t::typelist<int, float>>::type));
-      CPPUNIT_ASSERT(typeid(t::typelist<float, int>) == typeid(t::append_unique<int, t::typelist<float, int>>::type));
-
-      CPPUNIT_ASSERT(typeid(t::typelist<int>) == typeid(t::append_unique<int, t::typelist<>>::type));
-
-      // Invalid use of append_unique; will not compile
-      // CPPUNIT_ASSERT(typeid(t::typelist<int, int>) == typeid(t::append_unique<int, int>::type));
-
-      // Third, test the unique_typelist. It should strip out duplicates from a
-      // a list of types.
-      CPPUNIT_ASSERT(typeid(t::typelist<int, float>) == typeid(t::unique_typelist<int, int, float, float, int>::type));
-      CPPUNIT_ASSERT(typeid(t::typelist<int>) == typeid(t::unique_typelist<int>::type));
-      CPPUNIT_ASSERT(typeid(t::typelist<>) == typeid(t::unique_typelist<>::type));
     }
 };
 
