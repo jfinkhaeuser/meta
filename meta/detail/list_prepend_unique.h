@@ -28,7 +28,8 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 #include <meta/detail/list_contains.h>
 
 namespace meta {
@@ -75,32 +76,63 @@ struct prepend_unique <
 
 
 
-// Same for classes; true_type
+// Same for inheritance lists; true_type
 template <
   typename NewType,
   typename... Types
 >
 struct prepend_unique <
       NewType,
-      classlist<Types...>,
+      inheritancelist<Types...>,
       true_type
     >
 {
-  typedef classlist<Types...> type;
+  typedef inheritancelist<Types...> type;
 };
 
-// Same for classes; false_type
+// Same for inheritance lists; false_type
 template <
   typename NewType,
   typename... Types
 >
 struct prepend_unique <
       NewType,
-      classlist<Types...>,
+      inheritancelist<Types...>,
       false_type
     >
 {
-  typedef classlist<NewType, Types...> type;
+  typedef inheritancelist<NewType, Types...> type;
+};
+
+
+
+
+// Same for composition lists; true_type
+template <
+  typename NewType,
+  typename... Types
+>
+struct prepend_unique <
+      NewType,
+      compositionlist<Types...>,
+      true_type
+    >
+{
+  typedef compositionlist<Types...> type;
+};
+
+// Same for composition lists; false_type
+template <
+  typename NewType,
+  typename... Types
+>
+struct prepend_unique <
+      NewType,
+      compositionlist<Types...>,
+      false_type
+    >
+{
+  typedef compositionlist<NewType, Types...> type;
 };
 
 

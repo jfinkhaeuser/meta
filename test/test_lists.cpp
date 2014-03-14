@@ -94,13 +94,21 @@ public:
       CPPUNIT_TEST(testTypeListRevert);
       CPPUNIT_TEST(testUniqueTypeList);
 
-      CPPUNIT_TEST(testClassListContains);
-      CPPUNIT_TEST(testClassListAppend);
-      CPPUNIT_TEST(testClassListPrepend);
-      CPPUNIT_TEST(testClassListRevert);
-      CPPUNIT_TEST(testUniqueClassList);
+      CPPUNIT_TEST(testInheritanceListContains);
+      CPPUNIT_TEST(testInheritanceListAppend);
+      CPPUNIT_TEST(testInheritanceListPrepend);
+      CPPUNIT_TEST(testInheritanceListRevert);
+      CPPUNIT_TEST(testUniqueInheritanceList);
 
-      CPPUNIT_TEST(testClassListInitializer);
+      CPPUNIT_TEST(testInheritanceListInitializer);
+
+      CPPUNIT_TEST(testCompositionListContains);
+      CPPUNIT_TEST(testCompositionListAppend);
+      CPPUNIT_TEST(testCompositionListPrepend);
+      CPPUNIT_TEST(testCompositionListRevert);
+      CPPUNIT_TEST(testUniqueCompositionList);
+
+      CPPUNIT_TEST(testCompositionListInitializer);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -132,11 +140,18 @@ private:
         int, float, double>();
     }
 
-    void testClassListContains()
+    void testInheritanceListContains()
     {
       testThingListContains<
-        meta::types::classlist,
+        meta::types::inheritancelist,
         int_type, float_type, double_type>();
+    }
+
+    void testCompositionListContains()
+    {
+      testThingListContains<
+        meta::types::compositionlist,
+        int_type, float, double_type>();
     }
 
 
@@ -182,11 +197,18 @@ private:
       CPPUNIT_ASSERT(typeid(t::typelist<int, float, int, double>) == typeid(typename t::append<double, t::typelist<int, float, int>>::type));
     }
 
-    void testClassListAppend()
+    void testInheritanceListAppend()
     {
       testThingListAppend<
-        meta::types::classlist,
+        meta::types::inheritancelist,
         int_type, float_type, double_type>();
+    }
+
+    void testCompositionListAppend()
+    {
+      testThingListAppend<
+        meta::types::compositionlist,
+        int, float_type, double_type>();
     }
 
 
@@ -232,11 +254,18 @@ private:
       CPPUNIT_ASSERT(typeid(t::typelist<double, int, float, int>) == typeid(typename t::prepend<double, t::typelist<int, float, int>>::type));
     }
 
-    void testClassListPrepend()
+    void testInheritanceListPrepend()
     {
       testThingListPrepend<
-        meta::types::classlist,
+        meta::types::inheritancelist,
         int_type, float_type, double_type>();
+    }
+
+    void testCompositionListPrepend()
+    {
+      testThingListPrepend<
+        meta::types::compositionlist,
+        int_type, float_type, double>();
     }
 
 
@@ -268,11 +297,18 @@ private:
         char, int, float, double>();
     }
 
-    void testClassListRevert()
+    void testInheritanceListRevert()
     {
       testThingListRevert<
-        meta::types::classlist,
+        meta::types::inheritancelist,
         char_type, int_type, float_type, double_type>();
+    }
+
+    void testCompositionListRevert()
+    {
+      testThingListRevert<
+        meta::types::compositionlist,
+        char, int_type, float, double_type>();
     }
 
 
@@ -280,7 +316,6 @@ private:
 
     template <
       template <typename...> class ListType,
-      template <typename...> class UniqueListType,
       typename IntType,
       typename FloatType,
       typename DoubleType
@@ -289,67 +324,72 @@ private:
     {
       namespace t = meta::types;
 
-      CPPUNIT_ASSERT(typeid(ListType<>) == typeid(typename UniqueListType<>::type));
-      CPPUNIT_ASSERT(typeid(ListType<IntType>) == typeid(typename UniqueListType<IntType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<>) == typeid(typename t::make_unique<ListType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<IntType>) == typeid(typename t::make_unique<ListType, IntType>::type));
 
-      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, FloatType>::type));
-      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, FloatType, IntType>::type));
-      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, FloatType, IntType, FloatType>::type));
-      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, FloatType, IntType, FloatType, IntType>::type));
-      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, FloatType, IntType, FloatType, IntType, FloatType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename t::make_unique<ListType, IntType, FloatType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename t::make_unique<ListType, IntType, FloatType, IntType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename t::make_unique<ListType, IntType, FloatType, IntType, FloatType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename t::make_unique<ListType, IntType, FloatType, IntType, FloatType, IntType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename t::make_unique<ListType, IntType, FloatType, IntType, FloatType, IntType, FloatType>::type));
 
-      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename UniqueListType<IntType, IntType, FloatType, FloatType, IntType>::type));
+      CPPUNIT_ASSERT(typeid(ListType<IntType, FloatType>) == typeid(typename t::make_unique<ListType, IntType, IntType, FloatType, FloatType, IntType>::type));
     }
 
     void testUniqueTypeList()
     {
       testUniqueThingList<
         meta::types::typelist,
-        meta::types::unique_typelist,
         int, float, double>();
     }
 
-    void testUniqueClassList()
+    void testUniqueInheritanceList()
     {
       testUniqueThingList<
-        meta::types::classlist,
-        meta::types::unique_classlist,
+        meta::types::inheritancelist,
+        int_type, float_type, double_type>();
+    }
+
+    void testUniqueCompositionList()
+    {
+      testUniqueThingList<
+        meta::types::compositionlist,
         int_type, float_type, double_type>();
     }
 
 
 
 
-    void testClassListInitializer()
+    void testInheritanceListInitializer()
     {
       namespace t = meta::types;
 
       // No arguments
       {
-        t::classlist<int_type> a;
+        t::inheritancelist<int_type> a;
         CPPUNIT_ASSERT_EQUAL(int(0), static_cast<int_type *>(&a)->v);
 
-        t::classlist<int_type, float_type> b;
+        t::inheritancelist<int_type, float_type> b;
         CPPUNIT_ASSERT_EQUAL(int(0), static_cast<int_type *>(&b)->v);
         CPPUNIT_ASSERT_EQUAL(float(0), static_cast<float_type *>(&b)->v);
       }
 
       // Round braces
       {
-        t::classlist<int_type> a(42);
+        t::inheritancelist<int_type> a(42);
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&a)->v);
 
-        t::classlist<int_type, float_type> b(42, 3.14);
+        t::inheritancelist<int_type, float_type> b(42, 3.14);
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&b)->v);
         CPPUNIT_ASSERT_EQUAL(float(3.14), static_cast<float_type *>(&b)->v);
       }
 
       // Curly braces
       {
-        t::classlist<int_type> a = {42};
+        t::inheritancelist<int_type> a = {42};
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&a)->v);
 
-        t::classlist<int_type, float_type> b = {42, 3.14};
+        t::inheritancelist<int_type, float_type> b = {42, 3.14};
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&b)->v);
         CPPUNIT_ASSERT_EQUAL(float(3.14), static_cast<float_type *>(&b)->v);
       }
@@ -357,23 +397,73 @@ private:
       // Complex initializers
       {
         // Omissions of braces don't work.
-        // t::classlist<int_type> a = 42;
-        // t::classlist<complex_type> a = {3.14, 42};
+        // t::inheritancelist<int_type> a = 42;
+        // t::inheritancelist<complex_type> a = {3.14, 42};
 
-        t::classlist<complex_type> a = {{3.14, 42}};
+        t::inheritancelist<complex_type> a = {{3.14, 42}};
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<complex_type *>(&a)->a);
         CPPUNIT_ASSERT_EQUAL(double(3.14), static_cast<complex_type *>(&a)->b);
 
-        t::classlist<int_type, complex_type> b = {666, {3.14, 42}};
+        t::inheritancelist<int_type, complex_type> b = {666, {3.14, 42}};
         CPPUNIT_ASSERT_EQUAL(int(666), static_cast<int_type *>(&b)->v);
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<complex_type *>(&b)->a);
         CPPUNIT_ASSERT_EQUAL(double(3.14), static_cast<complex_type *>(&b)->b);
 
         // Looks funny, but is the correct use of the round braces
-        t::classlist<complex_type> c({3.14, 42});
+        t::inheritancelist<complex_type> c({3.14, 42});
       }
 
     }
+
+
+
+    void testCompositionListInitializer()
+    {
+      namespace t = meta::types;
+
+      // No arguments
+      {
+        t::compositionlist<int_type> a;
+        CPPUNIT_ASSERT_EQUAL(int(0), a.item.v);
+
+        t::compositionlist<int> b;
+        CPPUNIT_ASSERT_EQUAL(int(0), b.item);
+
+        t::compositionlist<int_type, float, float> c;
+        CPPUNIT_ASSERT_EQUAL(int(0), c.item.v);
+        CPPUNIT_ASSERT_EQUAL(float(0), static_cast<t::compositionlist<float> *>(&c)->item);
+        CPPUNIT_ASSERT_EQUAL(float(0), (static_cast<t::compositionlist<float, float> *>(&c)->item));
+      }
+
+      // Round braces
+      {
+        t::compositionlist<int_type> a(42);
+        CPPUNIT_ASSERT_EQUAL(int(42), a.item.v);
+
+        t::compositionlist<int> b(42);
+        CPPUNIT_ASSERT_EQUAL(int(42), b.item);
+
+        t::compositionlist<int_type, float, float> c(42, 3.14, 2.71828);
+        CPPUNIT_ASSERT_EQUAL(int(42), c.item.v);
+        CPPUNIT_ASSERT_EQUAL(float(2.71828), static_cast<t::compositionlist<float> *>(&c)->item);
+        CPPUNIT_ASSERT_EQUAL(float(3.14), (static_cast<t::compositionlist<float, float> *>(&c)->item));
+      }
+
+      // Curly braces
+      {
+        t::compositionlist<int_type> a = {42};
+        CPPUNIT_ASSERT_EQUAL(int(42), a.item.v);
+
+        t::compositionlist<int> b = 42;
+        CPPUNIT_ASSERT_EQUAL(int(42), b.item);
+
+        t::compositionlist<int_type, float, float> c = {42, 3.14, 2.71828};
+        CPPUNIT_ASSERT_EQUAL(int(42), c.item.v);
+        CPPUNIT_ASSERT_EQUAL(float(3.14), (static_cast<t::compositionlist<float, float> *>(&c)->item));
+        CPPUNIT_ASSERT_EQUAL(float(2.71828), static_cast<t::compositionlist<float> *>(&c)->item);
+      }
+    }
+
 };
 
 

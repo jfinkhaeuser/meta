@@ -18,8 +18,8 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
-#ifndef META_DETAIL_UNIQUE_LIST_H
-#define META_DETAIL_UNIQUE_LIST_H
+#ifndef META_DETAIL_LIST_MAKE_UNIQUE_H
+#define META_DETAIL_LIST_MAKE_UNIQUE_H
 
 #ifndef __cplusplus
 #error You are trying to include a C++ only header file
@@ -28,7 +28,8 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 #include <meta/detail/list_prepend_unique.h>
 #include <meta/detail/list_revert.h>
 
@@ -47,64 +48,43 @@ namespace types {
  * Note that this construct uses prepend_unique internally, the unique typelist
  * will contain elements in the order of first appearance.
  *
- * There also exists a unique_classlist construct for classlists.
+ * The construct works for typelists, inheritance and composition lists.
  *
  * Example usage:
- *    unique_typelist<int, int>::type         // is typelist<int>
- *    unique_typelist<int, float>::type       // is typelist<int, float>
- *    unique_typelist<float, int>::type       // is typelist<float, int>
- *    unique_typelist<int, float, int>::type  // is typelist<int, float>
+ *    make_unique<typelist, int, int>::type           // is typelist<int>
+ *    make_unique<inheritancelist, int, float>::type  // is inheritancelist<int, float>
+ *    make_unique<compositionlist, float, int>::type  // is compositionlist<float, int>
+ *    make_unique<typelist, int, float, int>::type    // is typelist<int, float>
  **/
 
 // The generic prototype
-template <typename... Types>
-struct unique_typelist;
+template <
+  template <typename...> class ListType,
+  typename... Types
+>
+struct make_unique;
 
 // End of recursion, and match for an empty list of types.
-template <>
-struct unique_typelist<>
+template <
+  template <typename...> class ListType
+>
+struct make_unique<ListType>
 {
-  typedef typelist<> type;
+  typedef ListType<> type;
 };
 
 // Split types into head and tail, and recurse.
 template <
+  template <typename...> class ListType,
   typename Head,
   typename... Tail
 >
-struct unique_typelist<Head, Tail...>
+struct make_unique<ListType, Head, Tail...>
 {
   typedef typename prepend_unique<
     Head,
     typename revert<
-      typename unique_typelist<Tail...>::type
-    >::type
-  >::type type;
-};
-
-
-// Same for classes
-template <typename... Types>
-struct unique_classlist;
-
-// End of recursion, and match for an empty list of types.
-template <>
-struct unique_classlist<>
-{
-  typedef classlist<> type;
-};
-
-// Split types into head and tail, and recurse.
-template <
-  typename Head,
-  typename... Tail
->
-struct unique_classlist<Head, Tail...>
-{
-  typedef typename prepend_unique<
-    Head,
-    typename revert<
-      typename unique_classlist<Tail...>::type
+      typename make_unique<ListType, Tail...>::type
     >::type
   >::type type;
 };

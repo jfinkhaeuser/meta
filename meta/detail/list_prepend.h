@@ -28,7 +28,8 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 
 namespace meta {
 namespace types {
@@ -67,17 +68,32 @@ struct prepend <
 
 
 
-// Same for classes
+// Same for inheritance lists
 template <
   typename NewType,
   typename... Types
 >
 struct prepend <
       NewType,
-      classlist<Types...>
+      inheritancelist<Types...>
     >
 {
-  typedef classlist<NewType, Types...> type;
+  typedef inheritancelist<NewType, Types...> type;
+};
+
+
+
+// Same for composition lists
+template <
+  typename NewType,
+  typename... Types
+>
+struct prepend <
+      NewType,
+      compositionlist<Types...>
+    >
+{
+  typedef compositionlist<NewType, Types...> type;
 };
 
 

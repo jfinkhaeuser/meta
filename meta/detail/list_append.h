@@ -28,7 +28,8 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 
 namespace meta {
 namespace types {
@@ -67,17 +68,32 @@ struct append <
 
 
 
-// Same for classes
+// Same for inheritance lists
 template <
   typename NewType,
   typename... Types
 >
 struct append <
       NewType,
-      classlist<Types...>
+      inheritancelist<Types...>
     >
 {
-  typedef classlist<Types..., NewType> type;
+  typedef inheritancelist<Types..., NewType> type;
+};
+
+
+
+// Same for composition lists
+template <
+  typename NewType,
+  typename... Types
+>
+struct append <
+      NewType,
+      compositionlist<Types...>
+    >
+{
+  typedef compositionlist<Types..., NewType> type;
 };
 
 

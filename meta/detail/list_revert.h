@@ -28,7 +28,8 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 #include <meta/detail/list_append.h>
 
 namespace meta {
@@ -84,17 +85,27 @@ struct revert <
   typedef typename detail::revert_helper<typelist, Types...>::type type;
 };
 
-// Specialization for classlists
+// Specialization for inheritance lists
 template <
   typename... Types
 >
 struct revert <
-      classlist<Types...>
+      inheritancelist<Types...>
     >
 {
-  typedef typename detail::revert_helper<classlist, Types...>::type type;
+  typedef typename detail::revert_helper<inheritancelist, Types...>::type type;
 };
 
+// Specialization for composition lists
+template <
+  typename... Types
+>
+struct revert <
+      compositionlist<Types...>
+    >
+{
+  typedef typename detail::revert_helper<compositionlist, Types...>::type type;
+};
 
 }} // namespace meta::types
 

@@ -28,7 +28,8 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 #include <meta/detail/list_contains.h>
 
 namespace meta {
@@ -47,7 +48,7 @@ namespace types {
  *
  * Note also that the second argument must be a typelist.
  *
- * A variant of append_unique exists that is a classlist rather than a typelist.
+ * Variants exist for inheritance and composition lists.
  *
  * Example usage:
  *    append_unique<int, typelist<float>>::type      // is typelist<float, int>
@@ -97,34 +98,64 @@ struct append_unique <
 
 
 
-// Same for classes; true_type
+// Same for inheritnace lists; true_type
 template <
   typename NewType,
   typename... Types
 >
 struct append_unique <
       NewType,
-      classlist<Types...>,
+      inheritancelist<Types...>,
       true_type
     >
 {
-  typedef classlist<Types...> type;
+  typedef inheritancelist<Types...> type;
 };
 
-// Same for classes; false_type
+// Same for inheritance; false_type
 template <
   typename NewType,
   typename... Types
 >
 struct append_unique <
       NewType,
-      classlist<Types...>,
+      inheritancelist<Types...>,
       false_type
     >
 {
-  typedef classlist<Types..., NewType> type;
+  typedef inheritancelist<Types..., NewType> type;
 };
 
+
+
+
+// Same for inheritnace lists; true_type
+template <
+  typename NewType,
+  typename... Types
+>
+struct append_unique <
+      NewType,
+      compositionlist<Types...>,
+      true_type
+    >
+{
+  typedef compositionlist<Types...> type;
+};
+
+// Same for composition; false_type
+template <
+  typename NewType,
+  typename... Types
+>
+struct append_unique <
+      NewType,
+      compositionlist<Types...>,
+      false_type
+    >
+{
+  typedef compositionlist<Types..., NewType> type;
+};
 
 }} // namespace meta::types
 

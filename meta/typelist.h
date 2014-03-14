@@ -28,13 +28,14 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 #include <meta/detail/list_contains.h>
 #include <meta/detail/list_revert.h>
 #include <meta/detail/list_append.h>
 #include <meta/detail/list_append_unique.h>
 #include <meta/detail/list_prepend.h>
 #include <meta/detail/list_prepend_unique.h>
-#include <meta/detail/unique_list.h>
+#include <meta/detail/list_make_unique.h>
 
 #endif // guard

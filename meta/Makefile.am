@@ -19,11 +19,12 @@ include_HEADERS = \
 	detail/dual_operators.tcc \
 	detail/chain_helper.tcc \
 	detail/typelist.h \
-	detail/classlist.h \
-	detail/unique_list.h \
+	detail/inhlist.h \
+	detail/complist.h \
 	detail/list_revert.h \
 	detail/list_prepend_unique.h \
 	detail/list_contains.h \
 	detail/list_append_unique.h \
 	detail/list_append.h \
-	detail/list_prepend.h
+	detail/list_prepend.h \
+	detail/list_make_unique.h

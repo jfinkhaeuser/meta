@@ -18,8 +18,8 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
-#ifndef META_DETAIL_CLASSLIST_H
-#define META_DETAIL_CLASSLIST_H
+#ifndef META_DETAIL_COMPOSITIONLIST_H
+#define META_DETAIL_COMPOSITIONLIST_H
 
 #ifndef __cplusplus
 #error You are trying to include a C++ only header file
@@ -35,44 +35,49 @@ namespace types {
  **/
 
 /**
- * The classlist struct is just used to represent a list of classes at compile
- * and run-time. Unlike typelist, it has a run-time value, namely the values
- * of all the types in it's template parameter list, since it derives from all
- * those types.
+ * The compositionlist construct composes all types into members, and therefore
+ * has value much like inheritancelist. But because it uses composition instead
+ * of inheritance, it can be used with POD types.
  **/
 template <typename... Classes>
-struct classlist;
+struct compositionlist;
 
-template <typename Head, typename... Tail>
-struct classlist<Head, Tail...>
-  : public Head
-  , public Tail...
+// Tail of the recursion
+template <>
+struct compositionlist<>
 {
-  inline classlist()
-  {
-  }
-
-  // XXX There were some problems with early GCC support that seemed to have
-  //     reversed the initalizer list if it was passed in curly braces. It
-  //     can't be reproduced any longer (GCC 4.6.3).
-  inline classlist(Head && head, Tail && ... tail)
-    : Head(head)
-    , Tail(tail)...
-  {
-  }
-
-  virtual ~classlist() {}
+  virtual ~compositionlist() {}
 };
 
-// Specialization needed for empty classlist constructor
-template <>
-struct classlist<>
+// Recursion
+template <typename Head, typename... Tail>
+struct compositionlist<Head, Tail...>
+  : public compositionlist<Tail...>
 {
-  inline classlist()
+  Head item;
+
+  inline compositionlist(Head const & _item, Tail const & ... tail)
+    : compositionlist<Tail...>(tail...)
+    , item(_item)
   {
   }
 
-  virtual ~classlist() {}
+
+  inline compositionlist(Head && _item, Tail && ... tail)
+    : compositionlist<Tail...>(tail...)
+    , item(_item)
+  {
+  }
+
+
+  inline compositionlist()
+    : compositionlist<Tail...>()
+    , item()
+  {
+  }
+
+
+  virtual ~compositionlist() {}
 };
 
 

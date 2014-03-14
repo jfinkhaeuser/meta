@@ -28,7 +28,8 @@
 #include <meta/meta-config.h>
 
 #include <meta/detail/typelist.h>
-#include <meta/detail/classlist.h>
+#include <meta/detail/inhlist.h>
+#include <meta/detail/complist.h>
 
 namespace meta {
 namespace types {
@@ -102,20 +103,20 @@ struct contains<
 
 
 
-// Same for classes; first element match
+// Same for inheritance lists; first element match
 template <
   typename TestType,
   typename... Types
 >
 struct contains<
       TestType,
-      classlist<TestType, Types...>
+      inheritancelist<TestType, Types...>
     >
 {
   typedef true_type type;
 };
 
-// Same for classes; recursion
+// Same for inheritance lists; recursion
 template <
   typename TestType,
   typename Head,
@@ -123,16 +124,47 @@ template <
 >
 struct contains<
       TestType,
-      classlist<Head, Tail...>
+      inheritancelist<Head, Tail...>
     >
 {
   typedef typename contains<
     TestType,
-    classlist<Tail...>
+    inheritancelist<Tail...>
   >::type type;
 };
 
 
+
+
+// Same for composition lists; first element match
+template <
+  typename TestType,
+  typename... Types
+>
+struct contains<
+      TestType,
+      compositionlist<TestType, Types...>
+    >
+{
+  typedef true_type type;
+};
+
+// Same for composition lists; recursion
+template <
+  typename TestType,
+  typename Head,
+  typename... Tail
+>
+struct contains<
+      TestType,
+      compositionlist<Head, Tail...>
+    >
+{
+  typedef typename contains<
+    TestType,
+    compositionlist<Tail...>
+  >::type type;
+};
 
 
 }} // namespace meta::types
