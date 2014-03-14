@@ -27,8 +27,11 @@
 
 #include <meta/meta-config.h>
 
+#include <meta/typelist.h>
+
 #include <meta/detail/dual_operators.tcc>
 #include <meta/detail/chain_helper.tcc>
+#include <meta/detail/dynamic.tcc>
 
 
 namespace meta {
@@ -38,23 +41,92 @@ namespace condition {
  * This header defines two variadic templates, _and and _or for chaining
  * together functors that represent conditions via && and || operators.
  *
- * FIXME
+ * Both constructs work whether the functors are stateful or stateless; the
+ * only requirement is that all functors used in a construct are either one
+ * or the other.
  *
+ * Assuming two functors that work in both contexts, one of which always
+ * returns true, the other of which always returns false, then:
  *
+ * Static:
  *
+ *   _and<_true, _true>::check(someparam)   // is true
+ *   _and<_false, _true>::check(someparam)  // is false
+ *   _or<_true, _true>::check(someparam)    // is true
+ *   _or<_false, _true>::check(someparam)   // is true
+ *
+ * Dynamic:
+ *
+ *   _and<_true, _true> c1; c1(someparam);  // is true
+ *   _and<_false, _true> c2; c2(someparam); // is false
+ *   _or<_true, _true> c3; c3(someparam);   // is true
+ *   _or<_false, _true> c4; c4(someparam);  // is true
+ *
+ * Conditions can be arbitrarily complex, e.g.
+ *
+ *   _and<_true, _or<_false, _true, _and<_true, _false>>>
+ *
+ * Conditions can take arbitrary parameters. The only requirement is that
+ * all conditions used in a complex construct agree on the order and type
+ * of them. Similarly, conditions can perform arbitrary checks, as long as
+ * they always return a boolean value.
+ *
+ * The difference between static and dynamic contexts for a condition is
+ * which member function gets called:
+ *
+ *    static bool mycondition::check(params...) in a static context
+ *    bool mycondition::operator()(params...)   in a dynamic context
+ *
+ * A condition may implement both and may implement both differently. For
+ * convenience, a helper construct "dynamic" provides an operator() that
+ * maps to a static check function:
+ *
+ * struct _true
+ *   : public meta::condition::dynamic<_true>
+ * {
+ *   static bool check()
+ *   {
+ *     return true;
+ *   }
+ * };
  **/
 template <
   typename... Conditions
 >
 struct _and
+  : public ::meta::types::compositionlist<Conditions...>
+  , public detail::dynamic_chain_helper<detail::dynamic_and, Conditions...>
+
 {
+  inline _and()
+    : ::meta::types::compositionlist<Conditions...>()
+  {
+  }
+
+
+  inline _and(Conditions &&... initializers)
+    : ::meta::types::compositionlist<Conditions...>(initializers...)
+  {
+  }
+
+
   template <typename... Args>
   static inline bool check(Args... args)
   {
-    return detail::chain_helper<
+    return detail::static_chain_helper<
       detail::dual_and,
       Conditions...
     >::check(args...);
+  }
+
+
+  template <typename... Args>
+  inline bool operator()(Args... args)
+  {
+    return detail::dynamic_chain_helper<
+      detail::dynamic_and,
+      Conditions...
+    >::operator()(args...);
   }
 };
 
@@ -64,14 +136,38 @@ template <
   typename... Conditions
 >
 struct _or
+  : public ::meta::types::compositionlist<Conditions...>
+  , public detail::dynamic_chain_helper<detail::dynamic_or, Conditions...>
 {
+  inline _or()
+    : ::meta::types::compositionlist<Conditions...>()
+  {
+  }
+
+
+  inline _or(Conditions &&... initializers)
+    : ::meta::types::compositionlist<Conditions...>(initializers...)
+  {
+  }
+
+
   template <typename... Args>
   static inline bool check(Args... args)
   {
-    return detail::chain_helper<
+    return detail::static_chain_helper<
       detail::dual_or,
       Conditions...
     >::check(args...);
+  }
+
+
+  template <typename... Args>
+  inline bool operator()(Args... args)
+  {
+    return detail::dynamic_chain_helper<
+      detail::dynamic_or,
+      Conditions...
+    >::operator()(args...);
   }
 };
 

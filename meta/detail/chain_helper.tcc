@@ -43,7 +43,7 @@ template <
   template <typename, typename> class Operator,
   typename... Conditions
 >
-struct chain_helper;
+struct static_chain_helper;
 
 
 /**
@@ -54,9 +54,9 @@ template <
   template <typename, typename> class Operator,
   typename Head
 >
-struct chain_helper<Operator, Head>
+struct static_chain_helper<Operator, Head>
 {
-  template <typename ...Args>
+  template <typename... Args>
   static inline bool check(Args... args)
   {
     return Head::check(args...);
@@ -74,15 +74,59 @@ template <
   template <typename, typename> class Operator,
   typename Head,
   typename... ConditionsRest>
-struct chain_helper<Operator, Head, ConditionsRest...>
+struct static_chain_helper<Operator, Head, ConditionsRest...>
 {
-  template <typename ...Args>
+  template <typename... Args>
   static inline bool check(Args... args)
   {
     return Operator<
       Head,
-      chain_helper<Operator, ConditionsRest...>
+      static_chain_helper<Operator, ConditionsRest...>
     >::check(args...);
+  }
+};
+
+
+/**
+ * For stateful/run-time/dynamic chains, we need to peel away the conditions
+ * differently, and are using a different underlying operator.
+ **/
+template <
+  template <typename, typename, typename...> class Operator,
+  typename... Conditions
+>
+struct dynamic_chain_helper;
+
+
+// End of recursion
+template <
+  template <typename, typename, typename...> class Operator
+>
+struct dynamic_chain_helper<Operator>
+{
+  template <typename... Args>
+  inline bool check(::meta::types::compositionlist<> const & list,
+      Args && ... args);
+};
+
+
+// Recursion
+template <
+  template <typename, typename, typename...> class Operator,
+  typename Head,
+  typename... ConditionsRest
+>
+struct dynamic_chain_helper<Operator, Head, ConditionsRest...>
+  : public Operator<Head, dynamic_chain_helper<Operator, ConditionsRest...>, ConditionsRest...>
+{
+  template <typename... Args>
+  inline bool operator()(Args && ... args)
+  {
+    return this->Operator<
+      Head,
+      dynamic_chain_helper<Operator, ConditionsRest...>,
+      ConditionsRest...
+    >::operator()(args...);
   }
 };
 

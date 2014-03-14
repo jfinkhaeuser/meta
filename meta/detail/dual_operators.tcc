@@ -29,19 +29,22 @@ namespace meta {
 namespace condition {
 namespace detail {
 
-
+/**
+ * Dual operators for static chains
+ **/
 template <
   typename Left,
   typename Right
 >
 struct dual_and
 {
-  template <typename ...Args>
+  template <typename... Args>
   static inline bool check(Args... args)
   {
     return Left::check(args...) && Right::check(args...);
   }
 };
+
 
 
 
@@ -51,12 +54,97 @@ template <
 >
 struct dual_or
 {
-  template <typename ...Args>
+  template <typename... Args>
   static inline bool check(Args... args)
   {
     return Left::check(args...) || Right::check(args...);
   }
 };
+
+
+
+
+/**
+ * Recursive operators for dynamic chains
+ **/
+template <
+  typename Left,
+  typename Right,
+  typename... Tail
+>
+struct dynamic_and
+  : public Right
+{
+  template <typename... Args>
+  inline bool operator()(Args... args)
+  {
+    // XXX We know that we can cast to compositionlist because of details in
+    //     condition.h - make sure that stays in sync!
+    return reinterpret_cast<
+      meta::types::compositionlist<Left, Tail...>
+    *>(this)->item.operator()(args...) && Right::operator()(args...);
+    return true;
+  }
+};
+
+
+template <typename Left, typename Right>
+struct dynamic_and<Left, Right>
+{
+  template <typename... Args>
+  inline bool operator()(Args... args)
+  {
+    // Right-hand side is unused.
+    // XXX We know that we can cast to compositionlist because of details in
+    //     condition.h - make sure that stays in sync!
+    return reinterpret_cast<
+      meta::types::compositionlist<Left> *
+    >(this)->item.operator()(args...);
+  }
+
+};
+
+
+
+
+
+template <
+  typename Left,
+  typename Right,
+  typename... Tail
+>
+struct dynamic_or
+  : public Right
+{
+  template <typename... Args>
+  inline bool operator()(Args... args)
+  {
+    // XXX We know that we can cast to compositionlist because of details in
+    //     condition.h - make sure that stays in sync!
+    return reinterpret_cast<
+      meta::types::compositionlist<Left, Tail...>
+    *>(this)->item.operator()(args...) || Right::operator()(args...);
+    return true;
+  }
+};
+
+
+template <typename Left, typename Right>
+struct dynamic_or<Left, Right>
+{
+  template <typename... Args>
+  inline bool operator()(Args... args)
+  {
+    // Right-hand side is unused.
+    // XXX We know that we can cast to compositionlist because of details in
+    //     condition.h - make sure that stays in sync!
+    return reinterpret_cast<
+      meta::types::compositionlist<Left> *
+    >(this)->item.operator()(args...);
+  }
+
+};
+
 
 
 }}} // namespace meta::condition::detail

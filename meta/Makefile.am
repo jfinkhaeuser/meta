@@ -18,6 +18,7 @@ include_HEADERS = \
 	detail/static_for.tcc \
 	detail/dual_operators.tcc \
 	detail/chain_helper.tcc \
+	detail/dynamic.tcc \
 	detail/typelist.h \
 	detail/inhlist.h \
 	detail/complist.h \
