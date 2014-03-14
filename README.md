@@ -20,6 +20,8 @@ than CppUnit for testing).
   - `inheritancelist` inherits from all types and therefore does not work with
     POD types.
   - `compositionlist` composes all types and therefore does work with POD types.
+- `condition.h` types for compile-time composition of condition chains with
+  conditions being either stateless or stateful.
 
 Some of these bits of code started out as mental exercises, so there's no
 guarantee for usefulness implied in providing them. See COPYING for details.
