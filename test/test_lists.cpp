@@ -190,7 +190,7 @@ private:
         meta::types::typelist,
         int, float, double>();
 
-      // We can also test type lists - but not class lists - with duplicate
+      // We can also test type lists - but not inheritance lists - with duplicate
       // entries.
       namespace t = meta::types;
       CPPUNIT_ASSERT(typeid(t::typelist<int, float, int>) == typeid(typename t::append<int, t::typelist<int, float>>::type));
@@ -209,6 +209,12 @@ private:
       testThingListAppend<
         meta::types::compositionlist,
         int, float_type, double_type>();
+
+      // We can also test composition lists - but not inheritance lists - with duplicate
+      // entries.
+      namespace t = meta::types;
+      CPPUNIT_ASSERT(typeid(t::compositionlist<int, float, int>) == typeid(typename t::append<int, t::compositionlist<int, float>>::type));
+      CPPUNIT_ASSERT(typeid(t::compositionlist<int, float, int, double>) == typeid(typename t::append<double, t::compositionlist<int, float, int>>::type));
     }
 
 
@@ -247,7 +253,7 @@ private:
         meta::types::typelist,
         int, float, double>();
 
-      // We can also test type lists - but not class lists - with duplicate
+      // We can also test type lists - but not inheritance lists - with duplicate
       // entries.
       namespace t = meta::types;
       CPPUNIT_ASSERT(typeid(t::typelist<int, int, float>) == typeid(typename t::prepend<int, t::typelist<int, float>>::type));
@@ -266,6 +272,12 @@ private:
       testThingListPrepend<
         meta::types::compositionlist,
         int_type, float_type, double>();
+
+      // We can also test composition lists - but not inheritance lists - with duplicate
+      // entries.
+      namespace t = meta::types;
+      CPPUNIT_ASSERT(typeid(t::compositionlist<int, int, float>) == typeid(typename t::prepend<int, t::compositionlist<int, float>>::type));
+      CPPUNIT_ASSERT(typeid(t::compositionlist<double, int, float, int>) == typeid(typename t::prepend<double, t::compositionlist<int, float, int>>::type));
     }
 
 
