@@ -14,6 +14,8 @@ include_HEADERS = \
 	nullptr.h \
 	condition.h \
 	typelist.h \
+	restricted.h \
+	restrictions.h \
 	detail/dynamic_for.tcc \
 	detail/static_for.tcc \
 	detail/dual_operators.tcc \
@@ -28,4 +30,6 @@ include_HEADERS = \
 	detail/list_append_unique.h \
 	detail/list_append.h \
 	detail/list_prepend.h \
-	detail/list_make_unique.h
+	detail/list_make_unique.h \
+	restrictions/numeric.h \
+	restrictions/container.h

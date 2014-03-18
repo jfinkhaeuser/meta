@@ -47,6 +47,8 @@ AX_CXX_HEADER_STDCXX_0X
 
 AC_CHECK_HEADERS([endian.h])
 AC_CHECK_HEADERS([byteswap.h])
+AC_CHECK_HEADERS([boost/date_time/posix_time/posix_time.hpp])
+
 
 ##############################################################################
 # Checks for typedefs, structures, and compiler characteristics.

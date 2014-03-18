@@ -13,4 +13,5 @@ testsuite_SOURCES = \
 	test_byteorder.cpp \
 	test_pointers.cpp \
 	test_condition.cpp \
+	test_restricted.cpp \
 	testsuite.cpp

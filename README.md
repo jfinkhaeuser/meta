@@ -3,8 +3,7 @@ meta
 
 C++ Metaprogramming Primivites and Pattern implementations.
 
-This library is kept deliberately small, with no external dependencies (other
-than CppUnit for testing).
+This library is kept deliberately small, with no external dependencies (1).
 
 - `for.h` provides compile-time for loops
 - `comparison.h` provides compile-time comparators
@@ -25,3 +24,7 @@ than CppUnit for testing).
 
 Some of these bits of code started out as mental exercises, so there's no
 guarantee for usefulness implied in providing them. See COPYING for details.
+
+1. There are external dependencies, but only for testing:
+  - `CppUnit` for the unit test framework.
+  - `boost::posix_time` for tests involving timing.
