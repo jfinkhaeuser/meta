@@ -27,6 +27,8 @@
 
 #include <meta/meta-config.h>
 
+#include <utility>
+
 #include <meta/typelist.h>
 
 #include <meta/detail/dual_operators.tcc>
@@ -105,22 +107,22 @@ struct _and
 
 
   template <typename... Args>
-  static inline bool check(Args... args)
+  static inline bool check(Args && ... args)
   {
     return detail::static_chain_helper<
       detail::dual_and,
       Conditions...
-    >::check(args...);
+    >::check(std::forward<Args>(args)...);
   }
 
 
   template <typename... Args>
-  inline bool operator()(Args... args)
+  inline bool operator()(Args && ... args)
   {
     return detail::dynamic_chain_helper<
       detail::dynamic_and,
       Conditions...
-    >::operator()(args...);
+    >::operator()(std::forward<Args>(args)...);
   }
 };
 
@@ -140,22 +142,22 @@ struct _or
 
 
   template <typename... Args>
-  static inline bool check(Args... args)
+  static inline bool check(Args && ... args)
   {
     return detail::static_chain_helper<
       detail::dual_or,
       Conditions...
-    >::check(args...);
+    >::check(std::forward<Args>(args)...);
   }
 
 
   template <typename... Args>
-  inline bool operator()(Args... args)
+  inline bool operator()(Args && ... args)
   {
     return detail::dynamic_chain_helper<
       detail::dynamic_or,
       Conditions...
-    >::operator()(args...);
+    >::operator()(std::forward<Args>(args)...);
   }
 };
 

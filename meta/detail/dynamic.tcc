@@ -25,6 +25,8 @@
 #error You are trying to include a C++ only header file
 #endif
 
+#include <utility>
+
 namespace meta {
 namespace condition {
 
@@ -38,7 +40,7 @@ struct dynamic
   template <typename... Args>
   inline bool operator()(Args && ... args) const
   {
-    return parentT::check(args...);
+    return parentT::check(std::forward<Args>(args)...);
   }
 };
 

@@ -25,6 +25,8 @@
 #error You are trying to include a C++ only header file
 #endif
 
+#include <utility>
+
 namespace meta {
 namespace condition {
 namespace detail {
@@ -52,7 +54,7 @@ template <
 struct static_chain_helper<Operator>
 {
   template <typename... Args>
-  static inline bool check(Args...)
+  static inline bool check(Args && ...)
   {
     // No conditions means always true
     return true;
@@ -71,9 +73,9 @@ template <
 struct static_chain_helper<Operator, Head>
 {
   template <typename... Args>
-  static inline bool check(Args... args)
+  static inline bool check(Args && ... args)
   {
-    return Head::check(args...);
+    return Head::check(std::forward<Args>(args)...);
   }
 };
 
@@ -91,12 +93,12 @@ template <
 struct static_chain_helper<Operator, Head, ConditionsRest...>
 {
   template <typename... Args>
-  static inline bool check(Args... args)
+  static inline bool check(Args && ... args)
   {
     return Operator<
       Head,
       static_chain_helper<Operator, ConditionsRest...>
-    >::check(args...);
+    >::check(std::forward<Args>(args)...);
   }
 };
 
@@ -139,7 +141,7 @@ struct dynamic_chain_helper<Operator, Head, ConditionsRest...>
       Head,
       dynamic_chain_helper<Operator, ConditionsRest...>,
       ConditionsRest...
-    >::operator()(args...);
+    >::operator()(std::forward<Args>(args)...);
   }
 };
 
