@@ -14,4 +14,5 @@ testsuite_SOURCES = \
 	test_pointers.cpp \
 	test_condition.cpp \
 	test_restricted.cpp \
+	test_singleton.cpp \
 	testsuite.cpp

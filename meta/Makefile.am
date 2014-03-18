@@ -16,6 +16,7 @@ include_HEADERS = \
 	typelist.h \
 	restricted.h \
 	restrictions.h \
+	singleton.h \
 	detail/dynamic_for.tcc \
 	detail/static_for.tcc \
 	detail/dual_operators.tcc \
