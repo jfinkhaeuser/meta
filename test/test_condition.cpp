@@ -232,10 +232,10 @@ private:
     CPPUNIT_ASSERT_EQUAL(false, complex_cond(1234));
 
     // The "less" example condition is stateless, but can be used in a dynamic
-    // context.
+    // context. Note that you must still initialize the conditions.
     less l;
     CPPUNIT_ASSERT_EQUAL(true, l(42, 666));
-    c::_or<less, less> or2_cond;
+    c::_or<less, less> or2_cond = {{}, {}};
     CPPUNIT_ASSERT_EQUAL(true, or2_cond(42, 666));
     CPPUNIT_ASSERT_EQUAL(false, or2_cond(42, 1));
   }

@@ -46,6 +46,20 @@ template <
 struct static_chain_helper;
 
 
+template <
+  template <typename, typename> class Operator
+>
+struct static_chain_helper<Operator>
+{
+  template <typename... Args>
+  static inline bool check(Args...)
+  {
+    // No conditions means always true
+    return true;
+  }
+};
+
+
 /**
  * Specialization for a single element. It ignores the operator, and just
  * calls check() on the single element.
@@ -105,8 +119,7 @@ template <
 struct dynamic_chain_helper<Operator>
 {
   template <typename... Args>
-  inline bool check(::meta::types::compositionlist<> const & list,
-      Args && ... args);
+  inline bool check(::meta::types::compositionlist<> const &, Args && ...);
 };
 
 

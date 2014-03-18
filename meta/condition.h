@@ -98,12 +98,6 @@ struct _and
   , public detail::dynamic_chain_helper<detail::dynamic_and, Conditions...>
 
 {
-  inline _and()
-    : ::meta::types::compositionlist<Conditions...>()
-  {
-  }
-
-
   inline _and(Conditions &&... initializers)
     : ::meta::types::compositionlist<Conditions...>(initializers...)
   {
@@ -139,12 +133,6 @@ struct _or
   : public ::meta::types::compositionlist<Conditions...>
   , public detail::dynamic_chain_helper<detail::dynamic_or, Conditions...>
 {
-  inline _or()
-    : ::meta::types::compositionlist<Conditions...>()
-  {
-  }
-
-
   inline _or(Conditions &&... initializers)
     : ::meta::types::compositionlist<Conditions...>(initializers...)
   {
