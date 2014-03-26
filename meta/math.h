@@ -29,6 +29,8 @@
 
 #include <stdint.h>
 
+#include <meta/comparison.h>
+
 namespace meta {
 namespace math {
 
@@ -146,39 +148,6 @@ struct divide_helper
 
 
 template <
-  typename A,
-  typename B,
-  bool PICK_A = false
->
-struct larger_type_impl
-{
-  typedef B type;
-};
-
-template <
-  typename A,
-  typename B
->
-struct larger_type_impl<A, B, true>
-{
-  typedef A type;
-};
-
-
-template <
-  typename A,
-  typename B
->
-struct larger_type
-{
-  typedef typename larger_type_impl<
-    A, B, (sizeof(A) > sizeof(B))>::type type;
-};
-
-
-
-
-template <
   typename ratioA,
   typename ratioB,
   template <typename intT, intT, intT, intT, intT> class helperT
@@ -188,7 +157,7 @@ struct ratio_operator
 public:
   // We need to pick the larger of the two ratio's int_t for the resulting
   // int_t.
-  typedef typename detail::larger_type<
+  typedef typename ::meta::size_greater<
     typename ratioA::int_t,
     typename ratioB::int_t
   >::type int_t;
