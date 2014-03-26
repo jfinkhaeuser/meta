@@ -100,7 +100,7 @@ template <
 struct invert
 {
   typedef ratio<
-    typename ratioT::intT,
+    typename ratioT::int_t,
     ratioT::DIVISOR,
     ratioT::DIVIDEND
   > type;
