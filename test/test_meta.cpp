@@ -232,37 +232,55 @@ private:
     {
       // equal
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_equal<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_equal<uint8_t, uint8_t>::type));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_equal<uint8_t, int8_t>::type));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_equal<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT(typeid(uint16_t) == typeid(meta::size_equal<uint8_t, uint16_t>::type));
 
       // not_equal
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_not_equal<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_not_equal<uint8_t, uint8_t>::type));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_not_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) != typeid(meta::size_not_equal<uint8_t, int8_t>::type));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_not_equal<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_not_equal<uint8_t, uint16_t>::type));
 
       // greater
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater<uint8_t, uint8_t>::value));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_greater<uint8_t, uint8_t>::type));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT(typeid(uint16_t) == typeid(meta::size_greater<uint8_t, uint16_t>::type));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater<uint16_t, uint8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint16_t) == typeid(meta::size_greater<uint16_t, uint8_t>::type));
 
       // less
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less<uint8_t, uint8_t>::value));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less<uint8_t, uint8_t>::type));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less<uint8_t, uint16_t>::type));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less<uint16_t, uint8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less<uint16_t, uint8_t>::type));
 
       // greater_equal
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater_equal<uint8_t, uint8_t>::value));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_greater_equal<uint8_t, uint8_t>::type));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater_equal<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT(typeid(uint16_t) == typeid(meta::size_greater_equal<uint8_t, uint16_t>::type));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater_equal<uint16_t, uint8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint16_t) == typeid(meta::size_greater_equal<uint16_t, uint8_t>::type));
 
       // less_equal
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less_equal<uint8_t, uint8_t>::value));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less_equal<uint8_t, uint8_t>::type));
       CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less_equal<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less_equal<uint8_t, uint16_t>::type));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less_equal<uint16_t, uint8_t>::value));
+      CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less_equal<uint16_t, uint8_t>::type));
     }
 
 };

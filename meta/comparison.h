@@ -104,6 +104,26 @@ namespace detail {
 template <
   typename T1,
   typename T2,
+  bool PICK_FIRST
+>
+struct compare_types_helper
+{
+  typedef T2 type;
+};
+
+template <
+  typename T1,
+  typename T2
+>
+struct compare_types_helper<T1, T2, true>
+{
+  typedef T1 type;
+};
+
+
+template <
+  typename T1,
+  typename T2,
   template <typename, size_t, size_t> class comparatorT
 >
 struct compare_types
@@ -111,6 +131,12 @@ struct compare_types
   enum {
     value = comparatorT<size_t, sizeof(T1), sizeof(T2)>::value,
   };
+
+  typedef typename compare_types_helper<
+    T1,
+    T2,
+    bool(value)
+  >::type type;
 };
 
 } // namespace detail
