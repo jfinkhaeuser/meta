@@ -4,14 +4,14 @@ AC_PREREQ([2.68])
 LT_PREREQ([2.4])
 
 AC_INIT([meta], [0.1], [jens@unwesen.co.uk])
+AM_INIT_AUTOMAKE([meta], [1.11.1])
 AC_CONFIG_SRCDIR([meta])
-AC_CONFIG_HEADERS([meta/meta-config.h])
+AC_CONFIG_HEADER([meta/_config.h])
+AX_PREFIX_CONFIG_H([meta/meta-config.h])
 
 LT_INIT
 AC_SUBST([LIBTOOL_DEPS])
 AC_CONFIG_MACRO_DIR([m4])
-
-AM_INIT_AUTOMAKE([1.11.1])
 
 AC_LANG_CPLUSPLUS
 

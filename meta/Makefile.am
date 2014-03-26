@@ -2,7 +2,8 @@ include $(top_srcdir)/common.mk
 
 SUBDIRS = .
 
-include_HEADERS = \
+include_metadir = $(includedir)/meta
+include_meta_HEADERS = \
 	meta-config.h \
 	version.h \
 	for.h \
@@ -17,7 +18,10 @@ include_HEADERS = \
 	restricted.h \
 	restrictions.h \
 	singleton.h \
-	math.h \
+	math.h
+
+include_detaildir = $(include_metadir)/detail
+include_detail_HEADERS = \
 	detail/dynamic_for.tcc \
 	detail/static_for.tcc \
 	detail/dual_operators.tcc \
@@ -32,6 +36,9 @@ include_HEADERS = \
 	detail/list_append_unique.h \
 	detail/list_append.h \
 	detail/list_prepend.h \
-	detail/list_make_unique.h \
+	detail/list_make_unique.h
+
+include_restrictionsdir = $(include_metadir)/restrictions
+include_restrictions_HEADERS = \
 	restrictions/numeric.h \
 	restrictions/container.h

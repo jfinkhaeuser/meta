@@ -4,8 +4,8 @@ libdir=@libdir@
 includedir=@includedir@
 
 Name: meta
-Description: FIXME
-Requires: FIXME
+Description: C++ Metaprogramming Primivites and Pattern implementations
+Requires: 
 Version: @PACKAGE_VERSION@
 Libs: 
-Cflags: -I${includedir}/meta
+Cflags: -I${includedir}

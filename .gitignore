@@ -12,6 +12,7 @@ m4
 /install-sh
 /missing
 /config.*
+meta/_config.*
 Makefile
 .deps
 .libs
