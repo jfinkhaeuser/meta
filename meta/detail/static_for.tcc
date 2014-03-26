@@ -48,7 +48,7 @@ template <
   int CURRENT,    // current value of the for loop counter
   int END,        // end of the for loop
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT
 >
 struct next
@@ -58,7 +58,7 @@ struct next
     functorT<CURRENT> func;
     func();
     next<
-      comparatorT<incrementorT<CURRENT>::value, END>::value,
+      comparatorT<int, incrementorT<CURRENT>::value, END>::value,
       incrementorT<CURRENT>::value,
       END,
       incrementorT,
@@ -73,7 +73,7 @@ struct next
     functorT<CURRENT> func;
     func(param);
     next<
-      comparatorT<incrementorT<CURRENT>::value, END>::value,
+      comparatorT<int, incrementorT<CURRENT>::value, END>::value,
       incrementorT<CURRENT>::value,
       END,
       incrementorT,
@@ -88,7 +88,7 @@ struct next
     functorT<CURRENT> func;
     func(param);
     next<
-      comparatorT<incrementorT<CURRENT>::value, END>::value,
+      comparatorT<int, incrementorT<CURRENT>::value, END>::value,
       incrementorT<CURRENT>::value,
       END,
       incrementorT,
@@ -108,7 +108,7 @@ template <
   int CURRENT,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT
 >
 struct next<0, CURRENT, END, incrementorT, comparatorT, functorT>
@@ -150,7 +150,7 @@ inline void
 static_for()
 {
   detail::static_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -170,7 +170,7 @@ inline void
 static_for()
 {
   detail::static_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -183,14 +183,14 @@ static_for()
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT
 >
 inline void
 static_for()
 {
   detail::static_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -204,14 +204,14 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT
 >
 inline void
 static_for()
 {
   detail::static_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -235,7 +235,7 @@ inline void
 static_for(functor_paramT & param)
 {
   detail::static_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -256,7 +256,7 @@ inline void
 static_for(functor_paramT & param)
 {
   detail::static_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -269,7 +269,7 @@ static_for(functor_paramT & param)
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >
@@ -277,7 +277,7 @@ inline void
 static_for(functor_paramT & param)
 {
   detail::static_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -291,7 +291,7 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >
@@ -299,7 +299,7 @@ inline void
 static_for(functor_paramT & param)
 {
   detail::static_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -322,7 +322,7 @@ inline void
 static_for(functor_paramT const & param)
 {
   detail::static_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -343,7 +343,7 @@ inline void
 static_for(functor_paramT const & param)
 {
   detail::static_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -356,7 +356,7 @@ static_for(functor_paramT const & param)
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >
@@ -364,7 +364,7 @@ inline void
 static_for(functor_paramT const & param)
 {
   detail::static_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -378,7 +378,7 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >
@@ -386,7 +386,7 @@ inline void
 static_for(functor_paramT const & param)
 {
   detail::static_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     incrementorT,

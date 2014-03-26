@@ -21,6 +21,8 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
+#include <stdint.h>
+
 #include <meta/noncopyable.h>
 #include <meta/comparison.h>
 #include <meta/for.h>
@@ -79,6 +81,7 @@ public:
       CPPUNIT_TEST(testComparison);
       CPPUNIT_TEST(testDynamicFor);
       CPPUNIT_TEST(testStaticFor);
+      CPPUNIT_TEST(testTypeComparison);
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -86,32 +89,32 @@ private:
     void testComparison()
     {
       // equal
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::equal<42, 42>::value));
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::equal<42, 43>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::equal<int, 42, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::equal<int, 42, 43>::value));
 
       // not_equal
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::not_equal<42, 42>::value));
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::not_equal<42, 43>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::not_equal<int, 42, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::not_equal<int, 42, 43>::value));
 
       // greater
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::greater<42, 42>::value));
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::greater<42, 43>::value));
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::greater<43, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::greater<int, 42, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::greater<int, 42, 43>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::greater<int, 43, 42>::value));
 
       // less
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::less<42, 42>::value));
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::less<42, 43>::value));
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::less<43, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::less<int, 42, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::less<int, 42, 43>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::less<int, 43, 42>::value));
 
       // greater_equal
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::greater_equal<42, 42>::value));
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::greater_equal<42, 43>::value));
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::greater_equal<43, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::greater_equal<int, 42, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::greater_equal<int, 42, 43>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::greater_equal<int, 43, 42>::value));
 
       // less_equal
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::less_equal<42, 42>::value));
-      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::less_equal<42, 43>::value));
-      CPPUNIT_ASSERT_EQUAL(false, bool(meta::less_equal<43, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::less_equal<int, 42, 42>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::less_equal<int, 42, 43>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::less_equal<int, 43, 42>::value));
     }
 
 
@@ -222,6 +225,46 @@ private:
         CPPUNIT_ASSERT_EQUAL(30 * 3, test_sum);
       }
     }
+
+
+
+    void testTypeComparison()
+    {
+      // equal
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_equal<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_equal<uint8_t, uint16_t>::value));
+
+      // not_equal
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_not_equal<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_not_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_not_equal<uint8_t, uint16_t>::value));
+
+      // greater
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater<uint16_t, uint8_t>::value));
+
+      // less
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less<uint16_t, uint8_t>::value));
+
+      // greater_equal
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater_equal<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_greater_equal<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_greater_equal<uint16_t, uint8_t>::value));
+
+      // less_equal
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less_equal<uint8_t, uint8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less_equal<uint8_t, int8_t>::value));
+      CPPUNIT_ASSERT_EQUAL(true,  bool(meta::size_less_equal<uint8_t, uint16_t>::value));
+      CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less_equal<uint16_t, uint8_t>::value));
+    }
+
 };
 
 

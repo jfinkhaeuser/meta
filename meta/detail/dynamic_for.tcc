@@ -50,7 +50,7 @@ template <
   int CURRENT,    // current value of the for loop counter
   int END,        // end of the for loop
   template <int> class incrementorT,
-  template <int, int> class comparatorT
+  template <typename intT, intT, intT> class comparatorT
 >
 struct next
 {
@@ -59,7 +59,7 @@ struct next
   {
     func(CURRENT);
     next<
-      comparatorT<incrementorT<CURRENT>::value, END>::value,
+      comparatorT<int, incrementorT<CURRENT>::value, END>::value,
       incrementorT<CURRENT>::value,
       END,
       incrementorT,
@@ -72,7 +72,7 @@ struct next
   {
     func(CURRENT);
     next<
-      comparatorT<incrementorT<CURRENT>::value, END>::value,
+      comparatorT<int, incrementorT<CURRENT>::value, END>::value,
       incrementorT<CURRENT>::value,
       END,
       incrementorT,
@@ -90,7 +90,7 @@ template <
   int CURRENT,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT
+  template <typename intT, intT, intT> class comparatorT
 >
 struct next<0, CURRENT, END, incrementorT, comparatorT>
 {
@@ -120,7 +120,7 @@ inline void
 dynamic_for(functorT const & func)
 {
   detail::dynamic_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -139,7 +139,7 @@ inline void
 dynamic_for(functorT const & func)
 {
   detail::dynamic_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -151,14 +151,14 @@ dynamic_for(functorT const & func)
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
 dynamic_for(functorT const & func)
 {
   detail::dynamic_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -171,14 +171,14 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
 dynamic_for(functorT const & func)
 {
   detail::dynamic_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -196,7 +196,7 @@ inline void
 dynamic_for(functorT & func)
 {
   detail::dynamic_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -215,7 +215,7 @@ inline void
 dynamic_for(functorT & func)
 {
   detail::dynamic_for_helpers::next<
-    ::meta::less<START, END>::value,
+    ::meta::less<int, START, END>::value,
     START,
     END,
     incrementorT,
@@ -227,14 +227,14 @@ dynamic_for(functorT & func)
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
 dynamic_for(functorT & func)
 {
   detail::dynamic_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     ::meta::inc_once,
@@ -247,14 +247,14 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
 dynamic_for(functorT & func)
 {
   detail::dynamic_for_helpers::next<
-    comparatorT<START, END>::value,
+    comparatorT<int, START, END>::value,
     START,
     END,
     incrementorT,

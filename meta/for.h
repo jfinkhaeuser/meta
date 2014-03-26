@@ -148,7 +148,7 @@ dynamic_for(functorT const & func);
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
@@ -159,7 +159,7 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
@@ -188,7 +188,7 @@ dynamic_for(functorT & func);
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
@@ -199,7 +199,7 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   typename functorT
 >
 inline void
@@ -274,7 +274,7 @@ static_for();
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT
 >
 inline void
@@ -285,7 +285,7 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT
 >
 inline void
@@ -319,7 +319,7 @@ static_for(functor_paramT & param);
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >
@@ -331,7 +331,7 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >
@@ -366,7 +366,7 @@ static_for(functor_paramT const & param);
 template <
   int START,
   int END,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >
@@ -378,7 +378,7 @@ template <
   int START,
   int END,
   template <int> class incrementorT,
-  template <int, int> class comparatorT,
+  template <typename intT, intT, intT> class comparatorT,
   template <int> class functorT,
   typename functor_paramT
 >

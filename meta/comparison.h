@@ -38,7 +38,7 @@ namespace meta {
  * Depending on the comparison performed by the construct, the resulting value
  * evaluates either to true or to false.
  **/
-template <int I1, int I2>
+template <typename intT, intT I1, intT I2>
 struct equal
 {
   enum {
@@ -48,7 +48,7 @@ struct equal
 
 
 
-template <int I1, int I2>
+template <typename intT, intT I1, intT I2>
 struct not_equal
 {
   enum {
@@ -58,7 +58,7 @@ struct not_equal
 
 
 
-template <int I1, int I2>
+template <typename intT, intT I1, intT I2>
 struct greater
 {
   enum {
@@ -68,7 +68,7 @@ struct greater
 
 
 
-template <int I1, int I2>
+template <typename intT, intT I1, intT I2>
 struct less
 {
   enum {
@@ -78,7 +78,7 @@ struct less
 
 
 
-template <int I1, int I2>
+template <typename intT, intT I1, intT I2>
 struct greater_equal
 {
   enum {
@@ -88,13 +88,51 @@ struct greater_equal
 
 
 
-template <int I1, int I2>
+template <typename intT, intT I1, intT I2>
 struct less_equal
 {
   enum {
     value = (I1 <= I2),
   };
 };
+
+/**
+ * Comparison of types
+ **/
+namespace detail {
+
+template <
+  typename T1,
+  typename T2,
+  template <typename, size_t, size_t> class comparatorT
+>
+struct compare_types
+{
+  enum {
+    value = comparatorT<size_t, sizeof(T1), sizeof(T2)>::value,
+  };
+};
+
+} // namespace detail
+
+template <typename T1, typename T2>
+struct size_equal : public detail::compare_types<T1, T2, equal> {};
+
+template <typename T1, typename T2>
+struct size_not_equal : public detail::compare_types<T1, T2, not_equal> {};
+
+template <typename T1, typename T2>
+struct size_greater : public detail::compare_types<T1, T2, greater> {};
+
+template <typename T1, typename T2>
+struct size_less : public detail::compare_types<T1, T2, less> {};
+
+template <typename T1, typename T2>
+struct size_greater_equal : public detail::compare_types<T1, T2, greater_equal> {};
+
+template <typename T1, typename T2>
+struct size_less_equal : public detail::compare_types<T1, T2, less_equal> {};
+
 
 } // namespace meta
 
