@@ -15,4 +15,5 @@ testsuite_SOURCES = \
 	test_condition.cpp \
 	test_restricted.cpp \
 	test_singleton.cpp \
+	test_math.cpp \
 	testsuite.cpp
