@@ -231,14 +231,14 @@ inline uint64_t swap(uint64_t const & orig)
   return bswap_64(orig);
 #  pragma GCC diagnostic pop
 #else
-  return ((orig & ((uint64_t) 0xff << 56)) >> 56) |
-         ((orig & ((uint64_t) 0xff << 48)) >> 40) |
-         ((orig & ((uint64_t) 0xff << 40)) >> 24) |
-         ((orig & ((uint64_t) 0xff << 32)) >> 8)  |
-         ((orig & ((uint64_t) 0xff << 24)) << 8)  |
-         ((orig & ((uint64_t) 0xff << 16)) << 24) |
-         ((orig & ((uint64_t) 0xff <<  8)) << 40) |
-         ((orig &  (uint64_t) 0xff       ) << 56);
+  return ((orig & (static_cast<uint64_t>(0xff) << 56)) >> 56) |
+         ((orig & (static_cast<uint64_t>(0xff) << 48)) >> 40) |
+         ((orig & (static_cast<uint64_t>(0xff) << 40)) >> 24) |
+         ((orig & (static_cast<uint64_t>(0xff) << 32)) >> 8)  |
+         ((orig & (static_cast<uint64_t>(0xff) << 24)) << 8)  |
+         ((orig & (static_cast<uint64_t>(0xff) << 16)) << 24) |
+         ((orig & (static_cast<uint64_t>(0xff) <<  8)) << 40) |
+         ((orig &  static_cast<uint64_t>(0xff)       ) << 56);
 #endif
 }
 
