@@ -47,8 +47,8 @@ protected:
 
 private:
   // The whole point is for the following to be private.
-  noncopyable(noncopyable const &);
-  noncopyable const & operator=(noncopyable const &);
+  noncopyable(noncopyable const &) = delete;
+  noncopyable & operator=(noncopyable const &) = delete;
 };
 
 } // namespace meta::detail
