@@ -30,8 +30,10 @@
  * Incomplete c++11 implementations on older compilers force us to fake
  * nullptr
  **/
-#if defined(__GNUC__) && __GNUC_MINOR__ < 6
-#  define META_NEED_NULLPTR_COMPATIBILITY
+#ifndef META_NEED_NULLPTR_COMPATIBILITY
+#  ifndef META_HAVE_STDCXX_0X
+#    define META_NEED_NULLPTR_COMPATIBILITY
+#  endif
 #endif
 
 
@@ -52,5 +54,7 @@ private:
   void operator&() const;     // whose address can't be taken
 } nullptr = {};
 #endif // META_NEED_NULLPTR_COMPATIBILITY
+
+#undef META_NEED_NULLPTR_COMPATIBILITY
 
 #endif // guard

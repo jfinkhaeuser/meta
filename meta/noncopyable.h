@@ -29,6 +29,23 @@
 namespace meta {
 namespace detail {
 
+#if !defined(META_HAVE_DELETE) && !defined(META_NO_DELETE)
+#  ifdef META_HAVE_STDCXX_0X
+#    define META_HAVE_DELETE
+#  else
+#    define META_NO_DELETE
+#  endif
+#endif
+
+#if defined(META_HAVE_DELETE) && !defined(META_NO_DELETE)
+#  define META_DELETE = delete
+#else
+#  define META_DELETE
+#endif
+
+#undef META_HAVE_DELETE
+#undef META_NO_DELETE
+
 /**
  * Private copy ctor and assignment ensure classes derived from noncopyable
  * cannot be copied.
@@ -47,9 +64,11 @@ protected:
 
 private:
   // The whole point is for the following to be private.
-  noncopyable(noncopyable const &) = delete;
-  noncopyable & operator=(noncopyable const &) = delete;
+  noncopyable(noncopyable const &) META_DELETE;
+  noncopyable & operator=(noncopyable const &) META_DELETE;
 };
+
+#undef META_DELETE
 
 } // namespace meta::detail
 
