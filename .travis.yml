@@ -1,0 +1,5 @@
+script:
+  - "autoconf -siv"
+  - "mkdir build && cd build"
+  - "../configure --enable-static --disable-shared"
+  - "make check"
