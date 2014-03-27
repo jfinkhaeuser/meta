@@ -3,6 +3,8 @@ meta
 
 C++ Metaprogramming Primivites and Pattern implementations.
 
+[![Build Status](https://travis-ci.org/jfinkhaeuser/meta.svg?branch=master)](https://travis-ci.org/jfinkhaeuser/meta)
+
 This library is kept deliberately small, with no external dependencies (1).
 
 - `for.h` provides compile-time for loops
