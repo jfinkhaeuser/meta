@@ -1,9 +1,12 @@
 before_install:
   - "sudo apt-get update"
 install:
-  - "sudo apt-get install libcppunit-dev"
+  - "sudo apt-get install libcppunit-dev clang"
 script:
   - "autoreconf -siv"
   - "mkdir build && cd build"
   - "../configure --enable-static --disable-shared"
   - "make distcheck"
+env:
+  - CXX=g++
+  - CXX=clang++
