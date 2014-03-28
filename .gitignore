@@ -15,6 +15,14 @@ meta/_config.*
 Makefile
 .deps
 .libs
+_configs.sed
+test-driver
+test/testsuite
+test/*.log
+test/*.core
+test/*.trs
+
+INSTALL
 
 # libtool
 ltmain.sh
