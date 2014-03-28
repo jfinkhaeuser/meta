@@ -19,6 +19,9 @@ AC_LANG_CPLUSPLUS
 # Checks for programs.
 AC_PROG_CXX
 
+AX_CHECK_COMPILE_FLAG([-Wstrict-null-sentinel])
+AM_CONDITIONAL([HAVE_GCC], [test "x$ax_cv_check_cxxflags___Wstrict_null_sentinel" == "xyes"])
+
 ##############################################################################
 # Checks for compiler characteristics
 AC_C_BIGENDIAN

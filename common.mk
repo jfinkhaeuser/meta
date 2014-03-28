@@ -7,11 +7,12 @@ AM_CXXFLAGS += \
 	-Wall \
 	-Wextra \
 	-Wabi \
-	-Wstrict-null-sentinel \
 	-Wold-style-cast
-#AM_CXXFLAGS += \
-#	-Weffc++
+
+if HAVE_GCC
+AM_CXXFLAGS += \
+	-Wstrict-null-sentinel
+endif
 
 # Dependencies XXX keep these in sync with meta.pc.in
-# AM_CXXFLAGS += 
 # AM_LDFLAGS += 
