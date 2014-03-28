@@ -4,8 +4,8 @@ AC_PREREQ([2.68])
 LT_PREREQ([2.4])
 
 AC_INIT([meta], [0.1], [jens@unwesen.co.uk])
-AM_INIT_AUTOMAKE([meta], [1.11.1])
 AC_CONFIG_SRCDIR([meta])
+AM_INIT_AUTOMAKE
 AC_CONFIG_HEADER([meta/_config.h])
 AX_PREFIX_CONFIG_H([meta/meta-config.h])
 
@@ -19,8 +19,8 @@ AC_LANG_CPLUSPLUS
 # Checks for programs.
 AC_PROG_CXX
 
-AX_CHECK_COMPILE_FLAG([-Wstrict-null-sentinel])
-AM_CONDITIONAL([HAVE_GCC], [test "x$ax_cv_check_cxxflags___Wstrict_null_sentinel" == "xyes"])
+AX_CHECK_COMPILE_FLAG([-Wstrict-null-sentinel], [], [], [-Werror])
+AM_CONDITIONAL([CC_FLAG_USE_NULL_SENTINEL], [test "x$ax_cv_check_cxxflags___Wstrict_null_sentinel" == "xyes"])
 
 ##############################################################################
 # Checks for compiler characteristics
