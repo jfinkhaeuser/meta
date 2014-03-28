@@ -71,7 +71,15 @@ public:
     {
     }
 
-    inline ~throw_if_unchecked()
+    inline throw_if_unchecked(throw_if_unchecked && other)
+      : m_throw(other.m_throw)
+      , m_retval(other.m_retval)
+    {
+      other.m_throw = false;
+      other.m_retval = wrappedT();
+    }
+
+    inline ~throw_if_unchecked() noexcept(false)
     {
         if (m_throw) {
             throw std::logic_error("Ignored return value that must not be ignored!");

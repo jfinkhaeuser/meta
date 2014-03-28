@@ -9,7 +9,7 @@ AM_CXXFLAGS += \
 	-Wabi \
 	-Wold-style-cast
 
-if HAVE_GCC
+if CC_FLAG_USE_NULL_SENTINEL
 AM_CXXFLAGS += \
 	-Wstrict-null-sentinel
 endif

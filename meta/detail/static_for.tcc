@@ -53,10 +53,11 @@ template <
 >
 struct next
 {
-  inline static void run()
+  template <typename... Params>
+  inline static void run(Params... params)
   {
     functorT<CURRENT> func;
-    func();
+    func(std::forward<Params>(params)...);
     next<
       comparatorT<int, incrementorT<CURRENT>::value, END>::value,
       incrementorT<CURRENT>::value,
@@ -64,37 +65,7 @@ struct next
       incrementorT,
       comparatorT,
       functorT
-    >::run();
-  }
-
-  template <typename functor_paramT>
-  inline static void run(functor_paramT & param)
-  {
-    functorT<CURRENT> func;
-    func(param);
-    next<
-      comparatorT<int, incrementorT<CURRENT>::value, END>::value,
-      incrementorT<CURRENT>::value,
-      END,
-      incrementorT,
-      comparatorT,
-      functorT
-    >::run(param);
-  }
-
-  template <typename functor_paramT>
-  inline static void run(functor_paramT const & param)
-  {
-    functorT<CURRENT> func;
-    func(param);
-    next<
-      comparatorT<int, incrementorT<CURRENT>::value, END>::value,
-      incrementorT<CURRENT>::value,
-      END,
-      incrementorT,
-      comparatorT,
-      functorT
-    >::run(param);
+    >::run(std::forward<Params>(params)...);
   }
 };
 
@@ -113,17 +84,8 @@ template <
 >
 struct next<0, CURRENT, END, incrementorT, comparatorT, functorT>
 {
-  inline static void run()
-  {
-  }
-
-  template <typename functor_paramT>
-  inline static void run(functor_paramT &)
-  {
-  }
-
-  template <typename functor_paramT>
-  inline static void run(functor_paramT const &)
+  template <typename... Params>
+  inline static void run(Params...)
   {
   }
 };
