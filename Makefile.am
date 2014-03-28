@@ -7,6 +7,8 @@ libtool: $(LIBTOOL_DEPS)
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = meta.pc
 
+DISTCLEANFILES = _configs.sed meta/meta-config.h
+
 SUBDIRS = \
 	meta \
 	test
