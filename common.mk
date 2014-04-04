@@ -2,7 +2,12 @@
 AM_CXXFLAGS = -I$(top_srcdir) -I$(top_builddir) @AM_CXXFLAGS@
 
 # Set default compiler flags
-AM_CXXFLAGS += --std=c++0x -Wc++0x-compat
+if CXX_MODE_CXX0X
+AM_CXXFLAGS += -std=c++0x -Wc++0x-compat
+elif CXX_MODE_CXX98
+AM_CXXFLAGS += -std=c++98
+endif
+
 AM_CXXFLAGS += \
 	-Wall \
 	-Wextra \

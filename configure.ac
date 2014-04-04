@@ -29,6 +29,7 @@ AC_C_BIGENDIAN
 # The AU_ALIAS is needed due to a bug in AX_CXX_HEADER_STDCXX_0X, etc.
 AX_CXX_COMPILE_STDCXX_0X
 AU_ALIAS([AC_COMPILE_STDCXX_0X], [AX_CXX_COMPILE_STDCXX_0X])
+JF_CXX_MODE
 
 ##############################################################################
 # Checks for machine characteristics
