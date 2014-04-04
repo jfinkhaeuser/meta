@@ -7,13 +7,17 @@ testsuite_CPPFLAGS = $(CPPUNIT_CFLAGS)
 testsuite_LDADD = $(CPPUNIT_LIBS)
 
 testsuite_SOURCES = \
-	test_meta.cpp \
-	test_lists.cpp \
 	test_mandatory.cpp \
+	test_meta.cpp \
 	test_byteorder.cpp \
 	test_pointers.cpp \
+	test_math.cpp \
+	testsuite.cpp
+
+if CXX_MODE_CXX0X
+testsuite_SOURCES += \
 	test_condition.cpp \
 	test_restricted.cpp \
 	test_singleton.cpp \
-	test_math.cpp \
-	testsuite.cpp
+	test_lists.cpp
+endif
