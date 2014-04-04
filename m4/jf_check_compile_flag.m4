@@ -31,8 +31,9 @@ AC_DEFUN([JF_CHECK_COMPILE_FLAG], [
 
     jf_check_compile_flag_value=
     AX_CHECK_COMPILE_FLAG([$1], [
+      $2
       jf_check_compile_flag_value="1"
-    ], [], [-Werror])
+    ], [$3], [-Werror $4])
 
     if test "$jf_compile_flag_value" == "$1" ; then
       AC_DEFINE_UNQUOTED(m4_toupper(m4_translit(HAVE_FLAG_$1, [-], [_])),
