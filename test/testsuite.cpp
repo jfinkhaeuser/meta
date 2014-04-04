@@ -23,6 +23,7 @@
 #include <stdexcept>
 
 #include <assert.h>
+#include <stdint.h>
 
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/TestResult.h>
