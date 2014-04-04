@@ -31,6 +31,12 @@
 
 #include <meta/noncopyable.h>
 
+#if META_CXX_MODE == META_CXX_MODE_CXX0X
+#  define META_DTOR_THROW noexcept(false)
+#else
+#  define META_DTOR_THROW throw(std::logic_error)
+#endif
+
 namespace meta {
 
 /**
@@ -71,6 +77,7 @@ public:
     {
     }
 
+#if META_CXX_MODE == META_CXX_MODE_CXX0X
     inline throw_if_unchecked(throw_if_unchecked && other)
       : m_throw(other.m_throw)
       , m_retval(other.m_retval)
@@ -78,8 +85,9 @@ public:
       other.m_throw = false;
       other.m_retval = wrappedT();
     }
+#endif
 
-    inline ~throw_if_unchecked() noexcept(false)
+    inline ~throw_if_unchecked() META_DTOR_THROW
     {
         if (m_throw) {
             throw std::logic_error("Ignored return value that must not be ignored!");
