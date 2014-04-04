@@ -60,7 +60,7 @@ inline std::pair<std::string, std::string> version()
  **/
 inline char const * copyright_string()
 {
-  static auto ret = META_PACKAGE_NAME " " META_PACKAGE_VERSION " " META_PACKAGE_URL "\n"
+  static char const * ret = META_PACKAGE_NAME " " META_PACKAGE_VERSION " " META_PACKAGE_URL "\n"
     "Copyright (c) 2011 Jens Finkhaeuser.\n"
     "Copyright (c) 2012-2014 Unwesen Ltd.\n"
     "Licensed under the the GPLv3 for personal, educational or non-profit use.\n"
@@ -76,7 +76,7 @@ inline char const * copyright_string()
  **/
 inline char const * license_string()
 {
-  static auto ret =
+  static char const * ret =
     "This software is licensed under the terms of the GNU GPLv3 for personal,\n"
     "educational and non-profit use. For all other uses, alternative license\n"
     "options are available. Please contact the copyright holder for additional\n"
