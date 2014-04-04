@@ -25,7 +25,7 @@
 #error You are trying to include a C++ only header file
 #endif
 
-#include <meta/meta-config.h>
+#include <meta/meta.h>
 
 #if META_CXX_MODE != META_CXX_MODE_CXX0X
 #error Can't compile meta/typelist.h because there's no C++11 support.

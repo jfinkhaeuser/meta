@@ -3,8 +3,7 @@
  *
  * Author(s): Jens Finkhaeuser <jens@unwesen.co.uk>
  *
- * Copyright (c) 2009-2012 Jens Finkhaeuser.
- * Copyright (c) 2013 Unwesen Ltd.
+ * Copyright (c) 2014 Unwesen Ltd.
  *
  * This software is licensed under the terms of the GNU GPLv3 for personal,
  * educational and non-profit use. For all other uses, alternative license
@@ -18,30 +17,34 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
-#ifndef META_DETAIL_TYPELIST_H
-#define META_DETAIL_TYPELIST_H
+#ifndef META_META_H
+#define META_META_H
 
 #ifndef __cplusplus
 #error You are trying to include a C++ only header file
 #endif
 
-#include <meta/meta.h>
-
-namespace meta {
-namespace types {
+#include <meta/meta-config.h>
 
 /**
- * This file contains meta-programming code for handling lists of types.
+ * Define recognized modes
  **/
+#undef  META_CXX_MODE_CXX98
+#define META_CXX_MODE_CXX98   0x1998
+
+#undef  META_CXX_MODE_CXX11
+#define META_CXX_MODE_CXX11   0x2011
+
+#undef  META_CXX_MODE_CXX0X
+#define META_CXX_MODE_CXX0X   META_CXX_MODE_CXX11
+
 
 /**
- * The typelist struct is just used to represent a list of types at compile
- * time; it has no run-time value.
+ * Define default mode - you can override, if you want
  **/
-template <typename... Types>
-struct typelist {};
+#ifndef META_CXX_MODE
+#define META_CXX_MODE         META_CXX_MODE_CXX11
+#endif
 
-
-}} // namespace meta::types
 
 #endif // guard

@@ -25,7 +25,7 @@
 #error You are trying to include a C++ only header file
 #endif
 
-#include <meta/meta-config.h>
+#include <meta/meta.h>
 
 #if defined(STDCXX_0X_HEADERS) || defined(STDCXX_98_HEADERS)
 #  include <cstdint>

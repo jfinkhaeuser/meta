@@ -4,6 +4,7 @@ SUBDIRS = .
 
 pkginclude_HEADERS = \
 	meta-config.h \
+	meta.h \
 	version.h \
 	for.h \
 	comparison.h \

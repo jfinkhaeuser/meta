@@ -26,7 +26,7 @@
 #error You are trying to include a C++ only header file
 #endif
 
-#include <meta/meta-config.h>
+#include <meta/meta.h>
 
 namespace meta {
 namespace pointers {
