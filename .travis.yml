@@ -8,5 +8,5 @@ script:
   - "../configure --enable-static --disable-shared"
   - "make distcheck"
 env:
-  - CXX=g++
-  - CXX=clang++
+  - CXX=g++ CC=gcc
+  - CXX=clang++ CC=clang
