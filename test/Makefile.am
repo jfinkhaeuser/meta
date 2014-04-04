@@ -14,7 +14,7 @@ testsuite_SOURCES = \
 	test_math.cpp \
 	testsuite.cpp
 
-if CXX_MODE_CXX0X
+if META_CXX_MODE_CXX0X
 testsuite_SOURCES += \
 	test_condition.cpp \
 	test_restricted.cpp \

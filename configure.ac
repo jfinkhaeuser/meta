@@ -18,9 +18,7 @@ AC_LANG_CPLUSPLUS
 ##############################################################################
 # Checks for programs.
 AC_PROG_CXX
-
-JF_CHECK_COMPILE_FLAG([-Wstrict-null-sentinel])
-
+AC_PROG_GREP
 
 ##############################################################################
 # Checks for compiler characteristics
@@ -29,7 +27,21 @@ AC_C_BIGENDIAN
 # The AU_ALIAS is needed due to a bug in AX_CXX_HEADER_STDCXX_0X, etc.
 AX_CXX_COMPILE_STDCXX_0X
 AU_ALIAS([AC_COMPILE_STDCXX_0X], [AX_CXX_COMPILE_STDCXX_0X])
-JF_CXX_MODE
+
+# Check if we have the null sentinel warning; it's annoying if we use it
+# but don't have it.
+JF_CHECK_COMPILE_FLAG([-Wstrict-null-sentinel])
+
+# Check if the CXX mode was set on the configure command line
+if echo "$CXXFLAGS" | $GREP -q 'DMETA_CXX_MODE=META_CXX_MODE_CXX0X' ; then
+  jf_cxx_mode=0x
+elif echo "$CXXFLAGS" | $GREP -q 'DMETA_CXX_MODE=META_CXX_MODE_CXX98' ; then
+  jf_cxx_mode=98
+else
+  jf_cxx_mode=0x
+fi
+AM_CONDITIONAL([META_CXX_MODE_CXX0X], [test "$jf_cxx_mode" = 0x])
+AM_CONDITIONAL([META_CXX_MODE_CXX98], [test "$jf_cxx_mode" = 98])
 
 ##############################################################################
 # Checks for machine characteristics
