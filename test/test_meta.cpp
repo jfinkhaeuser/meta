@@ -25,6 +25,8 @@
 
 #include <meta/noncopyable.h>
 #include <meta/comparison.h>
+
+#if META_CXX_MODE == META_CXX_MODE_CXX0X
 #include <meta/for.h>
 
 namespace {
@@ -69,8 +71,9 @@ struct static_functor
 };
 
 
-
 } // anonymous namespace
+
+#endif // c++11
 
 class MetaTest
     : public CppUnit::TestFixture
@@ -79,9 +82,12 @@ public:
     CPPUNIT_TEST_SUITE(MetaTest);
 
       CPPUNIT_TEST(testComparison);
+      CPPUNIT_TEST(testTypeComparison);
+
+#if META_CXX_MODE == META_CXX_MODE_CXX0X
       CPPUNIT_TEST(testDynamicFor);
       CPPUNIT_TEST(testStaticFor);
-      CPPUNIT_TEST(testTypeComparison);
+#endif
 
     CPPUNIT_TEST_SUITE_END();
 
@@ -119,6 +125,7 @@ private:
 
 
 
+#if META_CXX_MODE == META_CXX_MODE_CXX0X
     void testDynamicFor()
     {
       // Test both functors with default increments, i.e. inc_once
@@ -225,6 +232,7 @@ private:
         CPPUNIT_ASSERT_EQUAL(30 * 3, test_sum);
       }
     }
+#endif // c++11
 
 
 
