@@ -27,6 +27,10 @@
 
 #include <meta/meta-config.h>
 
+#if META_CXX_MODE != META_CXX_MODE_CXX0X
+#error Can't compile meta/typelist.h because there's no C++11 support.
+#endif
+
 #include <meta/detail/typelist.h>
 #include <meta/detail/inhlist.h>
 #include <meta/detail/complist.h>

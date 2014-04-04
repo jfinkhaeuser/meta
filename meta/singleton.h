@@ -26,6 +26,10 @@
 
 #include <meta/meta-config.h>
 
+#if META_CXX_MODE != META_CXX_MODE_CXX0X
+#error Can't compile meta/singleton.h because there's no C++11 support.
+#endif
+
 #include <utility>
 
 #include <meta/noncopyable.h>
