@@ -30,3 +30,21 @@ guarantee for usefulness implied in providing them. See COPYING for details.
 1. There are external dependencies, but only for testing:
   - `CppUnit` for the unit test framework.
   - `boost::posix_time` for tests involving timing.
+
+
+C++ Compatibility
+-----------------
+
+This library is mostly written with `c++0x` features in mind, but some of it's
+code can also compile in `c++98`. A few headers can be compiled in either mode.
+
+To force `meta`'s configure script into building only `c++98` compatible tests,
+invoke it like this:
+
+```bash
+$ CXXFLAGS=-DMETA_CXX_MODE=META_CXX_MODE_CXX98 ./configure
+```
+
+Similarly, if you're including meta headers into your `c++98` project, make
+sure to set the same define - either before the include statement, or on the
+command line.
