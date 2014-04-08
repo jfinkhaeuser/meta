@@ -17,7 +17,6 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
-
 #ifndef META_NULLPTR_H
 #define META_NULLPTR_H
 
@@ -25,13 +24,14 @@
 #error You are trying to include a C++ only header file
 #endif
 
+#include <meta/meta.h>
 
 /*****************************************************************************
  * Incomplete c++11 implementations on older compilers force us to fake
  * nullptr
  **/
 #ifndef META_NEED_NULLPTR_COMPATIBILITY
-#  ifndef META_HAVE_STDCXX_0X
+#  if META_CXX_MODE == META_CXX_MODE_CXX98
 #    define META_NEED_NULLPTR_COMPATIBILITY
 #  endif
 #endif
