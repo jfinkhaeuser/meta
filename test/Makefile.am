@@ -19,5 +19,6 @@ testsuite_SOURCES += \
 	test_condition.cpp \
 	test_restricted.cpp \
 	test_singleton.cpp \
-	test_lists.cpp
+	test_lists.cpp \
+	test_range.cpp
 endif

@@ -18,7 +18,8 @@ pkginclude_HEADERS = \
 	restricted.h \
 	restrictions.h \
 	singleton.h \
-	math.h
+	math.h \
+	range.h
 
 nobase_pkginclude_HEADERS = \
 	detail/dynamic_for.tcc \
