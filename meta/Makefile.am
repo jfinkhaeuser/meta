@@ -19,6 +19,7 @@ pkginclude_HEADERS = \
 	restrictions.h \
 	singleton.h \
 	math.h \
+	hash.h \
 	range.h
 
 nobase_pkginclude_HEADERS = \

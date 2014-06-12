@@ -12,6 +12,7 @@ testsuite_SOURCES = \
 	test_byteorder.cpp \
 	test_pointers.cpp \
 	test_math.cpp \
+	test_hash.cpp \
 	testsuite.cpp
 
 if META_CXX_MODE_CXX0X
