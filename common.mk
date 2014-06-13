@@ -23,3 +23,7 @@ endif
 
 # Dependencies XXX keep these in sync with meta.pc.in
 # AM_LDFLAGS += 
+
+# Build object files in subdirectories so we can support platform-dependent
+# builds
+AUTOMAKE_OPTIONS = subdir-objects
