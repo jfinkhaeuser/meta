@@ -1,32 +1,9 @@
-# http://www.gnu.org/software/automake
-
-Makefile.in
-
-# http://www.gnu.org/software/autoconf
-/autom4te.cache
-/aclocal.m4
-/compile
-/configure
-/depcomp
-/install-sh
-/missing
-/config.*
-meta/_config.*
+# CMake
+CMakeCache.txt
+CMakeFiles
 Makefile
-.deps
-.libs
-_configs.sed
-test-driver
-test/testsuite
-test/*.log
-test/*.core
-test/*.trs
-
-INSTALL
-
-# libtool
-ltmain.sh
-libtool
+cmake_install.cmake
+install_manifest.txt
 
 # pkg-config
 meta.pc
