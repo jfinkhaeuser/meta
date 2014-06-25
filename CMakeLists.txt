@@ -47,6 +47,11 @@ test_big_endian(META_BIGENDIAN)
 
 ##############################################################################
 # Write configuration
+# get_cmake_property(_variableNames VARIABLES)
+# foreach (_variableName ${_variableNames})
+#     message(STATUS "${_variableName}=${${_variableName}}")
+# endforeach()
+
 configure_file(
     "${PROJECT_SOURCE_DIR}/meta/meta-config.h.in"
     "${PROJECT_BINARY_DIR}/meta/meta-config.h"
@@ -94,6 +99,11 @@ include_directories(
     "${PROJECT_SOURCE_DIR}"
     "${PROJECT_BINARY_DIR}"
 )
+
+# Add library flags
+set (CMAKE_CXX_FLAGS          "${CPPUNIT_CFLAGS} ${CMAKE_CXX_FLAGS}")
+set (CMAKE_CXX_FLAGS_DEBUG    "${CPPUNIT_CFLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
+set (CMAKE_CXX_FLAGS_RELEASE  "${CPPUNIT_CFLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
 
 
 ##############################################################################
