@@ -7,6 +7,11 @@ set (META_PACKAGE_MAJOR 0)
 set (META_PACKAGE_MINOR 1)
 set (META_PACKAGE_URL https://github.com/unwesen/meta)
 
+set (META_PREFIX "${CMAKE_INSTALL_PREFIX}")
+set (META_EXEC_PREFIX "${META_PREFIX}/bin")
+set (META_LIBDIR "${META_PREFIX}/lib")
+set (META_INCLUDEDIR "${META_PREFIX}/include")
+
 ##############################################################################
 # Options
 option(META_USE_CXX11
@@ -50,6 +55,11 @@ test_big_endian(META_BIGENDIAN)
 configure_file(
     "${PROJECT_SOURCE_DIR}/meta/meta-config.h.in"
     "${PROJECT_BINARY_DIR}/meta/meta-config.h"
+)
+
+configure_file(
+    "${PROJECT_SOURCE_DIR}/meta.pc.in"
+    "${PROJECT_BINARY_DIR}/meta.pc"
 )
 
 
@@ -119,6 +129,10 @@ install(FILES
     meta/restrictions/numeric.h
     meta/restrictions/container.h
     DESTINATION include/meta/restrictions)
+
+install(FILES
+    meta.pc
+    DESTINATION inst/lib/pkgconfig)
 
 
 ##############################################################################
