@@ -1,0 +1,56 @@
+/*****************************************************************************
+ * Project metadata
+ **/
+// Name
+#define META_PACKAGE_NAME "@CMAKE_PROJECT_NAME@"
+
+// Version
+#define META_PACKAGE_MAJOR "@META_PACKAGE_MAJOR@"
+#define META_PACKAGE_MINOR "@META_PACKAGE_MINOR@"
+#define META_PACKAGE_VERSION "@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@"
+
+// URL
+#define META_PACKAGE_URL "@META_PACKAGE_URL@"
+
+
+/*****************************************************************************
+ * Options
+ **/
+/**
+ * Defining the build mode. Code in the project should always compare the
+ * value of META_CXX_MODE with the value of either META_CXX_MODE_CXX0X or
+ * META_CXX_MODE_CXX98.
+ *
+ * The META_CXX_MODE_BUILD define just shows which mode the project was
+ * built in originally. It should never be queried.
+ *
+ * If META_CXX_MODE is not set, it defaults to META_CXX_MODE_CXX0X
+ **/
+#define META_CXX_MODE_CXX0X @META_CXX_MODE_CXX0X@
+#define META_CXX_MODE_CXX98 @META_CXX_MODE_CXX98@
+
+#define META_CXX_MODE_BUILD @META_CXX_MODE_BUILD@
+
+#if !defined(META_CXX_MODE)
+#  if defined(META_CXX_MODE_BUILD)
+#    define META_CXX_MODE @META_CXX_MODE_BUILD@
+#  else
+#    define META_CXX_MODE META_CXX_MODE_CXX0X
+#  endif
+#endif
+
+/*****************************************************************************
+ * Headers
+ **/
+#cmakedefine META_HAVE_ENDIAN_H
+#cmakedefine META_HAVE_BYTESWAP_H
+#cmakedefine META_HAVE_STD_HEADERS
+#cmakedefine META_HAVE_TR1_HEADERS
+#cmakedefine META_HAVE_BOOST_POSIX_TIME
+
+
+/*****************************************************************************
+ * Platform checks
+ **/
+#define META_BIGENDIAN @META_BIGENDIAN@
+
