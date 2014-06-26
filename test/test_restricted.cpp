@@ -25,9 +25,9 @@
 #include <meta/restricted.h>
 #include <meta/restrictions.h>
 
-#if defined(HAVE_BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_HPP)
+#if defined(META_HAVE_BOOST_POSIX_TIME)
 #include <boost/date_time/posix_time/posix_time.hpp>
-#endif // HAVE_BOOST_POSIXTIME
+#endif // META_HAVE_BOOST_POSIX_TIME
 
 
 namespace {
@@ -60,9 +60,9 @@ public:
     CPPUNIT_TEST(testRestricted);
     CPPUNIT_TEST(testRestrictedComplex);
 
-#if defined(HAVE_BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_HPP)
+#if defined(META_HAVE_BOOST_POSIX_TIME)
     CPPUNIT_TEST(testRestrictedSpeed);
-#endif // HAVE_BOOST_POSIXTIME
+#endif // META_HAVE_BOOST_POSIX_TIME
 
   CPPUNIT_TEST_SUITE_END();
 private:
@@ -105,7 +105,7 @@ private:
 
 
 
-#if defined(HAVE_BOOST_DATE_TIME_POSIX_TIME_POSIX_TIME_HPP)
+#if defined(META_HAVE_BOOST_POSIX_TIME)
   void testRestrictedSpeed()
   {
     // Test the overhead of a restricted int without restrictions. People
@@ -149,12 +149,12 @@ private:
     // after all.
     const double percentage = 0.2;
 
-    bpt::time_duration::tick_type ms = std::max(plain_time, no_restrict_time)
+    bpt::time_duration::tick_type us = std::max(plain_time, no_restrict_time)
       .total_microseconds();
-    bpt::time_duration::tick_type diff_ms = std::labs(
+    bpt::time_duration::tick_type diff_us = std::labs(
         (plain_time - no_restrict_time).total_microseconds());
-    CPPUNIT_ASSERT_MESSAGE("This will likely fail if compiled with -O0.",
-        diff_ms < (ms * percentage));
+    CPPUNIT_ASSERT_MESSAGE("Using wall time as performance measure sucks, so this can fail.",
+        diff_us < (us * percentage));
 
     // Just for the hell of it, add another test where the int is restricted
     // to be positive.
@@ -177,11 +177,11 @@ private:
     bpt::time_duration restrict_time = restrict_end - restrict_start;
 
     // These checks can't be expensive.
-    ms = std::max(plain_time, restrict_time).total_microseconds();
-    diff_ms = std::labs((plain_time - restrict_time).total_microseconds());
-    CPPUNIT_ASSERT(diff_ms < (ms * percentage));
+    us = std::max(plain_time, restrict_time).total_microseconds();
+    diff_us = std::labs((plain_time - restrict_time).total_microseconds());
+    CPPUNIT_ASSERT(diff_us < (us * percentage));
   }
-#endif // HAVE_BOOST_POSIXTIME
+#endif // META_HAVE_BOOST_POSIX_TIME
 
 
 
