@@ -1,14 +1,13 @@
 before_install:
-  - "sudo apt-get update"
+  - "sudo apt-get update -qq"
 install:
-  - "sudo apt-get install libcppunit-dev clang"
+  - "sudo apt-get install libcppunit-dev clang cmake"
 script:
-  - "autoreconf -siv"
   - "mkdir build && cd build"
-  - "../configure --enable-static --disable-shared"
-  - "make distcheck"
+  - "cmake -DMETA_USE_CXX11=${META_USE_CXX11} .."
+  - "make testsuite && ./testsuite"
 env:
-  - CXX=g++ CC=gcc CXXFLAGS=-DMETA_CXX_MODE=META_CXX_MODE_CXX98
-  - CXX=clang++ CC=clang CXXFLAGS=-DMETA_CXX_MODE=META_CXX_MODE_CXX98
-  - CXX=g++ CC=gcc CXXFLAGS=-DMETA_CXX_MODE=META_CXX_MODE_CXX0X
-  - CXX=clang++ CC=clang CXXFLAGS=-DMETA_CXX_MODE=META_CXX_MODE_CXX0X
+  - CXX=g++ CC=gcc META_USE_CXX11=ON
+  - CXX=clang++ CC=clang META_USE_CXX11=ON
+  - CXX=g++ CC=gcc META_USE_CXX11=OFF
+  - CXX=clang++ CC=clang META_USE_CXX11=OFF
