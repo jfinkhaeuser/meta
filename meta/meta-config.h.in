@@ -1,3 +1,6 @@
+#ifndef META_META_CONFIG_H
+#define META_META_CONFIG_H
+
 /*****************************************************************************
  * Project metadata
  **/
@@ -54,3 +57,4 @@
  **/
 #define META_BIGENDIAN @META_BIGENDIAN@
 
+#endif // guard
