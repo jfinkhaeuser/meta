@@ -39,6 +39,7 @@ Requirements
 ------------
 
 There are external dependencies, but only for testing:
+- [CMake](http://www.cmake.org/) for the build system.
 - [CppUnit](cppunit.sourceforge.net) for the unit test framework.
 - `boost::posix_time` for tests involving timing.
 
@@ -49,32 +50,29 @@ Installation
 After installing the requirements, run:
 
 ```bash
-$ autoreconf -siv
+$ cmake .
 ```
 
-This will install missing build files and create a `configure` script. Usually, you can just run the
-following commands to get going:
+This will configure the build system. Usually, you can just run the following commands to get going:
 
 ```bash
-$ ./configure && make check
+$ make testsuite && ./testsuite
 ```
-
-For more details, check out the `INSTALL` file that was being generated/linked in the first step.
 
 
 C++ Compatibility
 -----------------
 
-This library is mostly written with `c++0x` features in mind, but some of it's
-code can also compile in `c++98`. A few headers can be compiled in either mode.
+This library is mostly written with `C++11` features in mind, but some of it's
+code can also compile in `C++98`. A few headers can be compiled in either mode.
 
-To force `meta`'s configure script into building only `c++98` compatible tests,
-invoke it like this:
+To force `meta` into building only `c++98` compatible tests, invoke `cmake`
+like this:
 
 ```bash
-$ CXXFLAGS=-DMETA_CXX_MODE=META_CXX_MODE_CXX98 ./configure
+$ cmake -DMETA_USE_CXX11=OFF .
 ```
 
-Similarly, if you're including meta headers into your `c++98` project, make
+Similarly, if you're including meta headers into your `C++98` project, make
 sure to set the same define - either before the include statement, or on the
 command line.
