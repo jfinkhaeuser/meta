@@ -61,7 +61,23 @@ configure_file(
 
 ##############################################################################
 # Compiler flags
-if (CMAKE_COMPILER_IS_GNUCXX)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  message("Selecting compiler flags for clang++")
+
+  set (CLANGXX_CXX_FLAGS "-Wall -Wextra -Wabi -Wold-style-cast"
+      CACHE STRING "Default flags for clang++")
+  if (META_USE_CXX11)
+    set (CLANGXX_CXX_FLAGS_STD "-std=c++0x -Wc++0x-compat")
+  else (META_USE_CXX11)
+    set (CLANGXX_CXX_FLAGS_STD "-std=c++98")
+  endif (META_USE_CXX11)
+  set (CMAKE_CXX_FLAGS "${CLANGXX_CXX_FLAGS} ${CLANGXX_CXX_FLAGS_STD}")
+  set (CMAKE_CXX_FLAGS_DEBUG "${CLANGXX_CXX_FLAGS} ${CLANGXX_CXX_FLAGS_STD} -O0 -ggdb")
+  set (CMAKE_CXX_FLAGS_RELEASE "${CLANGXX_CXX_FLAGS} ${CLANGXX_CXX_FLAGS_STD} -O3 -ggdb")
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  message("Selecting compiler flags for GNU c++")
+
   set (GNUCXX_CXX_FLAGS "-Wall -Wextra -Wabi -Wold-style-cast -Wstrict-null-sentinel"
       CACHE STRING "Default flags for G++")
   if (META_USE_CXX11)
@@ -72,7 +88,7 @@ if (CMAKE_COMPILER_IS_GNUCXX)
   set (CMAKE_CXX_FLAGS "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD}")
   set (CMAKE_CXX_FLAGS_DEBUG "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD} -O0 -ggdb")
   set (CMAKE_CXX_FLAGS_RELEASE "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD} -O3 -ggdb")
-endif (CMAKE_COMPILER_IS_GNUCXX)
+endif ()
 
 include_directories(
     "${PROJECT_SOURCE_DIR}"
