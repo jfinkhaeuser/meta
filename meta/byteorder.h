@@ -27,10 +27,10 @@
 
 #include <meta/meta.h>
 
-#if defined(STDCXX_0X_HEADERS) || defined(STDCXX_98_HEADERS)
+#if defined(META_HAVE_STD_HEADERS)
 #  include <cstdint>
 #  include <cinttypes>
-#elif defined(STDCXX_TR1_HEADERS)
+#elif defined(META_HAVE_TR1_HEADERS)
 #  include <tr1/cstdint>
 #  include <tr1/cinttypes>
 #else
@@ -48,21 +48,19 @@
 
 
 /**
- * If we can grab the byte order from the compiler, do that.
+ * If we can grab the byte order from CMake, do that.
  **/
-#if defined(__GNUC__)
-   // We have GCC, which means we get our endianness via autoconf's
-   // WORDS_BIGENDIAN define.
-#  if defined(WORDS_BIGENDIAN)
+#if defined(META_BIGENDIAN)
+#  if 0 == META_BIGENDIAN
 #    define META_BYTE_ORDER_TMP 4321
-#  else // WORDS_BIGENDIAN
+#  else // META_BIGENDIAN
 #    define META_BYTE_ORDER_TMP 1234
-#  endif // WORDS_BIGENDIAN
-#elif defined(HAVE_ENDIAN_H)
+#  endif // META_BIGENDIAN
+#elif defined(META_HAVE_ENDIAN_H)
 #  define META_BYTE_ORDER_TMP __BYTE_ORDER
 #else
    // TODO support other compilers
-#  error "Could not determine byte order either from the compiler or <endian.h>."
+#  error "Could not determine byte order either from the compiler or headers."
 #endif // __GNUC__
 
 
@@ -173,7 +171,7 @@ inline endian opposite(int arg)
  **/
 inline uint16_t swap(uint16_t const & orig)
 {
-#if defined(HAVE_BYTESWAP_H)
+#if defined(META_HAVE_BYTESWAP_H)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_16(orig);
@@ -186,7 +184,7 @@ inline uint16_t swap(uint16_t const & orig)
 
 inline int16_t swap(int16_t const & orig)
 {
-#if defined(HAVE_BYTESWAP_H)
+#if defined(META_HAVE_BYTESWAP_H)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_16(orig);
@@ -198,7 +196,7 @@ inline int16_t swap(int16_t const & orig)
 
 inline uint32_t swap(uint32_t const & orig)
 {
-#if defined(HAVE_BYTESWAP_H)
+#if defined(META_HAVE_BYTESWAP_H)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_32(orig);
@@ -213,7 +211,7 @@ inline uint32_t swap(uint32_t const & orig)
 
 inline int32_t swap(int32_t const & orig)
 {
-#if defined(HAVE_BYTESWAP_H)
+#if defined(META_HAVE_BYTESWAP_H)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_32(orig);
@@ -225,7 +223,7 @@ inline int32_t swap(int32_t const & orig)
 
 inline uint64_t swap(uint64_t const & orig)
 {
-#if defined(HAVE_BYTESWAP_H)
+#if defined(META_HAVE_BYTESWAP_H)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_64(orig);
@@ -244,7 +242,7 @@ inline uint64_t swap(uint64_t const & orig)
 
 inline int64_t swap(int64_t const & orig)
 {
-#if defined(HAVE_BYTESWAP_H)
+#if defined(META_HAVE_BYTESWAP_H)
 #  pragma GCC diagnostic push
 #  pragma GCC diagnostic ignored "-Wold-style-cast"
   return bswap_64(orig);
