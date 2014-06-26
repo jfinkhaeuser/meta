@@ -7,11 +7,6 @@ set (META_PACKAGE_MAJOR 0)
 set (META_PACKAGE_MINOR 1)
 set (META_PACKAGE_URL https://github.com/unwesen/meta)
 
-set (META_PREFIX "${CMAKE_INSTALL_PREFIX}")
-set (META_EXEC_PREFIX "${META_PREFIX}/bin")
-set (META_LIBDIR "${META_PREFIX}/lib")
-set (META_INCLUDEDIR "${META_PREFIX}/include")
-
 ##############################################################################
 # Options
 option(META_USE_CXX11
@@ -60,6 +55,7 @@ configure_file(
 configure_file(
     "${PROJECT_SOURCE_DIR}/meta.pc.in"
     "${PROJECT_BINARY_DIR}/meta.pc"
+    @ONLY
 )
 
 
@@ -87,7 +83,7 @@ include_directories(
 ##############################################################################
 # Build artefacts
 install(FILES
-    meta/meta-config.h
+    ${CMAKE_CURRENT_BINARY_DIR}/meta/meta-config.h
     meta/meta.h
     meta/version.h
     meta/for.h
@@ -131,8 +127,8 @@ install(FILES
     DESTINATION include/meta/restrictions)
 
 install(FILES
-    meta.pc
-    DESTINATION inst/lib/pkgconfig)
+    ${CMAKE_CURRENT_BINARY_DIR}/meta.pc
+    DESTINATION lib/pkgconfig)
 
 
 ##############################################################################

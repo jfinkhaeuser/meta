@@ -1,11 +1,11 @@
-prefix=@META_PREFIX@
-exec_prefix=@META_EXEC_PREFIX@
-libdir=@META_LIBDIR@
-includedir=@META_INCLUDEDIR@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}
+libdir=${prefix}/lib
+includedir=${prefix}/include
 
 Name: meta
 Description: C++ Metaprogramming Primivites and Pattern implementations
 Requires: 
-Version: @META_PACKAGE_VERSION@
+Version: @META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
 Libs: 
-Cflags: -I@META_INCLUDEDIR@
+Cflags: -I${includedir}
