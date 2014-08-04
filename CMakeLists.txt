@@ -115,6 +115,7 @@ install(FILES
     meta/for.h
     meta/comparison.h
     meta/noncopyable.h
+    meta/stackonly.h
     meta/mandatory.h
     meta/byteorder.h
     meta/pointers.h

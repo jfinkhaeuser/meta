@@ -24,6 +24,7 @@
 #include <stdint.h>
 
 #include <meta/noncopyable.h>
+#include <meta/stackonly.h>
 #include <meta/comparison.h>
 
 #if META_CXX_MODE == META_CXX_MODE_CXX0X
@@ -71,6 +72,17 @@ struct static_functor
 };
 
 
+
+struct nocopy : public meta::noncopyable
+{
+};
+
+
+struct stack : public meta::stackonly
+{
+};
+
+
 } // anonymous namespace
 
 #endif // c++11
@@ -83,6 +95,8 @@ public:
 
       CPPUNIT_TEST(testComparison);
       CPPUNIT_TEST(testTypeComparison);
+      CPPUNIT_TEST(testNonCopyable);
+      CPPUNIT_TEST(testStackOnly);
 
 #if META_CXX_MODE == META_CXX_MODE_CXX0X
       CPPUNIT_TEST(testDynamicFor);
@@ -289,6 +303,28 @@ private:
       CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less_equal<uint8_t, uint16_t>::type));
       CPPUNIT_ASSERT_EQUAL(false, bool(meta::size_less_equal<uint16_t, uint8_t>::value));
       CPPUNIT_ASSERT(typeid(uint8_t) == typeid(meta::size_less_equal<uint16_t, uint8_t>::type));
+    }
+
+
+
+    void testNonCopyable()
+    {
+      // Much of these tests would not compile; that's practically the point.
+      nocopy cpy;
+
+      // nocopy cpy2 = cpy;
+
+      nocopy cpy3;
+      // cpy3 = cpy;
+    }
+
+
+
+    void testStackOnly()
+    {
+      // Much of these tests would not compile; that's practically the point.
+      stack st;
+      // stack * st2 = new stack();
     }
 
 };
