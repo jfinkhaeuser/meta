@@ -6,6 +6,9 @@ script:
   - "mkdir build && cd build"
   - "cmake -DMETA_USE_CXX11=${META_USE_CXX11} .."
   - "make testsuite && ./testsuite"
+os:
+  - linux
+  - osx
 env:
   - CXX=g++ CC=gcc META_USE_CXX11=ON
   - CXX=clang++ CC=clang META_USE_CXX11=ON
