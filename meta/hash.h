@@ -28,6 +28,7 @@
 #include <meta/meta.h>
 
 #include <functional>
+#include <cstddef>
 
 namespace meta {
 namespace hash {
