@@ -6,7 +6,7 @@ case "${TRAVIS_OS_NAME}" in
     ;;
   osx)
     brew install cppunit
-    brew install llvm --with-asan --with-clang --HEAD
+#    brew install llvm --with-asan --with-clang --HEAD
     brew install cmake
     ;;
   *)
