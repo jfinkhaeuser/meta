@@ -4,7 +4,7 @@ install:
   - "./travis/install.sh"
 script:
   - "mkdir build && cd build"
-  - "cmake -DMETA_USE_CXX11=${META_USE_CXX11} .."
+  - "cmake -DCMAKE_BUILD_TYPE=Release -DMETA_USE_CXX11=${META_USE_CXX11} .."
   - "make testsuite && ./testsuite"
 os:
   - linux
