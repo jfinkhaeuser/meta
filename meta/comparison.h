@@ -124,7 +124,7 @@ struct compare_types_helper<T1, T2, true>
 template <
   typename T1,
   typename T2,
-  template <typename, size_t, size_t> class comparatorT
+  template <typename intT, intT, intT> class comparatorT
 >
 struct compare_types
 {
