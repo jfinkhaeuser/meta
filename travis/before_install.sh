@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -x
+
 case "${TRAVIS_OS_NAME}" in
   linux)
     sudo apt-get update -qq

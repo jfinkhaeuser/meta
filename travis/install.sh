@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -x
+
 function brew_install {
   pkg="$1"
   if brew list | grep -q "$pkg" ; then
