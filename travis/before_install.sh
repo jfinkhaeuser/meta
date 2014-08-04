@@ -5,7 +5,7 @@ case "${TRAVIS_OS_NAME}" in
     sudo apt-get update -qq
     ;;
   osx)
-    sudo brew update
+    brew update
     ;;
   *)
     echo "Unsupported os '${TRAVIS_OS_NAME}', aborting."

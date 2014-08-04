@@ -5,7 +5,7 @@ case "${TRAVIS_OS_NAME}" in
     sudo apt-get install libcppunit-dev clang cmake
     ;;
   osx)
-    sudo brew install cppunit clang cmake
+    brew install cppunit clang cmake
     ;;
   *)
     echo "Unsupported os '${TRAVIS_OS_NAME}', aborting."
