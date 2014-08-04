@@ -29,9 +29,11 @@
 
 #if META_CXX_MODE == META_CXX_MODE_CXX0X
 #include <meta/for.h>
+#endif // META_CXX_MODE == META_CXX_MODE_CXX0X
 
 namespace {
 
+#if META_CXX_MODE == META_CXX_MODE_CXX0X
 static int test_sum = 0;
 
 void
@@ -71,6 +73,7 @@ struct static_functor
   }
 };
 
+#endif // META_CXX_MODE == META_CXX_MODE_CXX0X
 
 
 struct nocopy : public meta::noncopyable
@@ -85,7 +88,7 @@ struct stack : public meta::stackonly
 
 } // anonymous namespace
 
-#endif // c++11
+
 
 class MetaTest
     : public CppUnit::TestFixture
