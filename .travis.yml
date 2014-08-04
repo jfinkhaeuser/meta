@@ -1,7 +1,7 @@
 before_install:
-  - "sudo apt-get update -qq"
+  - "./travis/before_install.sh"
 install:
-  - "sudo apt-get install libcppunit-dev clang cmake"
+  - "./travis/install.sh"
 script:
   - "mkdir build && cd build"
   - "cmake -DMETA_USE_CXX11=${META_USE_CXX11} .."

@@ -1,0 +1,14 @@
+#!/bin/bash
+
+case "${TRAVIS_OS_NAME}" in
+  linux)
+    sudo apt-get update -qq
+    ;;
+  osx)
+    sudo brew update
+    ;;
+  *)
+    echo "Unsupported os '${TRAVIS_OS_NAME}', aborting."
+    exit 1
+    ;;
+esac
