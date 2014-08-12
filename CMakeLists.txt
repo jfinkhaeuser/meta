@@ -96,6 +96,8 @@ configure_file(
 
 ##############################################################################
 # Compiler flags #2
+
+# Add include paths
 include_directories(
     "${PROJECT_SOURCE_DIR}"
     "${PROJECT_BINARY_DIR}"
