@@ -47,19 +47,19 @@ public:
     CPPUNIT_TEST_SUITE_END();
 private:
 
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
     void testMandatory()
     {
         int ret = 0;
         CPPUNIT_ASSERT_THROW(mandatory_function(), std::logic_error);
         CPPUNIT_ASSERT_NO_THROW(static_cast<meta::ignore_return_value>(mandatory_function()));
-#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
         CPPUNIT_ASSERT_NO_THROW(meta::ignore_return_value x = mandatory_function());
-#pragma GCC diagnostic pop
         CPPUNIT_ASSERT_NO_THROW(ret = mandatory_function());
 
         ret = mandatory_function();
         CPPUNIT_ASSERT_EQUAL(ret, 42);
     }
+#pragma GCC diagnostic pop
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION(MandatoryTest);
