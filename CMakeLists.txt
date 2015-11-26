@@ -59,8 +59,6 @@ check_include_file_cxx(endian.h META_HAVE_ENDIAN_H)
 check_include_file_cxx(byteswap.h META_HAVE_BYTESWAP_H)
 check_include_file_cxx(cstdint META_HAVE_STD_HEADERS)
 check_include_file_cxx(tr1/cstdint META_HAVE_TR1_HEADERS)
-check_include_file_cxx(boost/date_time/posix_time/posix_time.hpp
-    META_HAVE_BOOST_POSIX_TIME)
 
 
 ##############################################################################

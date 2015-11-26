@@ -41,7 +41,6 @@ Requirements
 There are external dependencies, but only for testing:
 - [CMake](http://www.cmake.org/) for the build system.
 - [CppUnit](cppunit.sourceforge.net) for the unit test framework.
-- `boost::posix_time` for tests involving timing.
 
 
 Installation
