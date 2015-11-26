@@ -26,8 +26,7 @@
 #endif
 
 #include <meta/meta.h>
-
-#include <stdint.h>
+#include <meta/inttypes.h>
 
 #include <meta/comparison.h>
 

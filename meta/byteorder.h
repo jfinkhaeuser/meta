@@ -26,17 +26,7 @@
 #endif
 
 #include <meta/meta.h>
-
-#if defined(META_HAVE_STD_HEADERS)
-#  include <cstdint>
-#  include <cinttypes>
-#elif defined(META_HAVE_TR1_HEADERS)
-#  include <tr1/cstdint>
-#  include <tr1/cinttypes>
-#else
-#  include <stdint.h>
-#  include <inttypes.h>
-#endif
+#include <meta/inttypes.h>
 
 #if defined(META_HAVE_ENDIAN_H)
 #  include <endian.h>
