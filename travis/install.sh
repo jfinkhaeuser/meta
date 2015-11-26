@@ -22,11 +22,12 @@ function brew_install {
 
 case "${TRAVIS_OS_NAME}" in
   linux)
-    sudo apt-get install libcppunit-dev clang cmake
+    sudo apt-get install libcppunit-dev clang cmake lcov
     ;;
   osx)
     brew_install cppunit
     brew_install cmake
+    brew_install lcov
 #    brew install llvm --with-asan --with-clang --HEAD
     ;;
   *)
