@@ -63,6 +63,7 @@ inline char const * copyright_string()
   static char const * ret = META_PACKAGE_NAME " " META_PACKAGE_VERSION " " META_PACKAGE_URL "\n"
     "Copyright (c) 2011 Jens Finkhaeuser.\n"
     "Copyright (c) 2012-2014 Unwesen Ltd.\n"
+    "Copyright (c) 2015 Jens Finkhaeuser.\n"
     "Licensed under the the GPLv3 for personal, educational or non-profit use.\n"
     "Other licensing options available; please contact the copyright holder for\n"
     "information."
