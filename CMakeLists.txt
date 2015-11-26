@@ -40,7 +40,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   message("Selecting compiler flags for GNU c++")
 
-  set (GNUCXX_CXX_FLAGS "-Wall -Wextra -Wabi -Wold-style-cast -Wstrict-null-sentinel"
+  set (GNUCXX_CXX_FLAGS "-Wall -Wextra -Wold-style-cast -Wstrict-null-sentinel"
       CACHE STRING "Default flags for G++")
   if (META_USE_CXX11)
     set (GNUCXX_CXX_FLAGS_STD "-std=c++0x -Wc++0x-compat")
@@ -115,6 +115,7 @@ install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/meta/meta-config.h
     meta/meta.h
     meta/version.h
+    meta/inttypes.h
     meta/for.h
     meta/comparison.h
     meta/noncopyable.h
@@ -166,6 +167,7 @@ install(FILES
 if (CPPUNIT_FOUND)
   # Tests compatible with all C++ versions
   set(TEST_SOURCES
+      test/timing.cpp
       test/test_mandatory.cpp
       test/test_meta.cpp
       test/test_byteorder.cpp

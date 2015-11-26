@@ -25,10 +25,7 @@
 #include <meta/restricted.h>
 #include <meta/restrictions.h>
 
-#if defined(META_HAVE_BOOST_POSIX_TIME)
-#include <boost/date_time/posix_time/posix_time.hpp>
-#endif // META_HAVE_BOOST_POSIX_TIME
-
+#include <test/timing.h>
 
 namespace {
 
@@ -59,10 +56,7 @@ public:
 
     CPPUNIT_TEST(testRestricted);
     CPPUNIT_TEST(testRestrictedComplex);
-
-#if defined(META_HAVE_BOOST_POSIX_TIME)
     CPPUNIT_TEST(testRestrictedSpeed);
-#endif // META_HAVE_BOOST_POSIX_TIME
 
   CPPUNIT_TEST_SUITE_END();
 private:
@@ -105,13 +99,11 @@ private:
 
 
 
-#if defined(META_HAVE_BOOST_POSIX_TIME)
   void testRestrictedSpeed()
   {
     // Test the overhead of a restricted int without restrictions. People
     // sometimes ask whether or not the overhead is worth adding such checks.
-
-    namespace bpt = boost::posix_time;
+    namespace tt = test::timing;
 
     typedef meta::restricted<int> no_restrict_int;
 
@@ -122,38 +114,32 @@ private:
     std::vector<int> vec1;
     vec1.reserve(amount);
 
-    bpt::ptime plain_start = bpt::microsec_clock::universal_time();
+    tt::timer plain;
     for (int i = 1 ; i <= amount ; ++i) {
       vec1.push_back(i);
     }
-    bpt::ptime plain_end = bpt::microsec_clock::universal_time();
+    int64_t plain_time = plain.duration();
 
     // Then, do the same with a restricted int (with no restrictions, i.e.
     // no_restrict_int)
     std::vector<no_restrict_int> vec2;
     vec2.reserve(amount);
 
-    bpt::ptime no_restrict_start = bpt::microsec_clock::universal_time();
+    tt::timer no_restrict;
     for (int i = 1 ; i <= amount ; ++i) {
       vec2.push_back(i);
     }
-    bpt::ptime no_restrict_end = bpt::microsec_clock::universal_time();
-
-
-    bpt::time_duration plain_time = plain_end - plain_start;
-    bpt::time_duration no_restrict_time = no_restrict_end - no_restrict_start;
+    int64_t no_restrict_time = no_restrict.duration();
 
     // Because wall time sucks as a performance/overhead measurement, we'll
-    // just make the simplifying assumption that a 20% difference between
+    // just make the simplifying assumption that a 200% difference between
     // both durations is a failure - there should be close to no overhead
     // after all.
-    const double percentage = 0.2;
+    const double percentage = 2;
 
-    bpt::time_duration::tick_type us = std::max(plain_time, no_restrict_time)
-      .total_microseconds();
-    bpt::time_duration::tick_type diff_us = std::labs(
-        (plain_time - no_restrict_time).total_microseconds());
-    CPPUNIT_ASSERT_MESSAGE("Using wall time as performance measure sucks, so this can fail.",
+    int64_t us = std::max(plain_time, no_restrict_time);
+    int64_t diff_us = std::labs(plain_time - no_restrict_time);
+    CPPUNIT_ASSERT_MESSAGE("Using wall time as performance measure sucks, so this can fail. Make sure you're running an optimized build.",
         diff_us < (us * percentage));
 
     // Just for the hell of it, add another test where the int is restricted
@@ -168,20 +154,17 @@ private:
     std::vector<restrict_int> vec3;
     vec3.reserve(amount);
 
-    bpt::ptime restrict_start = bpt::microsec_clock::universal_time();
+    tt::timer restricted;
     for (int i = 1 ; i <= amount ; ++i) {
       vec3.push_back(i);
     }
-    bpt::ptime restrict_end = bpt::microsec_clock::universal_time();
-
-    bpt::time_duration restrict_time = restrict_end - restrict_start;
+    int64_t restrict_time = restricted.duration();
 
     // These checks can't be expensive.
-    us = std::max(plain_time, restrict_time).total_microseconds();
-    diff_us = std::labs((plain_time - restrict_time).total_microseconds());
+    us = std::max(plain_time, restrict_time);
+    diff_us = std::labs(plain_time - restrict_time);
     CPPUNIT_ASSERT(diff_us < (us * percentage));
   }
-#endif // META_HAVE_BOOST_POSIX_TIME
 
 
 
