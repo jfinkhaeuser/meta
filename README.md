@@ -58,6 +58,24 @@ This will configure the build system. Usually, you can just run the following co
 $ make testsuite && ./testsuite
 ```
 
+Build Types
+-----------
+
+CMake already defines the `Release` and `Debug` build types. In addition to
+these, meta offers a `Coverage` build type which is largely indentical to
+`Debug`, but with GCC offers code coverage generation.
+
+To specify a build type, use e.g.
+
+```bash
+$ cmake . -DCMAKE_BUILD_TYPE=Coverage
+```
+
+For compiling code coverage information, just run the `coverage` target:
+
+```bash
+$ make coverage
+```
 
 C++ Compatibility
 -----------------

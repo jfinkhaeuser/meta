@@ -3,6 +3,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(meta)
 
+set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
+
 set (META_PACKAGE_MAJOR 0)
 set (META_PACKAGE_MINOR 1)
 set (META_PACKAGE_URL https://github.com/unwesen/meta)
@@ -191,4 +193,12 @@ if (CPPUNIT_FOUND)
   target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_LDFLAGS})
 
   add_test(NAME "Testsuite" COMMAND testsuite)
+  set(PROJECT_TEST_NAME testsuite)
+
+  # Code coverage
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    include(CodeCoverage)
+    setup_target_for_coverage(coverage ${PROJECT_TEST_NAME} coverage)
+    target_link_libraries(${PROJECT_TEST_NAME} gcov)
+  endif()
 endif (CPPUNIT_FOUND)
