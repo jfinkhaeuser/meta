@@ -7,7 +7,7 @@ set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
 set (META_PACKAGE_MAJOR 0)
 set (META_PACKAGE_MINOR 1)
-set (META_PACKAGE_URL https://github.com/unwesen/meta)
+set (META_PACKAGE_URL https://github.com/jfinkhaeuser/meta)
 
 ##############################################################################
 # Options
@@ -191,6 +191,8 @@ if (CPPUNIT_FOUND)
       ${TEST_SOURCES}
       test/testsuite.cpp)
   target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_LDFLAGS})
+
+  set_target_properties(testsuite PROPERTIES LINK_FLAGS "-static ${TESTSUITE_LINK_FLAGS}")
 
   add_test(NAME "Testsuite" COMMAND testsuite)
   set(PROJECT_TEST_NAME testsuite)

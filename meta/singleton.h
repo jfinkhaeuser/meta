@@ -1,9 +1,10 @@
 /**
  * This file is part of meta.
  *
- * Author(s): Jens Finkhaeuser <jens@unwesen.co.uk>
+ * Author(s): Jens Finkhaeuser <jens@unwesen.de>
  *
- * Copyright (c) 2014 Unwesen Ltd.
+ * Copyright (c) 2014-2015 Unwesen Ltd.
+ * Copyright (c) 2016 Jens Finkhaeuser
  *
  * This software is licensed under the terms of the GNU GPLv3 for personal,
  * educational and non-profit use. For all other uses, alternative license
@@ -17,6 +18,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
+
 #ifndef META_SINGLETON_H
 #define META_SINGLETON_H
 

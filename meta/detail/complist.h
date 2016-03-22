@@ -1,10 +1,11 @@
 /**
  * This file is part of meta.
  *
- * Author(s): Jens Finkhaeuser <jens@unwesen.co.uk>
+ * Author(s): Jens Finkhaeuser <jens@unwesen.de>
  *
  * Copyright (c) 2009-2012 Jens Finkhaeuser.
- * Copyright (c) 2013 Unwesen Ltd.
+ * Copyright (c) 2013-2015 Unwesen Ltd.
+ * Copyright (c) 2016 Jens Finkhaeuser
  *
  * This software is licensed under the terms of the GNU GPLv3 for personal,
  * educational and non-profit use. For all other uses, alternative license
@@ -18,6 +19,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
  * PARTICULAR PURPOSE.
  **/
+
 #ifndef META_DETAIL_COMPOSITIONLIST_H
 #define META_DETAIL_COMPOSITIONLIST_H
 
