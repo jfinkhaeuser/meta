@@ -10,6 +10,8 @@ env:
   - ARCH=native META_USE_CXX11=OFF
   - ARCH=arm META_USE_CXX11=ON
   - ARCH=arm META_USE_CXX11=OFF
+  - ARCH=mips META_USE_CXX11=ON
+  - ARCH=mips META_USE_CXX11=OFF
 matrix:
   exclude:
     # We don't want to go through the whole raspbian thing on OS X
@@ -17,11 +19,19 @@ matrix:
       env: ARCH=arm META_USE_CXX11=ON
     - os: osx
       env: ARCH=arm META_USE_CXX11=OFF
+    - os: osx
+      env: ARCH=mips META_USE_CXX11=ON
+    - os: osx
+      env: ARCH=mips META_USE_CXX11=OFF
     # Clang on Raspbian seems to be an older version which doesn't support
     # all we're doing.
     - compiler: clang
       env: ARCH=arm META_USE_CXX11=ON
     - compiler: clang
       env: ARCH=arm META_USE_CXX11=OFF
+    - compiler: clang
+      env: ARCH=mips META_USE_CXX11=ON
+    - compiler: clang
+      env: ARCH=mips META_USE_CXX11=OFF
 script:
   - "bash -ex ./travis/run.sh"

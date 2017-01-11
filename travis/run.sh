@@ -4,10 +4,10 @@
 set -e
 set -x
 
-CHROOT_DIR=/tmp/arm-chroot
-MIRROR=http://archive.raspbian.org/raspbian
+CHROOT_ARCH=${ARCH}
+CHROOT_DIR=/tmp/chroot-${CHROOT_ARCH}
+MIRROR=http://archive.debian.org/debian
 VERSION=wheezy
-CHROOT_ARCH=armhf
 
 # Debian package dependencies for the host
 HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
@@ -23,7 +23,7 @@ function setup_arm_chroot {
     sudo mkdir ${CHROOT_DIR}
     sudo debootstrap --foreign --no-check-gpg --include=fakeroot,build-essential \
         --arch=${CHROOT_ARCH} ${VERSION} ${CHROOT_DIR} ${MIRROR}
-    sudo cp /usr/bin/qemu-arm-static ${CHROOT_DIR}/usr/bin/
+    sudo cp /usr/bin/qemu-${CHROOT_ARCH}-static ${CHROOT_DIR}/usr/bin/
     sudo chroot ${CHROOT_DIR} ./debootstrap/debootstrap --second-stage
     sudo sbuild-createchroot --arch=${CHROOT_ARCH} --foreign --setup-only \
         ${VERSION} ${CHROOT_DIR} ${MIRROR}
