@@ -12,9 +12,16 @@ env:
   - ARCH=arm META_USE_CXX11=OFF
 matrix:
   exclude:
+    # We don't want to go through the whole raspbian thing on OS X
     - os: osx
       env: ARCH=arm META_USE_CXX11=ON
     - os: osx
+      env: ARCH=arm META_USE_CXX11=OFF
+    # Clang on Raspbian seems to be an older version which doesn't support
+    # all we're doing.
+    - compiler: clang
+      env: ARCH=arm META_USE_CXX11=ON
+    - compiler: clang
       env: ARCH=arm META_USE_CXX11=OFF
 script:
   - "bash -ex ./travis/run.sh"
