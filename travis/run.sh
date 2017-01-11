@@ -1,6 +1,9 @@
 #!/bin/bash
 # Based on instructions from https://www.tomaz.me/2013/12/02/running-travis-ci-tests-on-arm.html
 
+set -e
+set -x
+
 CHROOT_DIR=/tmp/arm-chroot
 MIRROR=http://archive.raspbian.org/raspbian
 VERSION=wheezy
@@ -11,9 +14,6 @@ HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
 
 # Debian package dependencies for the chrooted environment
 GUEST_DEPENDENCIES="build-essential git m4 sudo python"
-
-# Command used to run the tests
-TEST_COMMAND="make test"
 
 function setup_arm_chroot {
     # Host dependencies
@@ -57,6 +57,11 @@ if [ -e "/.chroot_is_done" ]; then
   . ./envvars.sh
 else
   if [ "${ARCH}" = "arm" ]; then
+    if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
+      echo "Won't emulate ARM on OS X, all done!"
+      exit 0
+    fi
+
     # ARM test run, need to set up chrooted environment first
     echo "Setting up chrooted ARM environment"
     setup_arm_chroot
@@ -66,4 +71,7 @@ fi
 echo "Running tests"
 echo "Environment: $(uname -a)"
 
-${TEST_COMMAND}
+cd "${TRAVIS_BUILD_DIR}"
+./travis/before_install.sh
+./travis/install.sh
+./travis/build.sh
