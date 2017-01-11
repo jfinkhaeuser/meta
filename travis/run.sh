@@ -15,7 +15,7 @@ HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
 # Debian package dependencies for the chrooted environment
 GUEST_DEPENDENCIES="build-essential git m4 sudo python"
 
-function setup_arm_chroot {
+function setup_chroot {
     # Host dependencies
     sudo apt-get install -qq -y ${HOST_DEPENDENCIES}
 
@@ -51,20 +51,20 @@ function setup_arm_chroot {
 }
 
 if [ -e "/.chroot_is_done" ]; then
-  # We are inside ARM chroot
+  # We are inside chroot
   echo "Running inside chrooted environment"
 
   . ./envvars.sh
 else
-  if [ "${ARCH}" = "arm" ]; then
+  if [ "${ARCH}" != "native" ]; then
     if [ "${TRAVIS_OS_NAME}" = "osx" ]; then
-      echo "Won't emulate ARM on OS X, all done!"
+      echo "Won't emulate on OS X, all done!"
       exit 0
     fi
 
-    # ARM test run, need to set up chrooted environment first
-    echo "Setting up chrooted ARM environment"
-    setup_arm_chroot
+    # Emulated test run, need to set up chrooted environment first
+    echo "Setting up chrooted environment"
+    setup_chroot
   fi
 fi
 
