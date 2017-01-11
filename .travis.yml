@@ -1,14 +1,14 @@
+language: cpp
 os:
   - linux
   - osx
+compiler:
+  - clang
+  - gcc
 env:
-  - ARCH=native CXX=g++ CC=gcc META_USE_CXX11=ON
-  - ARCH=native CXX=clang++ CC=clang META_USE_CXX11=ON
-  - ARCH=native CXX=g++ CC=gcc META_USE_CXX11=OFF
-  - ARCH=native CXX=clang++ CC=clang META_USE_CXX11=OFF
-  - ARCH=arm CXX=g++ CC=gcc META_USE_CXX11=ON
-  - ARCH=arm CXX=clang++ CC=clang META_USE_CXX11=ON
-  - ARCH=arm CXX=g++ CC=gcc META_USE_CXX11=OFF
-  - ARCH=arm CXX=clang++ CC=clang META_USE_CXX11=OFF
+  - ARCH=native META_USE_CXX11=ON
+  - ARCH=native META_USE_CXX11=OFF
+  - ARCH=arm META_USE_CXX11=ON
+  - ARCH=arm META_USE_CXX11=OFF
 script:
   - "bash -ex ./travis/run.sh"
