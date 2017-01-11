@@ -1,16 +1,21 @@
-before_install:
-  - "./travis/before_install.sh"
-install:
-  - "./travis/install.sh"
-script:
-  - "mkdir build && cd build"
-  - "cmake -DCMAKE_BUILD_TYPE=Release -DMETA_USE_CXX11=${META_USE_CXX11} .."
-  - "make testsuite && ./testsuite"
-os:
-  - linux
-  - osx
+# before_install:
+#   - "./travis/before_install.sh"
+# install:
+#   - "./travis/install.sh"
+# script:
+#   - "mkdir build && cd build"
+#   - "cmake -DCMAKE_BUILD_TYPE=Release -DMETA_USE_CXX11=${META_USE_CXX11} .."
+#   - "make testsuite && ./testsuite"
+# os:
+#   - linux
+#   - osx
+# env:
+#   - CXX=g++ CC=gcc META_USE_CXX11=ON
+#   - CXX=clang++ CC=clang META_USE_CXX11=ON
+#   - CXX=g++ CC=gcc META_USE_CXX11=OFF
+#   - CXX=clang++ CC=clang META_USE_CXX11=OFF
 env:
-  - CXX=g++ CC=gcc META_USE_CXX11=ON
-  - CXX=clang++ CC=clang META_USE_CXX11=ON
-  - CXX=g++ CC=gcc META_USE_CXX11=OFF
-  - CXX=clang++ CC=clang META_USE_CXX11=OFF
+  - ARCH=x64
+  - ARCH=arm
+script:
+  - "bash -ex ./travis/chroot.sh"
