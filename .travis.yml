@@ -1,17 +1,4 @@
 language: cpp
-os:
-  - linux
-  - osx
-compiler:
-  - clang
-  - gcc
-env:
-  - ARCH=native META_USE_CXX11=ON
-  - ARCH=native META_USE_CXX11=OFF
-  - ARCH=arm META_USE_CXX11=ON
-  - ARCH=arm META_USE_CXX11=OFF
-  - ARCH=mips META_USE_CXX11=ON
-  - ARCH=mips META_USE_CXX11=OFF
 matrix:
   include:
     # Clang/Linux/native
