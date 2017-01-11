@@ -7,7 +7,7 @@ set -x
 CHROOT_ARCH=${ARCH}
 CHROOT_DIR=/tmp/chroot-${CHROOT_ARCH}
 MIRROR=http://archive.debian.org/debian
-DEB_VERSION=squeeze
+DEB_VERSION=lenny
 
 # Debian package dependencies for the host
 HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
