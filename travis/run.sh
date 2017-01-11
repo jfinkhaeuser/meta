@@ -47,7 +47,7 @@ function setup_arm_chroot {
     sudo touch ${CHROOT_DIR}/.chroot_is_done
 
     # Call ourselves again which will cause tests to run
-    sudo chroot ${CHROOT_DIR} bash -c "cd ${TRAVIS_BUILD_DIR} && ./travis/chroot.sh"
+    sudo chroot ${CHROOT_DIR} bash -c "cd ${TRAVIS_BUILD_DIR} && ./travis/run.sh"
 }
 
 if [ -e "/.chroot_is_done" ]; then
