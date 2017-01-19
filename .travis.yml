@@ -37,5 +37,5 @@ matrix:
     - os: linux
       compiler: gcc
       env: ARCH=mips META_USE_CXX11=ON
-#script:
-#  - "bash -ex ./travis/run.sh"
+script:
+  - bash -ex ./build.sh "${ARCH}" "${TRAVIS_OS_NAME}" "${TRAVIS_BUILD_DIR}"
