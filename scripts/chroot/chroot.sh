@@ -22,6 +22,23 @@
 ##############################################################################
 # Utility Functions
 
+function chroot_deb_source {
+  # This mapping is surely incomplete, but tries to cover reasonably recent,
+  # reasonably well known sources (i.e. Debian, Ubuntu)
+  case "${CHROOT_DEB_VERSION}" in
+    jessie|wheezy|squeeze|lenny)
+      echo "ftp://ftp.debian.org/debian/"
+      ;;
+    yakkety|xenial|trusty|precie)
+      echo "http://archive.canonical.com/ubuntu/"
+      ;;
+    *)
+      # Default to debian
+      echo "ftp://ftp.debian.org/debian/"
+      ;;
+  esac
+}
+
 function chroot_emulator {
   # This mapping isn't based on any solid information at this time, just by
   # trying things out.
@@ -76,7 +93,11 @@ function chroot_create_chroot {
   sudo chroot "${CHROOT_DIR}" ./debootstrap/debootstrap --second-stage
 
   # Update the chroot's Apt repository
-  sudo sed -i.sed "s;https?://httpredir.debian.org/debian;${CHROOT_DEB_MIRROR};" "${CHROOT_DIR}/etc/apt/sources.list"
+  local sources="${CHROOT_DIR}/etc/apt/sources.list"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION} main restricted" >"$sources"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-updates main restricted" >>"$sources"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-security main restricted" >>"$sources"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-backports main restricted" >>"$sources"
   sudo chroot "${CHROOT_DIR}" "${CHROOT_EMULATOR}" /usr/bin/apt-get update
 }
 
@@ -151,6 +172,10 @@ function chroot_try_enter {
   test -d "${CHROOT_SOURCE_DIR}" || exit 1
   shift
 
+  CHROOT_DEB_VERSION="${1}"
+  test -z "${CHROOT_DEB_VERSION}" && CHROOT_DEB_VERSION="jessie"
+  shift
+
   # Otherwise, check if the host is supported for chroot emulation
   case "${CHROOT_HOST_OS}" in
     osx|Darwin)
@@ -170,8 +195,7 @@ function chroot_try_enter {
 
   ##############################################################################
   # Constants and defaults
-  CHROOT_DEB_MIRROR=ftp://ftp.debian.org/debian/
-  CHROOT_DEB_VERSION=jessie
+  CHROOT_DEB_MIRROR="$(chroot_deb_source)"
 
   if test -z "${CHROOT_DIR}" ; then
     CHROOT_DIR="/tmp/chroot-${CHROOT_ARCH}"
