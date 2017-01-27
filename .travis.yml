@@ -35,6 +35,7 @@ matrix:
 #    # GCC/Linux/mips
 #    # We test only with C++11 features - without was already verified on Linux
     - os: linux
+      dist: xenial
       compiler: gcc
       env: ARCH=mips META_USE_CXX11=ON
 script:
