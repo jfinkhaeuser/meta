@@ -210,9 +210,7 @@ function chroot_try_enter {
   # Constants and defaults
   CHROOT_DEB_MIRROR="$(chroot_deb_source)"
 
-  if test -z "${CHROOT_DIR}" ; then
-    CHROOT_DIR="/tmp/chroot-${CHROOT_ARCH}"
-  fi
+  test -z "${CHROOT_DIR}" && CHROOT_DIR="/tmp/chroot-${CHROOT_ARCH}"
   CHROOT_NAME="${CHROOT_DEB_VERSION}-${CHROOT_ARCH}-sbuild"
 
   # Debian package dependencies for the host
