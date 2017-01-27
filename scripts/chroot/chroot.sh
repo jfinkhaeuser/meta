@@ -240,5 +240,5 @@ function chroot_try_enter {
   sudo chroot "${CHROOT_DIR}" "${CHROOT_EMULATOR}" \
       /bin/bash -c "cd '${CHROOT_SOURCE_DIR}' && '${the_script}' $@"
 
-  return 3
+  return 2
 }
