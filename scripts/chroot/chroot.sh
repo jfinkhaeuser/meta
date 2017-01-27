@@ -189,23 +189,6 @@ function chroot_try_enter {
   test -z "${CHROOT_DEB_VERSION}" && CHROOT_DEB_VERSION="jessie"
   shift
 
-  # Otherwise, check if the host is supported for chroot emulation
-  case "${CHROOT_HOST_OS}" in
-    osx|Darwin)
-      echo "Can't emulate on host OS '${CHROOT_HOST_OS}', aborting."
-      return 1
-      ;;
-    *)
-      ;;
-  esac
-
-  # It's possible that the host architecture is already the same as the
-  # requested, in which case we don't need to do anything.
-  if [ "$(uname -m)" = "${CHROOT_ARCH}" ] ; then
-    echo "Host and requested architecture are both ${CHROOT_ARCH}, nothing to do."
-    return 0
-  fi
-
   ##############################################################################
   # Constants and defaults
   CHROOT_DEB_MIRROR="$(chroot_deb_source)"
@@ -227,6 +210,24 @@ function chroot_try_enter {
 
   ##############################################################################
   # Main part
+
+  # Otherwise, check if the host is supported for chroot emulation
+  case "${CHROOT_HOST_OS}" in
+    osx|Darwin)
+      echo "Can't emulate on host OS '${CHROOT_HOST_OS}', aborting."
+      return 1
+      ;;
+    *)
+      ;;
+  esac
+
+  # It's possible that the host architecture is already the same as the
+  # requested, in which case we don't need to do anything.
+  if [ "$(uname -m)" = "${CHROOT_ARCH}" ] ; then
+    echo "Host and requested architecture are both ${CHROOT_ARCH}, nothing to do."
+    return 0
+  fi
+
 
   # If we're already inside the chroot, we don't need to do anything more except
   # restore the environment.
