@@ -56,7 +56,7 @@ function chroot_emulator {
 function chroot_save_env {
   local tmpfile="$(mktemp)"
   printenv >"$tmpfile"
-  sed -i.bak "s/^\([A-Z_]*\)=\(.*\)/\1='\2'/" "$tmpfile"
+  sed -i.bak "s/^\([A-Za-z0-9_]*\)=\(.*\)/\1='\2'/" "$tmpfile"
   sed -i.bak 's/^\(.*\)$/export \1 || true/g' "$tmpfile"
   sudo mv "$tmpfile" "${CHROOT_DIR}/environment"
   cat "${CHROOT_DIR}/environment"
