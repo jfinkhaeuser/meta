@@ -21,7 +21,7 @@
 # Utility Functions
 
 function dep_osname {
-  uname -o | tr -cd '[[:alnum:]]._-' | tr '[:upper:]' '[:lower:]'
+  uname | tr -cd '[[:alnum:]]._-' | tr '[:upper:]' '[:lower:]'
 }
 
 function dep_read_dependencies {

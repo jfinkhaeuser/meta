@@ -164,7 +164,7 @@ function chroot_try_enter {
   done
 
   CHROOT_HOST_OS="${1}"
-  test -z "${CHROOT_HOST_OS}" && CHROOT_HOST_OS="$(uname -o)"
+  test -z "${CHROOT_HOST_OS}" && CHROOT_HOST_OS="$(uname)"
   shift
 
   CHROOT_SOURCE_DIR="${1}"
