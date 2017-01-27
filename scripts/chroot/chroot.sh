@@ -93,11 +93,13 @@ function chroot_create_chroot {
   sudo chroot "${CHROOT_DIR}" ./debootstrap/debootstrap --second-stage
 
   # Update the chroot's Apt repository
-  local sources="${CHROOT_DIR}/etc/apt/sources.list"
-  sudo echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION} main restricted" >"$sources"
-  sudo echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-updates main restricted" >>"$sources"
-  sudo echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-security main restricted" >>"$sources"
-  sudo echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-backports main restricted" >>"$sources"
+  local sources="$(mktemp)"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION} main restricted" >"$sources"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-updates main restricted" >>"$sources"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-security main restricted" >>"$sources"
+  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-backports main restricted" >>"$sources"
+  sudo mv "${sources}" "${CHROOT_DIR}/etc/apt/sources.list"
+
   sudo chroot "${CHROOT_DIR}" "${CHROOT_EMULATOR}" /usr/bin/apt-get update
 }
 
