@@ -1,5 +1,23 @@
 #!/bin/bash
-# Based on instructions from https://www.tomaz.me/2013/12/02/running-travis-ci-tests-on-arm.html
+#
+# This file is part of meta.
+#
+# Author(s): Jens Finkhaeuser <jens@finkhaeuser.de>
+#
+# Copyright (c) 2017 Jens Finkhaeuser
+#
+# This software is licensed under the terms of the GNU GPLv3 for personal,
+# educational and non-profit use. For all other uses, alternative license
+# options are available. Please contact the copyright holder for additional
+# information, stating your intended usage.
+#
+# You can find the full text of the GPLv3 in the COPYING file in this code
+# distribution.
+#
+# This software is distributed on an "AS IS" BASIS, WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
 
 ##############################################################################
 # Functions
@@ -26,7 +44,8 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 ##############################################################################
 # Load functions
-. "${SCRIPT_DIR}/travis/chroot.sh"
+. "${SCRIPT_DIR}/scripts/chroot/chroot.sh"
+. "${SCRIPT_DIR}/scripts/dependencies/dependencies.sh"
 
 ##############################################################################
 # Main
@@ -50,14 +69,21 @@ case "$?" in
     ;;
 esac
 
-# Build
+# Install dependencies
+dep_install "${SOURCE_DIR}"
+
+# Build & Test
+echo "======================================================================="
 echo "Running build"
 echo "Environment: $(uname -a)"
 
 cd "${SOURCE_DIR}"
-./travis/before_install.sh
-./travis/install.sh
-./travis/build.sh
+rm -rf build
+mkdir build
+cd build
+cmake -DCMAKE_BUILD_TYPE=Release -DMETA_USE_CXX11=${META_USE_CXX11} ..
+make testsuite
+./testsuite
 
 # Cleanup
 chroot_clean
