@@ -61,9 +61,13 @@ case "${ret}" in
   1)
     exit "$ret"
     ;;
-  2|3)
+  2)
     chroot_clean
     exit "$ret"
+    ;;
+  3)
+    chroot_clean
+    exit 0
     ;;
 esac
 
