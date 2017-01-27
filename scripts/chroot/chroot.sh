@@ -1,5 +1,40 @@
+#
+# This file is part of build-chroot.
+#
+# Author(s): Jens Finkhaeuser <jens@finkhaeuser.de>
+#
+# Copyright (c) 2017 Jens Finkhaeuser
+#
+# This software is licensed under the terms of the GNU GPLv3 for personal,
+# educational and non-profit use. For all other uses, alternative license
+# options are available. Please contact the copyright holder for additional
+# information, stating your intended usage.
+#
+# You can find the full text of the GPLv3 in the COPYING file in this code
+# distribution.
+#
+# This software is distributed on an "AS IS" BASIS, WITHOUT ANY WARRANTY;
+# without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE.
+
+# Based on instructions from https://www.tomaz.me/2013/12/02/running-travis-ci-tests-on-arm.html
+
 ##############################################################################
 # Utility Functions
+
+function chroot_emulator {
+  # This mapping isn't based on any solid information at this time, just by
+  # trying things out.
+  case "${CHROOT_ARCH}" in
+    arm*)
+      echo "arm"
+      ;;
+    *)
+      # Might not work, but it's the best possible fallback here.
+      echo "${CHROOT_ARCH}"
+      ;;
+  esac
+}
 
 function chroot_save_env {
   local tmpfile="$(mktemp)"
@@ -12,11 +47,12 @@ function chroot_save_env {
 
 function chroot_prepare_host {
   # Install host dependencies
-  sudo apt-get install -qq -y ${CHROOT_HOST_DEPENDENCIES}
+  export DEBIAN_FRONTEND=noninteractive
+  sudo apt-get install -y ${CHROOT_HOST_DEPENDENCIES}
 }
 
 function chroot_create_chroot {
-  chroot_clean
+  chroot_clean force
   sudo mkdir "${CHROOT_DIR}"
 
   # Debootstrap first stage
@@ -40,7 +76,7 @@ function chroot_create_chroot {
   sudo chroot "${CHROOT_DIR}" ./debootstrap/debootstrap --second-stage
 
   # Update the chroot's Apt repository
-  sudo sed -i.sed 's/httpredir/archive/' "${CHROOT_DIR}/etc/apt/sources.list"
+  sudo sed -i.sed "s;https?://httpredir.debian.org/debian;${CHROOT_DEB_MIRROR};" "${CHROOT_DIR}/etc/apt/sources.list"
   sudo chroot "${CHROOT_DIR}" "${CHROOT_EMULATOR}" /usr/bin/apt-get update
 }
 
@@ -69,12 +105,20 @@ function chroot_setup {
 # API Functions
 
 function chroot_clean {
+  local force="${1}"
+
+  if [ ! -e "${CHROOT_FLAG_FILE}" -a -z "${force}" ] ; then
+    echo "Not running in chroot, nothing to clean up!"
+    return 0
+  fi
+
   local fs
   for fs in dev proc ; do
     sudo umount -f "${CHROOT_DIR}/${fs}" || true
   done
 
   sudo rm -rf "${CHROOT_DIR}"
+  return 0
 }
 
 ##
@@ -104,6 +148,7 @@ function chroot_try_enter {
 
   CHROOT_SOURCE_DIR="${1}"
   test -z "${CHROOT_SOURCE_DIR}" && CHROOT_SOURCE_DIR="$(pwd)"
+  test -d "${CHROOT_SOURCE_DIR}" || exit 1
   shift
 
   # Otherwise, check if the host is supported for chroot emulation
@@ -125,8 +170,8 @@ function chroot_try_enter {
 
   ##############################################################################
   # Constants and defaults
-  CHROOT_DEB_MIRROR=http://archive.debian.org/debian
-  CHROOT_DEB_VERSION=lenny
+  CHROOT_DEB_MIRROR=ftp://ftp.debian.org/debian/
+  CHROOT_DEB_VERSION=jessie
 
   if test -z "${CHROOT_DIR}" ; then
     CHROOT_DIR="/tmp/chroot-${CHROOT_ARCH}"
@@ -143,7 +188,7 @@ function chroot_try_enter {
   CHROOT_FLAG_FILE="/.chroot-${CHROOT_DEB_VERSION}-${CHROOT_ARCH}"
 
   # Emulator binary
-  CHROOT_EMULATOR="/usr/bin/qemu-${CHROOT_ARCH}-static"
+  CHROOT_EMULATOR="/usr/bin/qemu-$(chroot_emulator ${CHROOT_ARCH})-static"
 
   ##############################################################################
   # Main part
