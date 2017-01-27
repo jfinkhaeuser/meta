@@ -89,7 +89,7 @@ function chroot_prepare_host {
 }
 
 function chroot_create_chroot {
-  chroot_clean force
+  chroot_clean
   sudo mkdir "${CHROOT_DIR}"
 
   # Debootstrap first stage
@@ -145,13 +145,6 @@ function chroot_setup {
 # API Functions
 
 function chroot_clean {
-  local force="${1}"
-
-  if [ ! -e "${CHROOT_FLAG_FILE}" -a -z "${force}" ] ; then
-    echo "Not running in chroot, nothing to clean up!"
-    return 0
-  fi
-
   local fs
   for fs in dev proc ; do
     sudo umount -f "${CHROOT_DIR}/${fs}" || true
