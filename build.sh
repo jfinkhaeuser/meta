@@ -51,7 +51,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Main
 
 set -e
-# set -x
+set -x
 
 # First, try to setup & enter chroot if necessary.
 ret=0
