@@ -1,0 +1,6 @@
+# Dependency name, colon, mandatory flag
+libcppunit-dev
+cmake:1
+lcov:1
+pkg-config:1
+clang:0
