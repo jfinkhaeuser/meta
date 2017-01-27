@@ -166,9 +166,10 @@ function chroot_clean {
 #   chroot_try_enter /path/to/caller/script target-architecture [host-os] [source-dir]
 #
 # Exit status:
-#   0 - we're inside target architecture - might be a chroot, or the host OS
-#   1 - host OS can't run a emulated chroot, we're on the host OS
-#   3 - exited from inside chroot
+#   0 - We're inside target architecture - might be a chroot, or the host OS
+#   1 - Can't emulate on this host, aborting.
+#   2 - Chroot exited unsuccessfully
+#   3 - Chroot exited successfully
 function chroot_try_enter {
   ##############################################################################
   # Parameter checking
@@ -198,7 +199,7 @@ function chroot_try_enter {
   # Otherwise, check if the host is supported for chroot emulation
   case "${CHROOT_HOST_OS}" in
     osx|Darwin)
-      echo "Won't emulate on host OS '${CHROOT_HOST_OS}', nothing to do."
+      echo "Can't emulate on host OS '${CHROOT_HOST_OS}', aborting."
       return 1
       ;;
     *)
@@ -257,5 +258,12 @@ function chroot_try_enter {
   sudo chroot "${CHROOT_DIR}" "${CHROOT_EMULATOR}" \
       /bin/bash -e -c "cd '${CHROOT_SOURCE_DIR}' && '${the_script}' $@"
 
-  return 2
+  ret="$?"
+  if [ "${ret}" = 0 ] ; then
+    # Build was successful.
+    return 3
+  else
+    # Build was unsuccessful
+    return 2
+  fi
 }

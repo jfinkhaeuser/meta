@@ -58,15 +58,12 @@ ret=0
 chroot_try_enter "${BASH_SOURCE[0]}" "${ARCH}" "${HOST_OS}" "${SOURCE_DIR}" "wheezy" "$@" || ret="$?"
 
 case "${ret}" in
-  0)
-    # We're in target architecture, proceed
-    ;;
   1)
-    # Unsupported host OS, continue with host build
+    exit "$ret"
     ;;
-  2)
-    # Finished inside chroot, we're done.
-    exit 0
+  2|3)
+    chroot_clean
+    exit "$ret"
     ;;
 esac
 
