@@ -4,17 +4,21 @@ matrix:
 #    # Clang/Linux/x86_64
 #    # We test both with and without C++11 features
 #    - os: linux
+#      dist: xenial
 #      compiler: clang
 #      env: ARCH=x86_64 META_USE_CXX11=ON
 #    - os: linux
+#      dist: xenial
 #      compiler: clang
 #      env: ARCH=x86_64 META_USE_CXX11=OFF
 #    # GCC/Linux/x86_64
 #    # We test both with and without C++11 features
 #    - os: linux
+#      dist: xenial
 #      compiler: gcc
 #      env: ARCH=x86_64 META_USE_CXX11=ON
 #    - os: linux
+#      dist: xenial
 #      compiler: gcc
 #      env: ARCH=x86_64 META_USE_CXX11=OFF
 #    # Clang/OSX/x86_64
@@ -30,6 +34,7 @@ matrix:
 #    # GCC/Linux/armhf
 #    # We test only with C++11 features - without was already verified on Linux
 #    - os: linux
+#      dist: xenial
 #      compiler: gcc
 #      env: ARCH=armhf META_USE_CXX11=ON
 #    # GCC/Linux/mips
