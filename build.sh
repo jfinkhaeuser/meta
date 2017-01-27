@@ -50,9 +50,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ##############################################################################
 # Main
 
+set -e
+# set -x
+
 # First, try to setup & enter chroot if necessary.
 ret=0
-chroot_try_enter "${BASH_SOURCE[0]}" "${ARCH}" "${HOST_OS}" "${SOURCE_DIR}" "$@" || ret="$?"
+chroot_try_enter "${BASH_SOURCE[0]}" "${ARCH}" "${HOST_OS}" "${SOURCE_DIR}" "wheezy" "$@" || ret="$?"
 
 case "${ret}" in
   0)
