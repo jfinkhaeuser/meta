@@ -22,6 +22,26 @@
 ##############################################################################
 # Utility Functions
 
+function chroot_apt_sources {
+  local outfile="${1}"
+
+  case "${CHROOT_DEB_VERSION}" in
+    jessie|wheezy|squeeze|lenny)
+      echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION} main contrib" >"$outfile"
+      echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-updates main contrib" >>"$outfile"
+      ;;
+    yakkety|xenial|trusty|precie)
+      echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION} main restricted" >"$outfile"
+      echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-updates main restricted" >>"$outfile"
+      echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-security main restricted" >>"$outfile"
+      echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-backports main restricted" >>"$outfile"
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
 function chroot_deb_source {
   # This mapping is surely incomplete, but tries to cover reasonably recent,
   # reasonably well known sources (i.e. Debian, Ubuntu)
@@ -94,10 +114,7 @@ function chroot_create_chroot {
 
   # Update the chroot's Apt repository
   local sources="$(mktemp)"
-  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION} main restricted" >"$sources"
-  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-updates main restricted" >>"$sources"
-  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-security main restricted" >>"$sources"
-  echo "deb ${CHROOT_DEB_MIRROR} ${CHROOT_DEB_VERSION}-backports main restricted" >>"$sources"
+  chroot_apt_sources "${sources}"
   sudo mv "${sources}" "${CHROOT_DIR}/etc/apt/sources.list"
 
   sudo chroot "${CHROOT_DIR}" "${CHROOT_EMULATOR}" /usr/bin/apt-get update
