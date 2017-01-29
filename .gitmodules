@@ -1,0 +1,3 @@
+[submodule "scripts/chroot"]
+	path = scripts/chroot
+	url = https://github.com/jfinkhaeuser/build-chroot.git
