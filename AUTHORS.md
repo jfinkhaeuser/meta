@@ -1,1 +1,1 @@
-Jens Finkhaeuser <jens@unwesen.de> (@jfinkhaeuser)
+Jens Finkhaeuser <jens@finkhaeuser.de> (@jfinkhaeuser)
