@@ -37,10 +37,18 @@ guarantee for usefulness implied in providing them. See COPYING for details.
 Tested On
 ---------
 
-- Linux x86_64
-- OS X x68_64
-- Linux Arm (hardfloat)
-- Linux MIPS (big endian)
+*Operating Systems*
+- Linux
+- OS X
+
+*Hardware*
+- x86_64
+- Arm (hardfloat)
+- MIPS (big endian)
+
+*Compilers*
+- GCC
+- CLang
 
 Requirements
 ------------
