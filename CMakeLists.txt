@@ -192,7 +192,7 @@ if (CPPUNIT_FOUND)
       test/testsuite.cpp)
   target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_LDFLAGS})
 
-  set_target_properties(testsuite PROPERTIES LINK_FLAGS "-static ${TESTSUITE_LINK_FLAGS}")
+  set_target_properties(testsuite PROPERTIES LINK_FLAGS "${TESTSUITE_LINK_FLAGS}")
 
   add_test(NAME "Testsuite" COMMAND testsuite)
   set(PROJECT_TEST_NAME testsuite)

@@ -1,0 +1,4 @@
+# Dependency name, colon, mandatory flag
+cppunit:1
+cmake:1
+lcov:1

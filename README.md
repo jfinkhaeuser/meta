@@ -5,7 +5,7 @@ C++ Metaprogramming Primivites and Pattern implementations.
 
 [![Build Status](https://travis-ci.org/jfinkhaeuser/meta.svg?branch=master)](https://travis-ci.org/jfinkhaeuser/meta)
 
-This library is kept deliberately small, with no external dependencies (1).
+This library is kept deliberately small, with no external dependencies.
 
 - `for.h` provides compile-time for loops
 - `comparison.h` provides compile-time comparators
@@ -34,6 +34,13 @@ This library is kept deliberately small, with no external dependencies (1).
 Some of these bits of code started out as mental exercises, so there's no
 guarantee for usefulness implied in providing them. See COPYING for details.
 
+Tested On
+---------
+
+- Linux x86_64
+- OS X x68_64
+- Linux Arm (hardfloat)
+- Linux MIPS (big endian)
 
 Requirements
 ------------
@@ -42,6 +49,10 @@ There are external dependencies, but only for testing:
 - [CMake](http://www.cmake.org/) for the build system.
 - [CppUnit](cppunit.sourceforge.net) for the unit test framework.
 
+Similarly, external dependencies for building on CI are:
+
+- [build-chroot](https://github.com/jfinkhaeuser/build-chroot)
+- [build-dependencies](https://github.com/jfinkhaeuser/build-dependencies)
 
 Installation
 ------------
@@ -93,3 +104,26 @@ $ cmake -DMETA_USE_CXX11=OFF .
 Similarly, if you're including meta headers into your `C++98` project, make
 sure to set the same define - either before the include statement, or on the
 command line.
+
+CI Building
+-----------
+
+The [build.sh](./build.sh) script uses `build-chroot` and `build-dependencies`
+to create a suitable build environment on CI, possibly on emulated hardware.
+
+Run e.g.
+
+```bash
+$ ./build.sh x86_64
+$ ./build.sh mips
+```
+
+License
+-------
+
+See [LICENSE](./LICENSE).
+
+Authors
+-------
+
+See [Authors](./AUTHORS.md).
