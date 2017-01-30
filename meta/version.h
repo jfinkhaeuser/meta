@@ -1,11 +1,11 @@
 /**
  * This file is part of meta.
  *
- * Author(s): Jens Finkhaeuser <jens@unwesen.de>
+ * Author(s): Jens Finkhaeuser <jens@finkhaeuser.de>
  *
  * Copyright (c) 2009-2012 Jens Finkhaeuser.
  * Copyright (c) 2013-2015 Unwesen Ltd.
- * Copyright (c) 2016 Jens Finkhaeuser
+ * Copyright (c) 2016-2017 Jens Finkhaeuser.
  *
  * This software is licensed under the terms of the GNU GPLv3 for personal,
  * educational and non-profit use. For all other uses, alternative license
@@ -65,7 +65,7 @@ inline char const * copyright_string()
   static char const * ret = META_PACKAGE_NAME " " META_PACKAGE_VERSION " " META_PACKAGE_URL "\n"
     "Copyright (c) 2011 Jens Finkhaeuser.\n"
     "Copyright (c) 2012-2014 Unwesen Ltd.\n"
-    "Copyright (c) 2015 Jens Finkhaeuser.\n"
+    "Copyright (c) 2015-2017 Jens Finkhaeuser.\n"
     "Licensed under the the GPLv3 for personal, educational or non-profit use.\n"
     "Other licensing options available; please contact the copyright holder for\n"
     "information."

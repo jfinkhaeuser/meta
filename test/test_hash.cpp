@@ -1,10 +1,10 @@
 /**
  * This file is part of meta.
  *
- * Author(s): Jens Finkhaeuser <jens@unwesen.de>
+ * Author(s): Jens Finkhaeuser <jens@finkhaeuser.de>
  *
  * Copyright (c) 2014-2015 Unwesen Ltd.
- * Copyright (c) 2016 Jens Finkhaeuser
+ * Copyright (c) 2016-2017 Jens Finkhaeuser.
  *
  * This software is licensed under the terms of the GNU GPLv3 for personal,
  * educational and non-profit use. For all other uses, alternative license
