@@ -1,0 +1,6 @@
+[submodule "scripts/chroot"]
+	path = scripts/chroot
+	url = https://github.com/jfinkhaeuser/build-chroot.git
+[submodule "scripts/dependencies"]
+	path = scripts/dependencies
+	url = https://github.com/jfinkhaeuser/build-dependencies.git

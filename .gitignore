@@ -16,3 +16,6 @@ meta.pc
 *.a
 *.lo
 *.la
+
+# build directory
+build
