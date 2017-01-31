@@ -392,7 +392,7 @@ private:
         t::inheritancelist<int_type> a(42);
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&a)->v);
 
-        t::inheritancelist<int_type, float_type> b(42, 3.14);
+        t::inheritancelist<int_type, float_type> b(42, 3.14f);
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&b)->v);
         CPPUNIT_ASSERT_EQUAL(float(3.14), static_cast<float_type *>(&b)->v);
       }
@@ -402,7 +402,7 @@ private:
         t::inheritancelist<int_type> a = {42};
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&a)->v);
 
-        t::inheritancelist<int_type, float_type> b = {42, 3.14};
+        t::inheritancelist<int_type, float_type> b = {42, 3.14f};
         CPPUNIT_ASSERT_EQUAL(int(42), static_cast<int_type *>(&b)->v);
         CPPUNIT_ASSERT_EQUAL(float(3.14), static_cast<float_type *>(&b)->v);
       }
@@ -456,7 +456,7 @@ private:
         t::compositionlist<int> b(42);
         CPPUNIT_ASSERT_EQUAL(int(42), b.item);
 
-        t::compositionlist<int_type, float, float> c(42, 3.14, 2.71828);
+        t::compositionlist<int_type, float, float> c(42, 3.14f, 2.71828f);
         CPPUNIT_ASSERT_EQUAL(int(42), c.item.v);
         CPPUNIT_ASSERT_EQUAL(float(2.71828), static_cast<t::compositionlist<float> *>(&c)->item);
         CPPUNIT_ASSERT_EQUAL(float(3.14), (static_cast<t::compositionlist<float, float> *>(&c)->item));
@@ -470,7 +470,7 @@ private:
         t::compositionlist<int> b = 42;
         CPPUNIT_ASSERT_EQUAL(int(42), b.item);
 
-        t::compositionlist<int_type, float, float> c = {42, 3.14, 2.71828};
+        t::compositionlist<int_type, float, float> c = {42, 3.14f, 2.71828f};
         CPPUNIT_ASSERT_EQUAL(int(42), c.item.v);
         CPPUNIT_ASSERT_EQUAL(float(3.14), (static_cast<t::compositionlist<float, float> *>(&c)->item));
         CPPUNIT_ASSERT_EQUAL(float(2.71828), static_cast<t::compositionlist<float> *>(&c)->item);
