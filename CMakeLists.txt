@@ -68,9 +68,6 @@ check_include_file_cxx(tr1/cstdint META_HAVE_TR1_HEADERS)
 include(FindPkgConfig)
 
 pkg_check_modules(CPPUNIT cppunit>=1.12)
-if (NOT CPPUNIT_FOUND)
-  check_include_file_cxx(cppunit/Test.h CPPUNIT_FOUND)
-endif()
 
 ##############################################################################
 # Platform checks
