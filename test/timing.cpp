@@ -25,8 +25,7 @@
 
 #include <iostream>
 
-#include <sys/time.h>
-#include <sys/resource.h>
+#include <ctime>
 
 #include <errno.h>
 #include <string.h>
@@ -61,17 +60,11 @@ timer::duration()
 int64_t
 timer::get_current() const
 {
-  struct ::rusage usage;
-  int err = ::getrusage(RUSAGE_SELF, &usage);
-  if (err < 0) {
-    std::cerr << "Failed to get rusage: " << ::strerror(errno) << std::endl;
-    return -1;
-  }
-
-  int64_t user = (static_cast<int64_t>(usage.ru_utime.tv_sec) * 1000000L)
-    + static_cast<int64_t>(usage.ru_utime.tv_usec);
-
-  return user;
+  std::clock_t current = std::clock();
+  return static_cast<int64_t>(
+      (static_cast<double>(current) / CLOCKS_PER_SEC)
+      * 1000000L
+  );
 }
 
 }} // namespace test::timing
