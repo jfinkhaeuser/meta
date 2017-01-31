@@ -28,6 +28,8 @@
 
 #include <test/timing.h>
 
+#include <algorithm>
+
 namespace {
 
 // Shut the compiler up
