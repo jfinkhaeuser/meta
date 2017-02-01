@@ -65,9 +65,7 @@ check_include_file_cxx(tr1/cstdint META_HAVE_TR1_HEADERS)
 
 ##############################################################################
 # Dependencies
-include(FindPkgConfig)
-
-pkg_check_modules(CPPUNIT cppunit>=1.12)
+find_package(cppunit 1.12.1)
 
 ##############################################################################
 # Platform checks
@@ -190,8 +188,9 @@ if (CPPUNIT_FOUND)
   add_executable(testsuite
       ${TEST_SOURCES}
       test/testsuite.cpp)
-  target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_LDFLAGS})
-
+  target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_LIBRARIES})
+  target_include_directories(testsuite PRIVATE ${CPPUNIT_INCLUDE_DIR})
+  
   set_target_properties(testsuite PROPERTIES LINK_FLAGS "${TESTSUITE_LINK_FLAGS}")
 
   add_test(NAME "Testsuite" COMMAND testsuite)
