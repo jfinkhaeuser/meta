@@ -25,7 +25,7 @@
 
 # First, try pkg-config
 include(FindPkgConfig)
-pkg_check_modules(CPPUNIT "cppunit>=${PACKAGE_FIND_VERSION}")
+pkg_check_modules(CPPUNIT "cppunit>=${cppunit_FIND_VERSION}")
 
 # Search in this directory if pkg-config found nothing
 set(CPPUNIT_ROOT_DIR
