@@ -189,8 +189,14 @@ if (CPPUNIT_FOUND)
       ${TEST_SOURCES}
       test/testsuite.cpp)
   target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_LIBRARIES})
-  target_include_directories(testsuite PRIVATE ${CPPUNIT_INCLUDE_DIR})
-  
+
+  # Since some time after 2.8.9
+  if ("${CMAKE_VERSION}" VERSION_GREATER "2.8.10")
+    target_include_directories(testsuite PRIVATE ${CPPUNIT_INCLUDE_DIR})
+  else()
+    include_directories(testsuite PRIVATE ${CPPUNIT_INCLUDE_DIR})
+  endif()
+
   set_target_properties(testsuite PROPERTIES LINK_FLAGS "${TESTSUITE_LINK_FLAGS}")
 
   add_test(NAME "Testsuite" COMMAND testsuite)
