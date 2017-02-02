@@ -40,6 +40,7 @@ Tested On
 *Operating Systems*
 - Linux
 - OS X
+- Windows
 
 *Hardware*
 - x86_64
@@ -49,6 +50,7 @@ Tested On
 *Compilers*
 - GCC
 - CLang
+- Visual Studio
 
 Requirements
 ------------
