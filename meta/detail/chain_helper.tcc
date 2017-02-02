@@ -121,8 +121,8 @@ template <
 >
 struct dynamic_chain_helper<Operator>
 {
-  template <typename... Args>
-  inline bool check(::meta::types::compositionlist<> const &, Args && ...);
+  template <typename Owner, typename... Args>
+  inline bool operator()(Owner * owner, Args && ...);
 };
 
 
@@ -135,14 +135,14 @@ template <
 struct dynamic_chain_helper<Operator, Head, ConditionsRest...>
   : public Operator<Head, dynamic_chain_helper<Operator, ConditionsRest...>, ConditionsRest...>
 {
-  template <typename... Args>
-  inline bool operator()(Args && ... args)
-  {
+  template <typename Owner, typename... Args>
+  inline bool operator()(Owner * owner, Args && ... args)
+  {	
     return this->Operator<
       Head,
       dynamic_chain_helper<Operator, ConditionsRest...>,
       ConditionsRest...
-    >::operator()(std::forward<Args>(args)...);
+    >::operator()(owner, std::forward<Args>(args)...);
   }
 };
 

@@ -127,7 +127,7 @@ struct _and
     return detail::dynamic_chain_helper<
       detail::dynamic_and,
       Conditions...
-    >::operator()(std::forward<Args>(args)...);
+    >::operator()(this, std::forward<Args>(args)...);
   }
 };
 
@@ -162,7 +162,7 @@ struct _or
     return detail::dynamic_chain_helper<
       detail::dynamic_or,
       Conditions...
-    >::operator()(std::forward<Args>(args)...);
+    >::operator()(this, std::forward<Args>(args)...);
   }
 };
 

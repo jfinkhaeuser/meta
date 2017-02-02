@@ -80,15 +80,15 @@ template <
 struct dynamic_and
   : public Right
 {
-  template <typename... Args>
-  inline bool operator()(Args && ... args)
+  template <typename Owner, typename... Args>
+  inline bool operator()(Owner * owner, Args && ... args)
   {
     // XXX We know that we can cast to compositionlist because of details in
     //     condition.h - make sure that stays in sync!
     return reinterpret_cast<
       meta::types::compositionlist<Left, Tail...>
-    *>(this)->item.operator()(std::forward<Args>(args)...)
-      && Right::operator()(std::forward<Args>(args)...);
+    *>(owner)->item.operator()(std::forward<Args>(args)...)
+      && Right::operator()(owner, std::forward<Args>(args)...);
     return true;
   }
 };
@@ -97,15 +97,15 @@ struct dynamic_and
 template <typename Left, typename Right>
 struct dynamic_and<Left, Right>
 {
-  template <typename... Args>
-  inline bool operator()(Args && ... args)
+  template <typename Owner, typename... Args>
+  inline bool operator()(Owner * owner, Args && ... args)
   {
     // Right-hand side is unused.
     // XXX We know that we can cast to compositionlist because of details in
     //     condition.h - make sure that stays in sync!
     return reinterpret_cast<
       meta::types::compositionlist<Left> *
-    >(this)->item.operator()(std::forward<Args>(args)...);
+    >(owner)->item.operator()(std::forward<Args>(args)...);
   }
 
 };
@@ -121,16 +121,16 @@ template <
 >
 struct dynamic_or
   : public Right
-{
-  template <typename... Args>
-  inline bool operator()(Args && ... args)
+{  
+  template <typename Owner, typename... Args>
+  inline bool operator()(Owner * owner, Args && ... args)
   {
     // XXX We know that we can cast to compositionlist because of details in
     //     condition.h - make sure that stays in sync!
     return reinterpret_cast<
       meta::types::compositionlist<Left, Tail...>
-    *>(this)->item.operator()(std::forward<Args>(args)...)
-        || Right::operator()(std::forward<Args>(args)...);
+    *>(owner)->item.operator()(std::forward<Args>(args)...)
+        || Right::operator()(owner, std::forward<Args>(args)...);
     return true;
   }
 };
@@ -139,15 +139,15 @@ struct dynamic_or
 template <typename Left, typename Right>
 struct dynamic_or<Left, Right>
 {
-  template <typename... Args>
-  inline bool operator()(Args && ... args)
+  template <typename Owner, typename... Args>
+  inline bool operator()(Owner * owner, Args && ... args)
   {
     // Right-hand side is unused.
     // XXX We know that we can cast to compositionlist because of details in
     //     condition.h - make sure that stays in sync!
     return reinterpret_cast<
       meta::types::compositionlist<Left> *
-    >(this)->item.operator()(std::forward<Args>(args)...);
+    >(owner)->item.operator()(std::forward<Args>(args)...);
   }
 
 };
