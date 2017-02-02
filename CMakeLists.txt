@@ -5,8 +5,8 @@ project(meta)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
 
-set (META_PACKAGE_MAJOR 0)
-set (META_PACKAGE_MINOR 1)
+set (META_PACKAGE_MAJOR 1)
+set (META_PACKAGE_MINOR 0)
 set (META_PACKAGE_URL https://github.com/jfinkhaeuser/meta)
 
 ##############################################################################
