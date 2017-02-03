@@ -1,6 +1,7 @@
 ##############################################################################
 # Project metadata
 cmake_minimum_required(VERSION 2.8)
+
 project(meta)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/CMakeModules)
@@ -209,3 +210,42 @@ if (CPPUNIT_FOUND)
     target_link_libraries(${PROJECT_TEST_NAME} gcov)
   endif()
 endif (CPPUNIT_FOUND)
+
+##############################################################################
+# CPack Section
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "C++ Metaprogramming Primivites and Pattern Implementations")
+set(CPACK_PACKAGE_VENDOR "finkhaeuser consulting")
+set(CPACK_PACKAGE_CONTACT "jens@finkhaeuser.de")
+set(CPACK_PACKAGE_VERSION_MAJOR "${META_PACKAGE_MAJOR}")
+set(CPACK_PACKAGE_VERSION_MINOR "${META_PACKAGE_MINOR}")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+# set(CPACK_PACKAGE_INSTALL_DIRECTORY "CMake ${CMake_VERSION_MAJOR}.${CMake_VERSION_MINOR}")
+
+if(WIN32 AND NOT UNIX)
+  set(CPACK_GENERATOR "NSIS;NSIS64")
+  # There is a bug in NSI that does not handle full unix paths properly. Make
+  # sure there is at least one set of four (4) backlasshes.
+  set(CPACK_PACKAGE_ICON "${PROJECT_SOURCE_DIR}\\\\data\\\\tool-icon.bmp")
+  # set(CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\MyExecutable.exe")
+  set(CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} meta")
+  set(CPACK_NSIS_HELP_LINK "http://jfinkhaeuser.github.io/meta/")
+  set(CPACK_NSIS_URL_INFO_ABOUT "http://jfinkhaeuser.github.io/meta/")
+  set(CPACK_NSIS_CONTACT "jens@finkhaeuser.de")
+  set(CPACK_NSIS_MODIFY_PATH ON)
+else(WIN32 AND NOT UNIX)
+  set(CPACK_GENERATOR "STGZ;TGZ;TBZ2;DEB")
+  # set(CPACK_STRIP_FILES "bin/MyExecutable")
+  set(CPACK_SOURCE_STRIP_FILES "")
+
+  # Debian
+  # set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.3.1-6), libgcc1 (>= 1:3.4.2-12)")
+endif(WIN32 AND NOT UNIX)
+
+# set(CPACK_PACKAGE_EXECUTABLES "MyExecutable" "My Executable")
+
+include(CPack)
