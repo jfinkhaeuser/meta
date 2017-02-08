@@ -106,8 +106,8 @@ private:
       typedef m::ratio<intT0, 9, 6> ratio_t1;
       typedef m::ratio<intT1, 3, 7> ratio_t2;
 
-      typedef m::multiply_ratios<ratio_t1, ratio_t2> product_t1;
-      typedef m::multiply_ratios<ratio_t2, ratio_t1> product_t2;
+      typedef m::multiply_ratios<ratio_t1, ratio_t2> META_ENUM_CLASS_NS(RATIO) product_t1;
+      typedef m::multiply_ratios<ratio_t2, ratio_t1> META_ENUM_CLASS_NS(RATIO) product_t2;
 
       // Multiplication is commutative
       CPPUNIT_ASSERT_EQUAL(int64_t(product_t1::GCD), int64_t(product_t2::GCD));
@@ -149,8 +149,8 @@ private:
       typedef m::ratio<intT0, 9, 6> ratio_t1;
       typedef m::ratio<intT1, 3, 7> ratio_t2;
 
-      typedef m::divide_ratios<ratio_t1, ratio_t2> quotient_t1;
-      typedef m::divide_ratios<ratio_t2, ratio_t1> quotient_t2;
+      typedef m::divide_ratios<ratio_t1, ratio_t2> META_ENUM_CLASS_NS(RATIO) quotient_t1;
+      typedef m::divide_ratios<ratio_t2, ratio_t1> META_ENUM_CLASS_NS(RATIO) quotient_t2;
 
       // Division ins non-commutative
       CPPUNIT_ASSERT_EQUAL(int64_t(quotient_t1::GCD), int64_t(quotient_t2::GCD));

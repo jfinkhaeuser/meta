@@ -123,7 +123,7 @@ template <
 >
 struct multiply_helper
 {
-  enum {
+  enum META_ENUM_CLASS(HELPER, intT) {
     TMP1 = A * C,
     TMP2 = B * D,
   };
@@ -139,7 +139,7 @@ template <
 >
 struct divide_helper
 {
-  enum {
+  enum META_ENUM_CLASS(HELPER, intT) {
     TMP1 = A * D,
     TMP2 = B * C,
   };
@@ -172,14 +172,14 @@ private:
   > helper_t;
 
 public:
-  enum {
+  enum META_ENUM_CLASS(RATIO, int_t) {
     GCD = gcd<
       int_t,
-      helper_t::TMP1,
-      helper_t::TMP2
+      static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP1),
+      static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP2)
     >::result,
-    DIVIDEND = helper_t::TMP1 / GCD,
-    DIVISOR = helper_t::TMP2 / GCD,
+    DIVIDEND = static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP1) / GCD,
+    DIVISOR = static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP2) / GCD,
   };
 };
 
