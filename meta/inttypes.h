@@ -40,4 +40,9 @@
 #  include <limits.h>
 #endif
 
+#if defined(META_WIN32)
+#  undef min
+#  undef max
+#endif
+
 #endif // guard
