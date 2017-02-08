@@ -22,7 +22,7 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <stdint.h>
+#include <meta/inttypes.h>
 
 #include <meta/noncopyable.h>
 #include <meta/stackonly.h>
