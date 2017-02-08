@@ -215,6 +215,9 @@ if (CPPUNIT_FOUND)
     setup_target_for_coverage(coverage ${PROJECT_TEST_NAME} coverage)
     target_link_libraries(${PROJECT_TEST_NAME} gcov)
   endif()
+
+  # May not work for older CMake versions
+  set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT testsuite)
 endif (CPPUNIT_FOUND)
 
 ##############################################################################
