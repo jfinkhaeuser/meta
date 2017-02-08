@@ -171,7 +171,6 @@ if (CPPUNIT_FOUND)
       test/test_meta.cpp
       test/test_byteorder.cpp
       test/test_pointers.cpp
-      test/test_math.cpp
   )
 
   # Tests compatible with C++11 only
@@ -185,6 +184,13 @@ if (CPPUNIT_FOUND)
       test/test_range.cpp
     )
   endif (META_USE_CXX11)
+
+  # Tests that on Windows only work in C++11 mode.
+  if (NOT WIN32 OR META_USE_CXX11)
+    set(TEST_SOURCES ${TEST_SOURCES}
+        test/test_math.cpp
+    )
+  endif()
 
   add_executable(testsuite
       ${TEST_SOURCES}

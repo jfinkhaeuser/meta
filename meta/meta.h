@@ -48,5 +48,50 @@
 #define META_CXX_MODE         META_CXX_MODE_CXX11
 #endif
 
+/**
+ * Which platform are we on?
+ **/
+#if !defined(META_PLATFORM_DEFINED)
+  #if defined(_WIN32) || defined(__WIN32__) || defined(__WINDOWS__)
+    #define META_WIN32
+  #else
+    #define META_POSIX
+  #endif
+  #define META_PLATFORM_DEFINED
+#endif
+
+/**
+ * Decide what to include globally
+ **/
+#if defined(META_WIN32)
+  #ifndef WIN32_LEAN_AND_MEAN
+    #define WIN32_LEAN_AND_MEAN
+    #define __UNDEF_LEAN_AND_MEAN
+  #endif
+  #include <windows.h>
+  #ifdef __UNDEF_LEAN_AND_MEAN
+    #undef WIN32_LEAN_AND_MEAN
+    #undef __UNDEF_LEAN_AND_MEAN
+  #endif
+#endif
+
+/**
+ * Enum classes may be supported in C++11 mode, and are required in some cases
+ * on Windows. We'd like to abort compilation on Windows if not in C++11 mode,
+ * and otherwise just do the right thing.
+ **/
+#if defined(META_WIN32)
+#  if META_CXX_MODE < META_CXX_MODE_CXX11
+#    define META_ENUM_CLASS(name, type) this_will_not_compile_on_windows_without_cxx11_support
+#    define META_ENUM_CLASS_NS(name) this_will_not_compile_on_windows_without_cxx11_support
+#  else
+#    define META_ENUM_CLASS(name, type) class name : type
+#    define META_ENUM_CLASS_NS(name) :: name
+#  endif
+#else
+#  define META_ENUM_CLASS(name, type)
+#  define META_ENUM_CLASS_NS(name)
+#endif
+
 
 #endif // guard
