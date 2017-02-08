@@ -44,8 +44,8 @@ template <
 >
 struct gcd
 {
-  enum {
-    result = gcd<intT, B, A % B>::result,
+  enum META_ENUM_CLASS(GCD, intT) {
+    result = gcd<intT, B, A % B> META_ENUM_CLASS_NS(GCD) ::result,
   };
 };
 
@@ -55,7 +55,7 @@ struct gcd
   template <type A>                     \
   struct gcd<type, A, type(0)>          \
   {                                     \
-    enum {                              \
+    enum META_ENUM_CLASS(GCD, type) {   \
       result = A,                       \
     };                                  \
   };
@@ -83,8 +83,8 @@ template <
 struct ratio
 {
   typedef intT int_t;
-  enum {
-    GCD = gcd<intT, _DIVIDEND, _DIVISOR>::result,
+  enum META_ENUM_CLASS(RATIO, intT) {
+    GCD = gcd<intT, _DIVIDEND, _DIVISOR> META_ENUM_CLASS_NS(GCD) ::result,
     DIVIDEND = _DIVIDEND / GCD,
     DIVISOR  = _DIVISOR / GCD,
   };
@@ -101,8 +101,8 @@ struct invert
 {
   typedef ratio<
     typename ratioT::int_t,
-    ratioT::DIVISOR,
-    ratioT::DIVIDEND
+    static_cast<typename ratioT::int_t>(ratioT META_ENUM_CLASS_NS(RATIO) ::DIVISOR),
+    static_cast<typename ratioT::int_t>(ratioT META_ENUM_CLASS_NS(RATIO) ::DIVIDEND)
   > type;
 };
 
@@ -165,10 +165,10 @@ public:
 private:
   typedef helperT<
     int_t,
-    ratioA::DIVIDEND,
-    ratioA::DIVISOR,
-    ratioB::DIVIDEND,
-    ratioB::DIVISOR
+    static_cast<int_t>(ratioA META_ENUM_CLASS_NS(RATIO) ::DIVIDEND),
+    static_cast<int_t>(ratioA META_ENUM_CLASS_NS(RATIO) ::DIVISOR),
+    static_cast<int_t>(ratioB META_ENUM_CLASS_NS(RATIO) ::DIVIDEND),
+    static_cast<int_t>(ratioB META_ENUM_CLASS_NS(RATIO) ::DIVISOR)
   > helper_t;
 
 public:
@@ -177,7 +177,7 @@ public:
       int_t,
       static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP1),
       static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP2)
-    >::result,
+    > META_ENUM_CLASS_NS(GCD) ::result,
     DIVIDEND = static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP1) / GCD,
     DIVISOR = static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP2) / GCD,
   };
