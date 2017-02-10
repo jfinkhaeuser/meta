@@ -44,8 +44,8 @@ private:
     {
       namespace m = meta::math;
 
-      CPPUNIT_ASSERT_EQUAL(intT(5), intT(m::gcd<intT, 5, 10>::result));
-      CPPUNIT_ASSERT_EQUAL(intT(5), intT(m::gcd<intT, 10, 5>::result));
+      CPPUNIT_ASSERT_EQUAL(intT(5), intT(m::gcd<intT, 5, 10> META_ENUM_CLASS_NS(GCD) ::result));
+      CPPUNIT_ASSERT_EQUAL(intT(5), intT(m::gcd<intT, 10, 5> META_ENUM_CLASS_NS(GCD) ::result));
     }
 
     void testGCD()
@@ -68,19 +68,19 @@ private:
       namespace m = meta::math;
 
       // Ratio without divisor defaults to divsor 1
-      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1)>::DIVIDEND));
-      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1)>::DIVISOR));
-      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1)>::GCD));
+      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1)> META_ENUM_CLASS_NS(RATIO) ::DIVIDEND));
+      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1)> META_ENUM_CLASS_NS(RATIO) ::DIVISOR));
+      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1)> META_ENUM_CLASS_NS(RATIO) ::GCD));
 
       // Ratio with divisor
-      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1), intT(10)>::DIVIDEND));
-      CPPUNIT_ASSERT_EQUAL(intT(10), intT(m::ratio<intT, intT(1), intT(10)>::DIVISOR));
-      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1), intT(10)>::GCD));
+      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1), intT(10)> META_ENUM_CLASS_NS(RATIO) ::DIVIDEND));
+      CPPUNIT_ASSERT_EQUAL(intT(10), intT(m::ratio<intT, intT(1), intT(10)> META_ENUM_CLASS_NS(RATIO) ::DIVISOR));
+      CPPUNIT_ASSERT_EQUAL(intT(1), intT(m::ratio<intT, intT(1), intT(10)> META_ENUM_CLASS_NS(RATIO) ::GCD));
 
       // Ratio that can be cancelled down
-      CPPUNIT_ASSERT_EQUAL(intT(2), intT(m::ratio<intT, intT(6), intT(9)>::DIVIDEND));
-      CPPUNIT_ASSERT_EQUAL(intT(3), intT(m::ratio<intT, intT(6), intT(9)>::DIVISOR));
-      CPPUNIT_ASSERT_EQUAL(intT(3), intT(m::ratio<intT, intT(6), intT(9)>::GCD));
+      CPPUNIT_ASSERT_EQUAL(intT(2), intT(m::ratio<intT, intT(6), intT(9)> META_ENUM_CLASS_NS(RATIO) ::DIVIDEND));
+      CPPUNIT_ASSERT_EQUAL(intT(3), intT(m::ratio<intT, intT(6), intT(9)> META_ENUM_CLASS_NS(RATIO) ::DIVISOR));
+      CPPUNIT_ASSERT_EQUAL(intT(3), intT(m::ratio<intT, intT(6), intT(9)> META_ENUM_CLASS_NS(RATIO) ::GCD));
 
     }
 
