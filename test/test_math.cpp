@@ -44,6 +44,7 @@ private:
     {
       namespace m = meta::math;
 
+      CPPUNIT_ASSERT(sizeof(intT) <= sizeof(m::gcd<intT, 5, 10> META_ENUM_CLASS_NS(GCD) ::result));
       CPPUNIT_ASSERT_EQUAL(intT(5), intT(m::gcd<intT, 5, 10> META_ENUM_CLASS_NS(GCD) ::result));
       CPPUNIT_ASSERT_EQUAL(intT(5), intT(m::gcd<intT, 10, 5> META_ENUM_CLASS_NS(GCD) ::result));
     }
