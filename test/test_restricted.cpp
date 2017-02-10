@@ -141,7 +141,7 @@ private:
     const double percentage = 2;
 
     int64_t us = std::max(plain_time, no_restrict_time);
-    int64_t diff_us = std::labs(plain_time - no_restrict_time);
+    int64_t diff_us = std::labs(long(plain_time - no_restrict_time));
     CPPUNIT_ASSERT_MESSAGE("Using wall time as performance measure sucks, so this can fail. Make sure you're running an optimized build.",
         diff_us < (us * percentage));
 
@@ -165,7 +165,7 @@ private:
 
     // These checks can't be expensive.
     us = std::max(plain_time, restrict_time);
-    diff_us = std::labs(plain_time - restrict_time);
+    diff_us = std::labs(long(plain_time - restrict_time));
     CPPUNIT_ASSERT(diff_us < (us * percentage));
   }
 
