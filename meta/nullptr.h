@@ -31,7 +31,7 @@
 /*****************************************************************************
  * nullptr compatibility
  **/
-#if !defined(META_HAVE_STD_NULLPTR_T
+#if !defined(META_HAVE_STD_NULLPTR_T)
 
 /**
  * nullptr emulation class similar to Effective C++ by Scott Meyers,
