@@ -151,7 +151,7 @@ private:
     CPPUNIT_ASSERT_EQUAL(false, (MySingleton<float, manual_destruction_policy>::destroyed));
 
     MySingleton<float, manual_destruction_policy> const & s =
-      MySingleton<float, manual_destruction_policy>::const_instance(3.14);
+      MySingleton<float, manual_destruction_policy>::const_instance(3.14f);
     CPPUNIT_ASSERT_EQUAL(float(3.14), s.member);
 
     CPPUNIT_ASSERT_EQUAL(false, (MySingleton<float, manual_destruction_policy>::destroyed));
@@ -160,7 +160,7 @@ private:
 
     // Since the instance is detroyed, we can now re-create it, I hope!
     MySingleton<float, manual_destruction_policy> const & s2 =
-      MySingleton<float, manual_destruction_policy>::const_instance(2.78);
+      MySingleton<float, manual_destruction_policy>::const_instance(2.78f);
     CPPUNIT_ASSERT_EQUAL(false, (MySingleton<float, manual_destruction_policy>::destroyed));
     CPPUNIT_ASSERT_EQUAL(float(2.78), s2.member);
 
