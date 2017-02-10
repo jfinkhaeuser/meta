@@ -62,6 +62,29 @@ check_include_file_cxx(endian.h META_HAVE_ENDIAN_H)
 check_include_file_cxx(byteswap.h META_HAVE_BYTESWAP_H)
 check_include_file_cxx(cstdint META_HAVE_STD_HEADERS)
 check_include_file_cxx(tr1/cstdint META_HAVE_TR1_HEADERS)
+check_include_file_cxx(cstddef META_HAVE_CSTDDEF)
+
+##############################################################################
+# Symbols
+include(CheckCXXSourceCompiles)
+if (META_HAVE_CSTDDEF)
+check_cxx_source_compiles("
+#include <cstddef>
+
+int main(int, char**)
+{
+  std::nullptr_t foo;
+}
+" META_HAVE_STD_NULLPTR_T)
+
+check_cxx_source_compiles("
+int main(int, char**)
+{
+  void * foo = nullptr;
+}
+" META_HAVE_NULLPTR)
+
+endif ()
 
 
 ##############################################################################

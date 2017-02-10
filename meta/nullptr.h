@@ -29,34 +29,54 @@
 #include <meta/meta.h>
 
 /*****************************************************************************
- * Incomplete c++11 implementations on older compilers force us to fake
- * nullptr
- **/
-#ifndef META_NEED_NULLPTR_COMPATIBILITY
-#  if META_CXX_MODE == META_CXX_MODE_CXX98
-#    define META_NEED_NULLPTR_COMPATIBILITY
-#  endif
-#endif
-
-
-/*****************************************************************************
  * nullptr compatibility
  **/
-#if defined(META_NEED_NULLPTR_COMPATIBILITY)
-const                         // this is a const object...
-class {
-public:
-  template<class T>           // convertible to any type
-  operator T*() const         // of null non-member
-  { return 0; }               // pointer...
-  template<class C, class T>  // or any type of null
-  operator T C::*() const     // member pointer...
-  { return 0; }
-private:
-  void operator&() const;     // whose address can't be taken
-} nullptr = {};
-#endif // META_NEED_NULLPTR_COMPATIBILITY
+#if !defined(META_HAVE_STD_NULLPTR_T
 
-#undef META_NEED_NULLPTR_COMPATIBILITY
+/**
+ * nullptr emulation class similar to Effective C++ by Scott Meyers,
+ * Second Edition.
+ */
+namespace std {
+
+class nullptr_t
+{
+public:
+  /**
+   * Can convert to any null non-member pointer.
+   **/
+  template <typename T>
+  inline operator T*() const
+  {
+    return 0;
+  }
+
+  /**
+   * Can convert to null member pointers.
+   **/
+  template <typename C, typename T>
+  inline operator T C::*() const
+  {
+    return 0;
+  }
+
+private:
+  /**
+   * Can't take the address of an object.
+   **/
+  void operator&() const;
+};
+
+} // namespace std
+
+
+#endif // META_HAVE_STD_NULLPTR_T
+
+
+#if !defined(META_HAVE_NULLPTR)
+
+std::nullptr_t const nullptr = {};
+
+#endif // META_HAVE_NULLPTR
 
 #endif // guard

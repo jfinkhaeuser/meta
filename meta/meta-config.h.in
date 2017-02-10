@@ -49,8 +49,13 @@
 #cmakedefine META_HAVE_BYTESWAP_H
 #cmakedefine META_HAVE_STD_HEADERS
 #cmakedefine META_HAVE_TR1_HEADERS
-#cmakedefine META_HAVE_BOOST_POSIX_TIME
+#cmakedefine META_HAVE_CSTDDEF
 
+/*****************************************************************************
+ * Symbols
+ **/
+#cmakedefine META_HAVE_STD_NULLPTR_T
+#cmakedefine META_HAVE_NULLPTR
 
 /*****************************************************************************
  * Platform checks
