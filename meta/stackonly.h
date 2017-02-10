@@ -39,6 +39,12 @@ namespace detail {
 #  define META_NOEXCEPT throw()
 #endif
 
+#if defined(META_WIN32)
+#  define META_THROW_BAD_ALLOC
+#else
+#  define META_THROW_BAD_ALLOC throw (std::bad_alloc)
+#endif
+
 
 /**
  * Private new operator ensures classes derived from stackonly cannot be
@@ -58,7 +64,7 @@ protected:
 
 private:
   // The whole point is for the following to be private.
-  void * operator new (std::size_t size) throw (std::bad_alloc) META_DELETE;
+  void * operator new (std::size_t size) META_THROW_BAD_ALLOC META_DELETE;
   void * operator new (std::size_t size, std::nothrow_t const & nothrow_value) META_NOEXCEPT META_DELETE;
 };
 
