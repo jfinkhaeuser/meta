@@ -53,6 +53,21 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set (CMAKE_CXX_FLAGS "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD}")
   set (CMAKE_CXX_FLAGS_DEBUG "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD} -O0 -ggdb")
   set (CMAKE_CXX_FLAGS_RELEASE "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD} -O3 -ggdb")
+
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  message("Selecting compiler flags for MSVC")
+
+  set (MSVC_CXX_FLAGS "/analyze /GR /sdl /W4"
+      CACHE STRING "Default flags for MSVC")
+  if (META_USE_CXX11)
+    set (MSVC_CXX_FLAGS_STD "/std:c++latest")
+  else (META_USE_CXX11)
+    set (MSVC_CXX_FLAGS_STD "/std:c++98")
+  endif (META_USE_CXX11)
+  set (CMAKE_CXX_FLAGS "${MSVC_CXX_FLAGS} ${MSVC_CXX_FLAGS_STD}")
+  set (CMAKE_CXX_FLAGS_DEBUG "${MSVC_CXX_FLAGS} ${MSVC_CXX_FLAGS_STD} ")
+  set (CMAKE_CXX_FLAGS_RELEASE "${MSVC_CXX_FLAGS} ${MSVC_CXX_FLAGS_STD} /GL /Ox")
+
 endif ()
 
 ##############################################################################
@@ -194,6 +209,7 @@ if (CPPUNIT_FOUND)
       test/test_meta.cpp
       test/test_byteorder.cpp
       test/test_pointers.cpp
+      test/test_math.cpp
   )
 
   # Tests compatible with C++11 only
@@ -208,17 +224,13 @@ if (CPPUNIT_FOUND)
     )
   endif (META_USE_CXX11)
 
-  # Tests that on Windows only work in C++11 mode.
-  if (NOT WIN32 OR META_USE_CXX11)
-    set(TEST_SOURCES ${TEST_SOURCES}
-        test/test_math.cpp
-    )
-  endif()
-
   add_executable(testsuite
       ${TEST_SOURCES}
       test/testsuite.cpp)
-  target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_LIBRARIES})
+  if (CPPUNIT_LIBRARY_DEBUG)
+    target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_DL_LIBS} debug ${CPPUNIT_LIBRARY_DEBUG})
+  endif ()
+  target_link_libraries(testsuite ${DEP_LIBRARIES} ${CPPUNIT_DL_LIBS} optimized ${CPPUNIT_LIBRARY_RELEASE})
 
   # Since some time after 2.8.9
   if ("${CMAKE_VERSION}" VERSION_GREATER "2.8.10")

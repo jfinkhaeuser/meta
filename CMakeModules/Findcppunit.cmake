@@ -29,53 +29,58 @@ pkg_check_modules(CPPUNIT "cppunit>=${cppunit_FIND_VERSION}")
 
 # Search in this directory if pkg-config found nothing
 set(CPPUNIT_ROOT_DIR
-	"${CPPUNIT_ROOT_DIR}"
-	CACHE
-	PATH
-	"Directory to search for CppUnit")
+  "${CPPUNIT_ROOT_DIR}"
+  CACHE
+  PATH
+  "Directory to search for CppUnit")
 
-if (NOT CPPUNIT_FOUND)
-	find_library(CPPUNIT_LIBRARY_RELEASE
-		NAMES
-		cppunit
-		HINTS
-		"${CPPUNIT_ROOT_DIR}/lib")
+if (CPPUNIT_FOUND)
+  # We need to emulate find_library's _RELEASE and _DEBUG libraries, even on
+  # other platforms.
+  set(CPPUNIT_LIBRARY_DEBUG "${CPPUNIT_LIBRARIES}")
+  set(CPPUNIT_LIBRARY_RELEASE "${CPPUNIT_LIBRARIES}")
+else()
 
-	find_library(CPPUNIT_LIBRARY_DEBUG
-		NAMES
-		cppunitd
-		HINTS
-		"${CPPUNIT_ROOT_DIR}/lib")
+  find_library(CPPUNIT_LIBRARY_RELEASE
+    NAMES
+    cppunit
+    HINTS
+    "${CPPUNIT_ROOT_DIR}/lib")
 
-	include(SelectLibraryConfigurations)
-	select_library_configurations(CPPUNIT)
+  find_library(CPPUNIT_LIBRARY_DEBUG
+    NAMES
+    cppunitd
+    HINTS
+    "${CPPUNIT_ROOT_DIR}/lib")
 
-	# Might want to look close to the library first for the includes.
-	get_filename_component(_libdir "${CPPUNIT_LIBRARY_RELEASE}" PATH)
+  include(SelectLibraryConfigurations)
+  select_library_configurations(CPPUNIT)
 
-	find_path(CPPUNIT_INCLUDE_DIR
-		NAMES
-		cppunit/TestCase.h
-		HINTS
-		"${_libdir}/.."
-		PATHS
-		"${CPPUNIT_ROOT_DIR}"
-		PATH_SUFFIXES
-		include/)
+  # Might want to look close to the library first for the includes.
+  get_filename_component(_libdir "${CPPUNIT_LIBRARY_RELEASE}" PATH)
+
+  find_path(CPPUNIT_INCLUDE_DIR
+    NAMES
+    cppunit/TestCase.h
+    HINTS
+    "${_libdir}/.."
+    PATHS
+    "${CPPUNIT_ROOT_DIR}"
+    PATH_SUFFIXES
+    include/)
 
 
-	include(FindPackageHandleStandardArgs)
-	find_package_handle_standard_args(cppunit
-		DEFAULT_MSG
-		CPPUNIT_LIBRARY
-		CPPUNIT_INCLUDE_DIR)
+  include(FindPackageHandleStandardArgs)
+  find_package_handle_standard_args(cppunit
+    DEFAULT_MSG
+    CPPUNIT_LIBRARY
+    CPPUNIT_INCLUDE_DIR)
 
-	if(CPPUNIT_FOUND)
-		set(CPPUNIT_LIBRARIES ${CPPUNIT_LIBRARY} ${CMAKE_DL_LIBS})
-		set(CPPUNIT_INCLUDE_DIRS "${CPPUNIT_INCLUDE_DIR}")
-	endif()
+  if(CPPUNIT_FOUND)
+    set(CPPUNIT_INCLUDE_DIRS "${CPPUNIT_INCLUDE_DIR}")
+  endif()
 
-	mark_as_advanced(CPPUNIT_INCLUDE_DIR
-		CPPUNIT_LIBRARY_RELEASE
-		CPPUNIT_LIBRARY_DEBUG)
+  mark_as_advanced(CPPUNIT_INCLUDE_DIR
+    CPPUNIT_LIBRARY_RELEASE
+    CPPUNIT_LIBRARY_DEBUG)
 endif()
