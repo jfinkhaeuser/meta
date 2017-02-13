@@ -28,6 +28,10 @@
 
 #include <meta/meta.h>
 
+#if META_CXX_MODE != META_CXX_MODE_CXX0X
+#error Can't compile meta/singleton.h because there's no C++11 support.
+#endif
+
 #include <functional>
 #include <cstddef>
 
@@ -36,6 +40,8 @@ namespace hash {
 
 /**
  * Hash multiple values
+ *
+ * std::hash only exists from C++11 onwards.
  **/
 template <typename T>
 inline std::size_t multi_hash(T const & t)
