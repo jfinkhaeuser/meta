@@ -44,21 +44,19 @@ template <
 >
 struct gcd
 {
-  enum META_ENUM_CLASS(GCD, intT) {
-    result = gcd<intT, B, A % B> META_ENUM_CLASS_NS(GCD) ::result,
-  };
+  static intT const result = gcd<intT, B, A % B>::result;
 };
+
 
 // Need a bunch of specializations because non-type arguments many not depend
 // on a type argument.
-#define META_MATH_GCD_SPECIALIZE(type)  \
-  template <type A>                     \
-  struct gcd<type, A, type(0)>          \
-  {                                     \
-    enum META_ENUM_CLASS(GCD, type) {   \
-      result = A,                       \
-    };                                  \
+#define META_MATH_GCD_SPECIALIZE(type)            \
+  template <type A>                               \
+  struct gcd<type, A, type(0)>                    \
+  {                                               \
+    static type const result = A;                 \
   };
+
 
 META_MATH_GCD_SPECIALIZE(int8_t);
 META_MATH_GCD_SPECIALIZE(uint8_t);
@@ -83,11 +81,10 @@ template <
 struct ratio
 {
   typedef intT int_t;
-  enum META_ENUM_CLASS(RATIO, intT) {
-    GCD = gcd<intT, _DIVIDEND, _DIVISOR> META_ENUM_CLASS_NS(GCD) ::result,
-    DIVIDEND = _DIVIDEND / GCD,
-    DIVISOR  = _DIVISOR / GCD,
-  };
+
+  static intT const GCD = gcd<intT, _DIVIDEND, _DIVISOR>::result;
+  static intT const DIVIDEND = _DIVIDEND / GCD;
+  static intT const DIVISOR = _DIVISOR / GCD;
 };
 
 
@@ -101,8 +98,8 @@ struct invert
 {
   typedef ratio<
     typename ratioT::int_t,
-    static_cast<typename ratioT::int_t>(ratioT META_ENUM_CLASS_NS(RATIO) ::DIVISOR),
-    static_cast<typename ratioT::int_t>(ratioT META_ENUM_CLASS_NS(RATIO) ::DIVIDEND)
+    ratioT::DIVISOR,
+    ratioT::DIVIDEND
   > type;
 };
 
@@ -119,15 +116,14 @@ template <
   intT A,
   intT B,
   intT C,
-  intT D 
+  intT D
 >
 struct multiply_helper
 {
-  enum META_ENUM_CLASS(HELPER, intT) {
-    TMP1 = A * C,
-    TMP2 = B * D,
-  };
+  static intT const TMP1 = A * C;
+  static intT const TMP2 = B * D;
 };
+
 
 
 template <
@@ -139,10 +135,8 @@ template <
 >
 struct divide_helper
 {
-  enum META_ENUM_CLASS(HELPER, intT) {
-    TMP1 = A * D,
-    TMP2 = B * C,
-  };
+  static intT const TMP1 = A * D;
+  static intT const TMP2 = B * C;
 };
 
 
@@ -165,23 +159,18 @@ public:
 private:
   typedef helperT<
     int_t,
-    static_cast<int_t>(ratioA META_ENUM_CLASS_NS(RATIO) ::DIVIDEND),
-    static_cast<int_t>(ratioA META_ENUM_CLASS_NS(RATIO) ::DIVISOR),
-    static_cast<int_t>(ratioB META_ENUM_CLASS_NS(RATIO) ::DIVIDEND),
-    static_cast<int_t>(ratioB META_ENUM_CLASS_NS(RATIO) ::DIVISOR)
+    ratioA::DIVIDEND,
+    ratioA::DIVISOR,
+    ratioB::DIVIDEND,
+    ratioB::DIVISOR
   > helper_t;
 
 public:
-  enum META_ENUM_CLASS(RATIO, int_t) {
-    GCD = gcd<
-      int_t,
-      static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP1),
-      static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP2)
-    > META_ENUM_CLASS_NS(GCD) ::result,
-    DIVIDEND = static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP1) / GCD,
-    DIVISOR = static_cast<int_t>(helper_t META_ENUM_CLASS_NS(HELPER) ::TMP2) / GCD,
-  };
+  static int_t const GCD = gcd<int_t, helper_t::TMP1, helper_t::TMP2>::result;
+  static int_t const DIVIDEND = helper_t::TMP1 / GCD;
+  static int_t const DIVISOR = helper_t::TMP2 / GCD;
 };
+
 
 
 } // namespace detail
