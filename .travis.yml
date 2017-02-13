@@ -1,4 +1,5 @@
 language: cpp
+sudo: required
 matrix:
   include:
     # Clang/Linux/x86_64
