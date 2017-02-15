@@ -17,6 +17,4 @@ cd _package
 tar vxfz meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz
 cd meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
 
-cp -a ../../../debian debian
-
 debuild -S -sa
