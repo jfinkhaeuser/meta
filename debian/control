@@ -5,7 +5,7 @@ Maintainer: Jens Finkhaeuser <jens@finkhaeuser.de>
 Standards-Version: 3.9.7
 Build-Depends: debhelper (>= 9), cmake (>= 2.8)
 
-Package: meta-dev
+Package: meta
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+# Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: C++ Metaprogramming Primivites and Pattern Implementations
