@@ -130,6 +130,13 @@ configure_file(
     @ONLY
 )
 
+configure_file(
+    "${PROJECT_SOURCE_DIR}/package.sh.in"
+    "${PROJECT_BINARY_DIR}/package.sh"
+    @ONLY
+)
+
+
 
 ##############################################################################
 # Compiler flags #2
@@ -285,6 +292,9 @@ else(WIN32 AND NOT UNIX)
   set(CPACK_GENERATOR "STGZ;TGZ;TBZ2;DEB")
   # set(CPACK_STRIP_FILES "bin/MyExecutable")
   set(CPACK_SOURCE_STRIP_FILES "")
+
+  set(CPACK_SOURCE_IGNORE_FILES "CMakeFiles/;tmp/;build/;.git*;.*.swp;.travis.yml")
+  set(CPACK_SOURCE_PACKAGE_FILE_NAME "meta-${META_PACKAGE_MINOR}.${META_PACKAGE_MAJOR}")
 
   # Debian
   # set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.3.1-6), libgcc1 (>= 1:3.4.2-12)")

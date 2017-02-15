@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set +e
+set +x
+
+# Source tarball
+make package_source
+
+# Debian build
+rm -rf _package
+
+mkdir _package
+mv meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.tar.gz \
+     _package/meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz
+
+cd _package
+tar vxfz meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz
+cd meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
+
+cp -a ../../../debian debian
+
+debuild -S -sa
