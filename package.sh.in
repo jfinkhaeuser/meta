@@ -6,15 +6,20 @@ set +x
 # Source tarball
 make package_source
 
+# Checksum tarball
+ORIG_TARBALL="meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.tar.gz"
+TARBALL_SUM=$(tar -xOzf "$ORIG_TARBALL" |md5sum | cut -d' ' -f1)
+
 # Debian build
 rm -rf _package
-
 mkdir _package
-mv meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.tar.gz \
-     _package/meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz
+
+#NEW_TARBALL="meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.$TARBALL_SUM.orig.tar.gz"
+NEW_TARBALL="meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz"
+cp "$ORIG_TARBALL" "_package/$NEW_TARBALL"
 
 cd _package
-tar vxfz meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz
+tar vxfz "$NEW_TARBALL"
 cd meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
 
 debuild -S -sa
