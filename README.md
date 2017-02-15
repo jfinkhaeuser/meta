@@ -64,6 +64,16 @@ Similarly, external dependencies for building on CI are:
 - [build-chroot](https://github.com/jfinkhaeuser/build-chroot)
 - [build-dependencies](https://github.com/jfinkhaeuser/build-dependencies)
 
+Installation (Ubuntu)
+---------------------
+
+Follow the instructions to add the [Ubuntu PPA](https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/cpp)
+to your system. Then run (as root):
+
+```bash
+apt-get install meta
+```
+
 Installation
 ------------
 
