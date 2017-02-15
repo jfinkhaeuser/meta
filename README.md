@@ -41,6 +41,7 @@ Tested On
 - Linux
 - OS X
 - Windows
+- FreeBSD
 
 *Hardware*
 - x86_64
