@@ -35,11 +35,11 @@ rm -rf "libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@"
 tar vxfz "$NEW_TARBALL"
 cd libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
 
-# Build source package
-debuild -S -sa
-
-# Build binary package, for test purposes.
+# Build packages
 debuild -us -uc -I -i
+rm -rf debian/tmp
+rm -rf inst
+debuild -S -sa
 
 # Double check
 for filename in "$PACKAGE_DIR"/*.deb ; do
