@@ -40,3 +40,9 @@ debuild -S -sa
 
 # Build binary package, for test purposes.
 debuild -us -uc -I -i
+
+# Double check
+for filename in "$PACKAGE_DIR"/*.deb ; do
+  dpkg-deb -I "$filename"
+  dpkg-deb -c "$filename"
+done
