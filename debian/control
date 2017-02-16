@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: Jens Finkhaeuser <jens@finkhaeuser.de>
 Standards-Version: 3.9.7
-Build-Depends: debhelper (>= 9), cmake (>= 2.8)
+Build-Depends: debhelper (>= 9), cmake (>= 2.8), rsync (>= 3.1), gzip (>= 1.6)
 Homepage: https://github.com/jfinkhaeuser/meta
 Vcs-Git: https://github.com/jfinkhaeuser/meta.git
 
