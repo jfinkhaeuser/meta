@@ -1,25 +1,42 @@
 #!/bin/bash
 
-set +e
-set +x
+set -e
+set -x
+
+PACKAGE_DIR="$PWD/../_package"
 
 # Source tarball
 make package_source
 
 # Checksum tarball
-ORIG_TARBALL="meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.tar.gz"
-TARBALL_SUM=$(tar -xOzf "$ORIG_TARBALL" |md5sum | cut -d' ' -f1)
+ORIG_TARBALL="libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.tar.gz"
+ORIG_TARBALL_SUM=$(tar -xOzf "$ORIG_TARBALL" | md5sum | cut -d' ' -f1)
 
-# Debian build
-rm -rf _package
-mkdir _package
+# Create package dir if it doesn't exist
+if [ ! -d "$PACKAGE_DIR" ] ; then
+  mkdir -p "$PACKAGE_DIR"
+fi
 
-#NEW_TARBALL="meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.$TARBALL_SUM.orig.tar.gz"
-NEW_TARBALL="meta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz"
-cp "$ORIG_TARBALL" "_package/$NEW_TARBALL"
+# If a new tarball already exists in the package dir, then compare
+# checksums.
+NEW_TARBALL="libmeta_@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.orig.tar.gz"
+if [ ! -f "$PACKAGE_DIR/$NEW_TARBALL" ] ; then
+  cp "$ORIG_TARBALL" "$PACKAGE_DIR/$NEW_TARBALL"
+else
+  NEW_TARBALL_SUM=$(tar -xOzf "$PACKAGE_DIR/$NEW_TARBALL" | md5sum | cut -d' ' -f1)
+  if [ "$ORIG_TARBALL_SUM" != "$NEW_TARBALL_SUM" ] ; then
+    cp "$ORIG_TARBALL" "$PACKAGE_DIR/$NEW_TARBALL"
+  fi
+fi
 
-cd _package
+# Go to package dir, unpack tarball.
+cd "$PACKAGE_DIR"
+rm -rf "libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@"
 tar vxfz "$NEW_TARBALL"
-cd meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
+cd libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
 
+# Build source package
 debuild -S -sa
+
+# Build binary package, for test purposes.
+debuild -us -uc -I -i
