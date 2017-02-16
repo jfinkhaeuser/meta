@@ -72,8 +72,10 @@ Follow the instructions to add the [Ubuntu PPA](https://launchpad.net/~finkhaeus
 to your system. Then run (as root):
 
 ```bash
-apt-get install meta
+apt-get install libmeta-dev
 ```
+
+This will install the (empty) binary package file as well as the development headers.
 
 Installation
 ------------
