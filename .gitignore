@@ -19,6 +19,7 @@ meta.pc
 
 # build directory
 build
+_package
 
 # Temporary directory
 tmp
