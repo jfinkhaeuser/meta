@@ -1,11 +1,35 @@
-Source: meta
+Source: libmeta
 Section: devel
 Priority: optional
 Maintainer: Jens Finkhaeuser <jens@finkhaeuser.de>
 Standards-Version: 3.9.7
 Build-Depends: debhelper (>= 9), cmake (>= 2.8)
+Homepage: https://github.com/jfinkhaeuser/meta
+Vcs-Git: https://github.com/jfinkhaeuser/meta.git
 
-Package: meta
+Package: libmeta1
+Section: libs
 Architecture: any
-# Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: C++ Metaprogramming Primivites and Pattern Implementations
+Multi-Arch: no
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: C++ Metaprogramming Primivites and Pattern Implementations (libraries)
+ There are no libraries in this headers-only project, just the appropriate
+ pkg-config file.
+ For full information on the package, visit its github page at
+ https://github.com/jfinkhaeuser/meta
+Replaces: meta
+Conflicts: meta
+
+Package: libmeta-dev
+Section: libdevel
+Architecture: any
+Multi-Arch: no
+Depends: libmeta1 (= ${binary:Version}), ${shlibs:Depends}, ${misc:Depends}
+Pre-Depends: ${misc:Pre-Depends}
+Description: C++ Metaprogramming Primivites and Pattern Implementations (development files)
+ This package contains headers only.
+ For full information on the package, visit its github page at
+ https://github.com/jfinkhaeuser/meta
+Replaces: meta
+Conflicts: meta
