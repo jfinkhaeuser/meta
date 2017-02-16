@@ -1,5 +1,5 @@
-meta (1.1-1) xenial; urgency=low
+libmeta (1.1-1) xenial; urgency=low
 
   * Initial release.
 
- -- Jens Finkhaeuser <jens@finkhaeuser.de>  Wed, 15 Feb 2017 15:09:28 +0100
+ -- Jens Finkhaeuser <jens@finkhaeuser.de>  Thu, 16 Feb 2017 09:50:28 +0100
