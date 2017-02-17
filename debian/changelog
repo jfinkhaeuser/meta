@@ -1,11 +1,5 @@
-libmeta (1.1-2) xenial; urgency=medium
-
-  * Build again with improved build time dependencies.
-
- -- Jens Finkhaeuser <jens@finkhaeuser.de>  Thu, 16 Feb 2017 12:22:38 +0100
-
-libmeta (1.1-1) xenial; urgency=low
+libmeta (1.1-1) xenial; urgency=medium
 
   * Initial release.
 
- -- Jens Finkhaeuser <jens@finkhaeuser.de>  Thu, 16 Feb 2017 09:50:28 +0100
+ -- Jens Finkhaeuser <jens@localhost>  Fri, 17 Feb 2017 09:30:39 +0100
