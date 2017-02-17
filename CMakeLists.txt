@@ -36,9 +36,9 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   else (META_USE_CXX11)
     set (CLANGXX_CXX_FLAGS_STD "-std=c++98")
   endif (META_USE_CXX11)
-  set (CMAKE_CXX_FLAGS "${CLANGXX_CXX_FLAGS} ${CLANGXX_CXX_FLAGS_STD}")
-  set (CMAKE_CXX_FLAGS_DEBUG "${CLANGXX_CXX_FLAGS} ${CLANGXX_CXX_FLAGS_STD} -O0 -ggdb")
-  set (CMAKE_CXX_FLAGS_RELEASE "${CLANGXX_CXX_FLAGS} ${CLANGXX_CXX_FLAGS_STD} -O3 -ggdb")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CLANGXX_CXX_FLAGS} ${CLANGXX_CXX_FLAGS_STD}")
+  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -ggdb")
+  set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -ggdb")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   message("Selecting compiler flags for GNU c++")
@@ -50,9 +50,9 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   else (META_USE_CXX11)
     set (GNUCXX_CXX_FLAGS_STD "-std=c++98")
   endif (META_USE_CXX11)
-  set (CMAKE_CXX_FLAGS "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD}")
-  set (CMAKE_CXX_FLAGS_DEBUG "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD} -O0 -ggdb")
-  set (CMAKE_CXX_FLAGS_RELEASE "${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD} -O3 -ggdb")
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GNUCXX_CXX_FLAGS} ${GNUCXX_CXX_FLAGS_STD}")
+  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} -O0 -ggdb")
+  set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} -O3 -ggdb")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   message("Selecting compiler flags for MSVC")
@@ -64,11 +64,11 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   else (META_USE_CXX11)
     set (MSVC_CXX_FLAGS_STD "/std:c++98")
   endif (META_USE_CXX11)
-  set (CMAKE_CXX_FLAGS "${MSVC_CXX_FLAGS} ${MSVC_CXX_FLAGS_STD}")
-  set (CMAKE_CXX_FLAGS_DEBUG "${MSVC_CXX_FLAGS} ${MSVC_CXX_FLAGS_STD} ")
-  set (CMAKE_CXX_FLAGS_RELEASE "${MSVC_CXX_FLAGS} ${MSVC_CXX_FLAGS_STD} /GL /Ox")
-
+  set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MSVC_CXX_FLAGS} ${MSVC_CXX_FLAGS_STD}")
+  set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS}")
+  set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /GL /Ox")
 endif ()
+
 
 ##############################################################################
 # Headers
@@ -155,6 +155,8 @@ set (CMAKE_CXX_FLAGS_RELEASE  "${CPPUNIT_CFLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
 
 ##############################################################################
 # Build artefacts
+include(GNUInstallDirs)
+
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/meta/meta-config.h
     meta/meta.h
@@ -203,7 +205,7 @@ install(FILES
 
 install(FILES
     ${CMAKE_CURRENT_BINARY_DIR}/meta.pc
-    DESTINATION lib/pkgconfig)
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig)
 
 
 ##############################################################################
@@ -302,10 +304,7 @@ else(WIN32 AND NOT UNIX)
       "\\\\..*\\\\.sw."
       "/\\\\.travis.yml"
   )
-  set(CPACK_SOURCE_PACKAGE_FILE_NAME "libmeta-${META_PACKAGE_MINOR}.${META_PACKAGE_MAJOR}")
-
-  # Debian
-  # set(CPACK_DEBIAN_PACKAGE_DEPENDS "libc6 (>= 2.3.1-6), libgcc1 (>= 1:3.4.2-12)")
+  set(CPACK_SOURCE_PACKAGE_FILE_NAME "meta-${META_PACKAGE_MAJOR}.${META_PACKAGE_MINOR}")
 endif(WIN32 AND NOT UNIX)
 
 # set(CPACK_PACKAGE_EXECUTABLES "MyExecutable" "My Executable")
