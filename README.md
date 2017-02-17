@@ -68,7 +68,7 @@ Similarly, external dependencies for building on CI are:
 Installation (Ubuntu)
 ---------------------
 
-Follow the instructions to add the [Ubuntu PPA](https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/cpp)
+Follow the instructions to add the [Ubuntu PPA](https://launchpad.net/~finkhaeuser-consulting/+archive/ubuntu/ppa)
 to your system. Then run (as root):
 
 ```bash
