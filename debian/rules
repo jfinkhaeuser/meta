@@ -1,59 +1,15 @@
 #!/usr/bin/make -f
 
-BUILDDIR = build_dir
+# Make debhelper verbose
+export DH_VERBOSE = 1
 
-# Clean
-clean:
-	rm -f build || true
-	rm -rf $(BUILDDIR)
+# Enable hardening build flags
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+DPKG_EXPORT_BUILDFLAGS = 1
+include /usr/share/dpkg/buildflags.mk
+CFLAGS+=$(CPPFLAGS)
+CXXFLAGS+=$(CPPFLAGS)
 
-# Build
-build: build-arch build-indep
-build-arch: build-stamp
-build-indep: build-stamp
-build-stamp:
-	mkdir $(BUILDDIR)
-	cd $(BUILDDIR) && \
-		cmake \
-			-DCMAKE_BUILD_TYPE=Release \
-			-DCMAKE_INSTALL_PREFIX=../inst \
-			..
-	make -C $(BUILDDIR)
-
-# Package
-binary: binary-indep binary-arch
-
-binary-indep: binary-stamp-indep
-	mkdir -p debian/tmp/usr/share/doc/libmeta-dev
-	cp debian/copyright debian/tmp/usr/share/doc/libmeta-dev
-	cp debian/changelog debian/tmp/usr/share/doc/libmeta-dev/changelog.Debian
-	gzip -n -9 debian/tmp/usr/share/doc/libmeta-dev/changelog.Debian
-	rm -rf debian/tmp/usr/lib
-	dpkg-gencontrol -plibmeta-dev
-	dh_md5sums -Pdebian/tmp -plibmeta-dev -v
-	find debian/tmp
-	dpkg --build debian/tmp ..
-
-binary-arch: binary-stamp-arch
-	mkdir -p debian/tmp/usr/share/doc/libmeta1
-	cp debian/copyright debian/tmp/usr/share/doc/libmeta1
-	cp debian/changelog debian/tmp/usr/share/doc/libmeta1/changelog.Debian
-	gzip -n -9 debian/tmp/usr/share/doc/libmeta1/changelog.Debian
-	rm -rf debian/tmp/usr/include
-	dpkg-gencontrol -plibmeta1
-	dh_md5sums -Pdebian/tmp -plibmeta1 -v
-	find debian/tmp
-	dpkg --build debian/tmp ..
-
-binary-stamp-pre:
-	cd $(BUILDDIR) && cmake -P cmake_install.cmake
-
-binary-stamp-%: binary-stamp-pre
-	rm -rf debian/tmp/usr
-	mkdir -p debian/tmp/usr
-	rsync -a inst/ debian/tmp/usr/
-	rm -rf debian/tmp/DEBIAN
-	mkdir -p debian/tmp/DEBIAN
-
-
-.PHONY: binary binary-arch binary-indep clean
+# Use cdbs magic
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/cmake.mk
