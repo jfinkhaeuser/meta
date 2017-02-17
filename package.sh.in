@@ -9,7 +9,7 @@ PACKAGE_DIR="$PWD/../_package"
 make package_source
 
 # Checksum tarball
-ORIG_TARBALL="libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.tar.bz2"
+ORIG_TARBALL="meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@.tar.bz2"
 ORIG_TARBALL_SUM=$(tar -xOjf "$ORIG_TARBALL" | md5sum | cut -d' ' -f1)
 
 # Create package dir if it doesn't exist
@@ -31,9 +31,9 @@ fi
 
 # Go to package dir, unpack tarball.
 cd "$PACKAGE_DIR"
-rm -rf "libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@"
+rm -rf "meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@"
 tar vxfj "$NEW_TARBALL"
-cd libmeta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
+cd meta-@META_PACKAGE_MAJOR@.@META_PACKAGE_MINOR@
 
 # Build packages
 debuild -us -uc -I -i
