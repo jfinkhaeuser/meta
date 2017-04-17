@@ -1,6 +1,8 @@
 meta
 ====
 
+Sensible change!
+
 C++ Metaprogramming Primivites and Pattern implementations.
 
 [![Build Status](https://travis-ci.org/jfinkhaeuser/meta.svg?branch=master)](https://travis-ci.org/jfinkhaeuser/meta)
