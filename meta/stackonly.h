@@ -42,7 +42,11 @@ namespace detail {
 #if defined(META_WIN32)
 #  define META_THROW_BAD_ALLOC
 #else
-#  define META_THROW_BAD_ALLOC throw (std::bad_alloc)
+#  if META_CXX_MODE == META_CXX_MODE_CXX0X
+#    define META_THROW_BAD_ALLOC throw()
+#  else
+#    define META_THROW_BAD_ALLOC throw (std::bad_alloc)
+#  endif
 #endif
 
 
