@@ -39,6 +39,22 @@ namespace meta {
 namespace hash {
 
 /**
+ * Combine two hash values.
+ * Based on boost::hash_combine, which is based on
+ * http://www.cs.rmit.edu.au/~jz/fulltext/jasist-tch.pdf
+ **/
+inline std::size_t
+hash_combine(std::size_t const & seed, std::size_t const & value)
+{
+
+  std::size_t ret = seed;
+  ret ^= value + 0x9e3779b9
+    + (seed << 6) + (seed >> 2);
+  return ret;
+}
+
+
+/**
  * Hash multiple values
  *
  * std::hash only exists from C++11 onwards.
@@ -57,15 +73,13 @@ inline std::size_t multi_hash(T0 const & t0, Ts && ... ts)
     return seed;
   }
 
-  size_t remainder = multi_hash(std::forward<Ts>(ts)...);
+  std::size_t remainder = multi_hash(std::forward<Ts>(ts)...);
 
-  // Based on boost::hash_combine, which is based on
-  // http://www.cs.rmit.edu.au/~jz/fulltext/jasist-tch.pdf
-  seed ^= remainder + 0x9e3779b9
-    + (seed << 6) + (seed >> 2);
-
-  return seed;
+  return hash_combine(seed, remainder);
 }
+
+
+
 
 }} // namespace meta::hash
 
