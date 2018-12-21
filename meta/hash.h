@@ -43,14 +43,12 @@ namespace hash {
  * Based on boost::hash_combine, which is based on
  * http://www.cs.rmit.edu.au/~jz/fulltext/jasist-tch.pdf
  **/
-inline std::size_t
-hash_combine(std::size_t const & seed, std::size_t const & value)
+inline void
+hash_combine(std::size_t & seed, std::size_t const & value)
 {
 
-  std::size_t ret = seed;
-  ret ^= value + 0x9e3779b9
+  seed ^= value + 0x9e3779b9
     + (seed << 6) + (seed >> 2);
-  return ret;
 }
 
 
@@ -75,7 +73,8 @@ inline std::size_t multi_hash(T0 const & t0, Ts && ... ts)
 
   std::size_t remainder = multi_hash(std::forward<Ts>(ts)...);
 
-  return hash_combine(seed, remainder);
+  hash_combine(seed, remainder);
+  return seed;
 }
 
 
