@@ -34,15 +34,16 @@ matrix:
       env: ARCH=x86_64 META_USE_CXX11=ON
     # GCC/Linux/armhf
     # We test only with C++11 features - without was already verified on Linux
-    - os: linux
-      dist: xenial
-      compiler: gcc
-      env: ARCH=armhf META_USE_CXX11=ON
-    # GCC/Linux/mips
-    # We test only with C++11 features - without was already verified on Linux
-    - os: linux
-      dist: xenial
-      compiler: gcc
-      env: ARCH=mips META_USE_CXX11=ON
+    # FIXME don't work on current travis, ugh.
+    #    - os: linux
+    #      dist: xenial
+    #      compiler: gcc
+    #      env: ARCH=armhf META_USE_CXX11=ON
+    #    # GCC/Linux/mips
+    #    # We test only with C++11 features - without was already verified on Linux
+    #    - os: linux
+    #      dist: xenial
+    #      compiler: gcc
+    #      env: ARCH=mips META_USE_CXX11=ON
 script:
   - ./build.sh "${ARCH}" "${TRAVIS_OS_NAME}" "${TRAVIS_BUILD_DIR}"
