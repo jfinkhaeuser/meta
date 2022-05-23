@@ -3,7 +3,7 @@ meta
 
 C++ Metaprogramming Primivites and Pattern implementations.
 
-[![Build Status](https://travis-ci.org/jfinkhaeuser/meta.svg?branch=master)](https://travis-ci.org/jfinkhaeuser/meta)
+[Now lives at Codeberg](https://codeberg.org/jfinkhaeuser/meta)
 
 This library is kept deliberately small, with no external dependencies.
 
